@@ -1,0 +1,33 @@
+.MuiPaper-root{
+    width: 50vw;
+
+    .MuiDialogTitle-root{
+        background: linear-gradient(90deg, #FF4581 0%, #4388DD 100%);
+        color: white;
+    }
+
+    .MuiDialogContent-root{
+        p{
+            font-size: 0.8rem;
+        }
+        small{
+            font-size: 0.7rem;
+            color: firebrick;
+            padding: 0rem 0.5rem;
+        }
+    }
+
+    .MuiDialogActions-root{
+        justify-content: space-between;
+        padding: 0.7rem 1.5rem;
+
+        .MuiButtonBase-root{
+            background: #4452FE;
+border-radius: 10px;
+padding: 0.3rem 1rem;
+color: white;
+font-size: 1rem;
+font-weight: 500;
+        }
+    }
+}

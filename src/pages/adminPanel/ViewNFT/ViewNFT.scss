@@ -1,0 +1,61 @@
+.viewNFT {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    padding: 1.5rem;
+  
+    &__title {
+      color: var(--background-black);
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    &__body{
+        display: flex;
+        flex-direction: row;
+
+        .imageSection{
+            width: 50%;
+            padding: 10px;
+            img{
+                width: 100%;
+                height: 500px;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+        }
+        .infoSection{
+            width: 50%;
+            padding: 10px;
+            .title{
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+            .description{
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+
+            .info{
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                font-size: 0.9rem;
+
+                :nth-child(1){
+                    font-weight: 600;
+                    width: 30%;
+                }
+                :nth-child(2){
+                    font-weight: 500;
+                    width: 70%;
+                    text-overflow: break;
+                    text-align: right;
+                }
+            }
+        }
+    }
+  
+  }
+  

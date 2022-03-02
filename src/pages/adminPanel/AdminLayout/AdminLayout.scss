@@ -1,0 +1,21 @@
+.AdminLayoutContainer{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.headerContainer{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: var(--background-black);
+}
+.bodyContainer{
+    height: calc(100vh - 60px);
+    width: 100%;
+    display: flex;
+   flex-direction: row;
+}

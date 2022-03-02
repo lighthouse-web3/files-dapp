@@ -1,0 +1,22 @@
+.searchbarContainer{
+    width: 100%;
+    position: relative;
+    input[type="text"]{
+        height: 30px;
+        width: 100%;
+        background: #fefefe;
+        border: 0.5px solid #c4c4c4;
+        box-sizing: border-box;
+        border-radius: 10px;
+        margin: 0.5rem 0rem;
+        padding-left: 30px;
+      }
+
+      .icon{
+        position: absolute;
+        top: 16px;
+        left: 12px;
+        font-size: 0.8rem;
+        color: #5c5c5c;
+      }
+}

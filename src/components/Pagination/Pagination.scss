@@ -1,0 +1,35 @@
+.pagination {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 1rem;
+    font-family: var(--font-tertiary);
+
+    li {
+      margin: 0rem 0.5rem;
+      &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
+    }
+
+    .selected {
+      background: var(--primary-blue);
+      color: white;
+      font-weight: 600;
+      padding: 0rem 0.3rem;
+      border-radius: 5px;
+    }
+
+    .previous,
+    .next {
+      font-weight: 600;
+      margin: 0rem 1rem;
+    }
+
+    .previous.disabled,
+    .next.disabled {
+      color: var(--content-grey);
+    }
+  }

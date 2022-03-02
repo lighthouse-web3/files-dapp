@@ -1,0 +1,16 @@
+.OverlayContainer{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.9;
+    p{
+        opacity: 1;
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,47 @@
+.header {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+
+  &__logoBox {
+    display: flex;
+    width: 30%;
+    height: 100%;
+    padding: 0rem 2rem;
+    align-items: center;
+    img {
+      height: 60%;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    p {
+      font-size: 1.4rem;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &__infoBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+    width: 70%;
+    color: white;
+
+    &:nth-child(n) {
+      font-size: 1rem;
+    }
+
+    .userName {
+      font-weight: 400;
+      width: 30%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.gateway {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    padding: 1.5rem;
+  
+    &__title {
+      color: var(--background-black);
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+  
+  }
+  

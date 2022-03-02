@@ -1,0 +1,69 @@
+.infoBarContainer.collapsed {
+    width: 0px;
+    min-width: 0px;
+}
+
+
+.infoBarContainer {
+
+  .fileName{
+    width: 80%;
+    word-break: break-all;
+  }
+
+  .pro-sidebar-layout {
+    background: var(--background-black);
+    position: relative;
+    padding: 1rem;
+ 
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url(../../../public/bg/bg_pattern.png);
+      opacity: 0.1;
+      filter: grayscale(100%);
+      z-index: -1;
+    }
+    .pro-sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2rem;
+    }
+
+    .pro-sidebar-content {
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        p {
+          margin: 0.5rem 0rem;
+          font-size: 0.9rem;
+          overflow-wrap: anywhere;
+        }
+
+        .content {
+          color: white;
+          text-align: right;
+          line-height: 1.3rem;
+        }
+      }
+
+      .iconsContainer{
+          padding: 1rem 0rem;
+          width: 100%;
+          color: white;
+          font-size: 1.5rem;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          :nth-child(n):hover{
+              cursor: pointer;
+          }
+      }
+    }
+  }
+}

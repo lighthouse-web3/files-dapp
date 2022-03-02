@@ -1,0 +1,33 @@
+
+.pro-sidebar-layout{
+    background: var(--background-black);
+}
+
+.pro-sidebar-header{
+    .pro-menu-item{
+        background: var(--primary-blue);
+        color: white;
+    }
+}
+
+.pro-sidebar .pro-menu.shaped .pro-menu-item > .pro-inner-item > .pro-icon-wrapper {
+    background-color: transparent;
+}
+
+.pro-menu-item{
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0.5rem 1.5rem;
+
+    .pro-icon-wrapper{
+        font-size: 1.5rem !important;
+    }
+}
+
+.pro-menu-item.active {
+    background: rgba(73, 73, 73, 1);
+    color: white;
+}

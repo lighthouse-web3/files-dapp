@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
+body {
+  margin: 0;
+  font-family: 'ABeeZee','Montserrat','Roboto',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: white;
+}
+
+.gradient__text {
+  -webkit-text-fill-color: transparent;
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.ptr{
+  cursor: pointer;
+}
+
+
+
+:root{
+  --font-primary: 'ABeeZee';
+  --font-secondary: 'Montserrat';
+  --font-tertiary: 'Roboto';
+  --gradient-text: linear-gradient(266.31deg,#ff4581 6.14%,#4388dd 99.41%);
+  --background-black:#181818;
+  --primary-blue:#4452FE;
+  --content-grey:#5C5C5C;
+}
+
+input[type="text"] , textarea{
+  width: 100%;
+  background: #fefefe;
+  border: 0.5px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin: 0.5rem 0rem;
+  padding-left: 10px;
+}

@@ -1,0 +1,124 @@
+.landingPage {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  background: #181818;
+  position: relative;
+  font-family: 'AbeeZee';
+  &__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: overlay;
+    background: linear-gradient(
+      60.65deg,
+      #45108a 12.91%,
+      #3d065f 33.44%,
+      #10054d 87.44%
+    );
+  }
+
+  &__overlayRings {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: cover !important;
+    background-position: center;
+    background: url("../../../public/bg/bg_rings.png");
+  }
+
+  &__sideBar {
+    z-index: 3;
+    color: white;
+    padding: 2rem;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .header{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      img{
+        width: auto;
+        height: 4.5rem;
+      }
+      p{
+        font-size: 2rem;
+        margin: 0;
+      }
+    }
+
+    .title{
+      margin-bottom: 15%;
+      margin-left: 10%;
+      p{
+        font-size: 3.5rem;
+      }
+
+      .icons{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        :nth-child(n){
+          color: white;
+          margin-right: 10px;
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__loginBar {
+    z-index: 3;
+    color: white;
+    width: 30%;
+   
+    background: #4452fe;
+    position: relative;
+
+    &_pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      mix-blend-mode: color-burn;
+      height: 100%;
+      background: url("../../../public/bg/bg_pattern.png");
+      z-index: -1;
+    }
+
+    &_iconsContainer{
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 3;
+
+        .loginBox{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 1rem 0rem;
+            img{
+                width: 100px;
+                height: 100px;
+            }
+            p{
+                margin: 0.5rem 0rem;
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+        }
+    }
+  }
+}
