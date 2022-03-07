@@ -13,8 +13,8 @@ let serverUrlmoralis = process.env.serverUrl;
 
 ReactDOM.render(
   <MoralisProvider
-    appId=appIdmoralis
-    serverUrl=serverUrlmoralis
+    appId={appIdmoralis}
+    serverUrl={serverUrlmoralis}
   >
     <BrowserRouter>
       <Provider store={store}>
