@@ -117,10 +117,10 @@ function Landingpage() {
                     </div>
 
                     <div className="footer__chains">
-                        <img src="/binance.png" alt="binanceLogo" />
-                        <img src="/polygon.png" alt="polygonLogo" />
-                        <img src="/fantom.png" alt="fantomLogo" />
-                        <img src="/optimism.svg" alt="optimismLogo" />
+                        <img src="/chain_icons/binance.png" alt="binanceLogo" />
+                        <img src="/chain_icons/polygon.png" alt="polygonLogo" />
+                        <img src="/chain_icons/fantom.png" alt="fantomLogo" />
+                        <img src="/chain_icons/optimism.svg" alt="optimismLogo" />
                     </div>
 
                 </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./uploadNew.scss";
-import Dropzone from "../../../components/dropzone";
 import { useSelector } from "react-redux";
 import Progress from "react-progressbar";
 import UploadCID from "../../../components/uploadCID/UploadCID";
@@ -77,10 +76,6 @@ function UploadNew() {
                             </div>
                         )
                     }
-                    {/* <div className="information">
-                        <p>{uploadedFiles?.target?.files[0]?.name}</p>
-                        <p>{(uploadedFiles?.target?.files[0]?.size / 1024).toFixed(1)} Kb</p>
-                    </div> */}
                     <Progress completed={fileUploadProgress} />
                 </div>
             )}
