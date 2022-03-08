@@ -78,8 +78,8 @@ function Landingpage() {
     useEffect(() => {
         if (userAddress.length > 0) {
             let networkVersion = window.ethereum.networkVersion;
-            let chain = getChainNetwork(networkVersion)[0];
-            let network = getChainNetwork(networkVersion)[1];
+            let chain = getChainNetwork(networkVersion);
+            let network = getChainNetwork(networkVersion);
             _auth.setAuthData({
                 address: userAddress,
                 chain: chain,
@@ -110,6 +110,19 @@ function Landingpage() {
                         <a href="https://discord.com/invite/c4a4CGCdJG" target="_blank" rel="noreferrer"> <BsDiscord /></a>
                         <a href="https://twitter.com/lighthouseweb3" target="_blank" rel="noreferrer"> <BsTwitter /></a>
                     </div>
+                </div>
+                <div className="footer">
+                    <div className="footer__heading">
+                        Supported Chains:
+                    </div>
+
+                    <div className="footer__chains">
+                        <img src="/binance.png" alt="binanceLogo" />
+                        <img src="/polygon.png" alt="polygonLogo" />
+                        <img src="/fantom.png" alt="fantomLogo" />
+                        <img src="/optimism.svg" alt="optimismLogo" />
+                    </div>
+
                 </div>
             </div>
             <div className="landingPage__loginBar">

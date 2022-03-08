@@ -27,6 +27,7 @@ function Myspace() {
         console.log(userdata, 'USERDATA');
         axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${getChainNetwork()}&publicKey=${userdata.address}`)
             .then(response => {
+                console.log(response);
                 if (response['status'] === 200) {
                     _fileAC.setFileData(response['data']);
                     setCurrentItems(response['data']);

@@ -10,7 +10,18 @@ import { notify } from "../../../utils/services/notification";
 import UploadFile from "../../../components/uploadFile/UploadFile";
 
 
+const GetTotalFolderSize = (fileArr) => {
+    let total = 0;
+    console.log(fileArr, 'arr');
+    for (let index = 0; index < fileArr['length']; index++) {
+        total = total + fileArr[index]?.size
+    }
+    // fileArr?.forEach(element => {
+    //     total = total + element?.size
 
+    // });
+    return total;
+}
 
 function UploadNew() {
     const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -27,6 +38,7 @@ function UploadNew() {
 
     useEffect(() => {
         if (uploadedFolder?.target?.files.length > 0) {
+            console.log(uploadedFolder?.target?.files)
             setUploadProgress(5);
             uploadFolder(uploadedFolder, setUploadProgress, _authDetails);
         }
@@ -53,10 +65,26 @@ function UploadNew() {
 
             {(fileUploadProgress > 0) && (
                 <div className="uploadNew__progressContainer">
-                    <div className="information">
+                    {
+                        (uploadedFiles?.target?.files.length > 0) && (
+                            <div className="information">
+                                <p>{uploadedFiles?.target?.files[0]?.name}</p>
+                                <p>{(uploadedFiles?.target?.files[0]?.size / 1024).toFixed(1)} Kb</p>
+                            </div>
+                        )
+                    }
+                    {
+                        (uploadedFolder?.target?.files.length > 0) && (
+                            <div className="information">
+                                <p>{uploadedFolder?.target?.files[0]?.webkitRelativePath?.split('/')[0]}</p>
+                                <p>{(GetTotalFolderSize(uploadedFolder?.target?.files) / 1024).toFixed(1)} Kb</p>
+                            </div>
+                        )
+                    }
+                    {/* <div className="information">
                         <p>{uploadedFiles?.target?.files[0]?.name}</p>
                         <p>{(uploadedFiles?.target?.files[0]?.size / 1024).toFixed(1)} Kb</p>
-                    </div>
+                    </div> */}
                     <Progress completed={fileUploadProgress} />
                 </div>
             )}
