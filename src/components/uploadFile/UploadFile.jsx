@@ -18,7 +18,7 @@ function UploadFile({ setUploadedFiles, setUploadedFolder }) {
             <input type="file" id='file' onChange={e => getEventFile(e)} hidden />
             <input onChange={e => getEventFolder(e)} directory="" webkitdirectory="" type="file" id='folder' hidden />
             <button className="fileBtn ptr" onClick={() => { clickInput('file') }}>Upload File </button>
-            {/* <button className="fileBtn ptr" onClick={() => { clickInput('folder') }}>Upload Folder </button> */}
+            <button className="fileBtn ptr" onClick={() => { clickInput('folder') }}>Upload Folder </button>
         </div >
     )
 }

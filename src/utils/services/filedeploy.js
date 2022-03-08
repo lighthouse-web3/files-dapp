@@ -30,7 +30,7 @@ export const execute_transaction = async (
 ) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   console.log(network);
-  const contract_address = lighthouse.get_contract_address(network);
+  const contract_address = lighthouse.getContractAddress(network);
 
   const signer = provider.getSigner();
   const contract = new ethers.Contract(contract_address, lighthouseAbi, signer);
@@ -93,12 +93,15 @@ export const uploadFile = async (
       const signing_response = await sign_message();
       setUploadProgress(20);
 
+      console.log(uploadedFile.target.files[0].size);
+      console.log(network);
       const cost = (
-        await lighthouse.get_quote(uploadedFile.target.files[0].size, network)
-      ).total_cost
+        await lighthouse.getQuote(uploadedFile.target.files[0].size, network)
+      ).totalCost
         .toFixed(18)
         .toString();
       setUploadProgress(50);
+      console.log(cost);
 
       const deploy_response = await lighthouse.deploy(
         uploadedFile,
@@ -139,10 +142,12 @@ export const uploadFolder = async (
   uploadedFile.persist();
 
   let network = getChainNetwork();
+  setUploadProgress(10);
 
   if (network) {
     try {
       const signing_response = await sign_message();
+      setUploadProgress(20);
 
       let deploy_response = await deployDir(
         uploadedFile,
@@ -152,13 +157,17 @@ export const uploadFolder = async (
       deploy_response = deploy_response.split("\n");
       deploy_response = JSON.parse(deploy_response[deploy_response.length - 2]);
 
+      console.log("deploy_response");
       console.log(deploy_response);
 
       const cost = (
-        await lighthouse.get_quote(deploy_response.Size, network)
-      ).total_cost
+        await lighthouse.getQuote(deploy_response.Size, network)
+      ).totalCost
         .toFixed(18)
         .toString();
+
+      console.log(cost);
+      setUploadProgress(50);
 
       const transaction = await execute_transaction(
         deploy_response.Hash,
@@ -167,6 +176,7 @@ export const uploadFolder = async (
         cost,
         network
       );
+      setUploadProgress(100);
       console.log(transaction);
       setUploadProgress(0);
       notify(

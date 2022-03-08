@@ -32,13 +32,13 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
                     notify('CID doesnt exist', 'error');
                     return;
                 }
-                const cost = (await lighthouse.get_quote(costRes['data']['Size'], network)).total_cost.toFixed(18).toString();
+                const cost = (await lighthouse.getQuote(costRes['data']['Size'], network)).total_cost.toFixed(18).toString();
                 // setUploadProgress(50);
                 console.log('COST', cost + '');
 
                 const transaction = await execute_transaction(CID, fileName, costRes['data']['Size'], cost, network);
 
-                const deploy = await lighthouse.add_cid(fileName, CID);
+                const deploy = await lighthouse.addCid(fileName, CID);
 
                 if (deploy['created']) {
                     notify('File Uploaded Successfully', 'success');
