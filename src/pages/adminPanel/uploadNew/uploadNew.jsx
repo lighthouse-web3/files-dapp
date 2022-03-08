@@ -16,10 +16,6 @@ const GetTotalFolderSize = (fileArr) => {
     for (let index = 0; index < fileArr['length']; index++) {
         total = total + fileArr[index]?.size
     }
-    // fileArr?.forEach(element => {
-    //     total = total + element?.size
-
-    // });
     return total;
 }
 
