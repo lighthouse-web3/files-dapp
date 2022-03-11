@@ -106,7 +106,8 @@ export const uploadFile = async (
       const deploy_response = await lighthouse.deploy(
         uploadedFile,
         signing_response.address,
-        signing_response.signed_message
+        signing_response.signed_message,
+        true
       );
       console.log(deploy_response);
       setUploadProgress(70);
@@ -149,11 +150,13 @@ export const uploadFolder = async (
       const signing_response = await sign_message();
       setUploadProgress(20);
 
-      let deploy_response = await deployDir(
+      const deploy_response_folder = await lighthouse.deploy(
         uploadedFile,
         signing_response.address,
-        signing_response.signed_message
+        signing_response.signed_message,
+        false
       );
+      let deploy_response = deploy_response_folder;
       deploy_response = deploy_response.split("\n");
       deploy_response = JSON.parse(deploy_response[deploy_response.length - 2]);
 
