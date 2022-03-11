@@ -1,4 +1,3 @@
-import Logout from "../logout";
 import { notify } from "./notification";
 
 export function getChainNetwork() {
