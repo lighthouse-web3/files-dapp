@@ -121,10 +121,7 @@ export const uploadFile = async (
       );
 
       setUploadProgress(0);
-      notify(
-        `File Upload Success:\n Transaction Hash: ${transaction?.hash}`,
-        "success"
-      );
+      notify(`File Upload Success:  ${transaction?.hash}`, "success");
     } catch (e) {
       notify(`ERROR:${e}`, "error");
       setUploadProgress(0);
@@ -182,10 +179,7 @@ export const uploadFolder = async (
       setUploadProgress(100);
       console.log(transaction);
       setUploadProgress(0);
-      notify(
-        `File Upload Success:\n Transaction Hash: ${transaction?.hash}`,
-        "success"
-      );
+      notify(`File Upload Success:\n  ${transaction?.hash}`, "success");
     } catch (e) {
       notify(`ERROR:${e}`, "error");
       setUploadProgress(0);

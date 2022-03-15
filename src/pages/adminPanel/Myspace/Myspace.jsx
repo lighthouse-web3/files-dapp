@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Myspace.scss";
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { useOutletContext } from "react-router-dom";
@@ -18,11 +18,15 @@ function Myspace() {
     const [infoBarData, setInfoBarData] = useOutletContext();
     const [currentItems, setCurrentItems] = useState([]);
     const [orignalItems, setOrignalItems] = useState([]);
+    const [itemsPerPage, setitemsPerPage] = useState(7);
+    const tableRef = useRef(null)
+    const columnRef = useRef(null)
     const [totalSize, setTotalSize] = useState(0);
     const store = useSelector((store) => store);
     const dispatch = useDispatch()
     const _fileAC = bindActionCreators(fileAC, dispatch);
     const data = store.file || [];
+
     useEffect(() => {
         axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${getChainNetwork()}&publicKey=${getAddress()}`)
             .then(response => {
@@ -39,6 +43,8 @@ function Myspace() {
                     setTotalSize(total.toFixed(2));
                 }
             });
+        // table
+        setitemsPerPage(Math.floor(tableRef.current.clientHeight / 70) - 1);
     }, []);
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
@@ -53,7 +59,7 @@ function Myspace() {
                 </div>
             </div>
 
-            <div className="mySpace__tableContainer">
+            <div className="mySpace__tableContainer" ref={tableRef}>
                 <table>
                     <thead>
                         <tr className="tableHead">
@@ -65,7 +71,7 @@ function Myspace() {
                     </thead>
                     <tbody>
                         {(currentItems?.length > 0) && currentItems.map((item, i) =>
-                            <tr key={i} className="ptr" onClick={() => { setInfoBarData(item) }} >
+                            <tr key={i} className="ptr" onClick={() => { setInfoBarData(item) }} ref={columnRef}>
                                 <td >{item?.fileName}</td>
                                 <td>
                                     <span className="cid">{item.cid}</span>
@@ -83,7 +89,7 @@ function Myspace() {
                 <div className="sizeBar">
                     <p>Total Size : {totalSize + ' Kb'}</p>
                 </div>
-                <Pagination orignalData={data} setCurrentData={setCurrentItems} currentData={currentItems} itemsPerPage={7} />
+                <Pagination orignalData={data} setCurrentData={setCurrentItems} currentData={currentItems} itemsPerPage={itemsPerPage} />
 
             </div>
         </div>
