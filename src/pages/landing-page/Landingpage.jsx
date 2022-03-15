@@ -9,6 +9,7 @@ import { getChainNetwork } from "../../utils/services/chainNetwork";
 import axios from 'axios';
 import { ethers } from "ethers";
 import { notify } from "../../utils/services/notification";
+import { login } from "../../utils/services/auth";
 
 
 function isMobileDevice() {
@@ -86,7 +87,7 @@ function Landingpage() {
                 network: network,
                 networkVersion: networkVersion,
             });
-            userAddress.length > 0 && _navigate("/dashboard");
+            login(userAddress, _navigate);
         }
     }, [_auth, _navigate, userAddress]);
 
@@ -101,7 +102,7 @@ function Landingpage() {
                 </div>
                 <div className="title">
                     <p>
-                        Your Personal <br /> <span className="gradient__text">Web 3.0</span>{" "}
+                        Your <br /> <span className="gradient__text">Web 3.0</span>{" "}
                         storage
                         <br /> in <span className="gradient__text">Metaverse</span>
                     </p>

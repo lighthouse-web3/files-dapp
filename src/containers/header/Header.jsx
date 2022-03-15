@@ -4,8 +4,8 @@ import { CgProfile } from 'react-icons/cg'
 import { useSelector } from 'react-redux';
 
 function Header() {
-    const _auth = useSelector((store) => store.auth)
-    const userId = _auth.address;
+    const _auth = JSON.parse(localStorage.getItem('authData') || '{}');
+    const userId = _auth?.userAddress || '-';
     return (
         <div className="header">
             <div className="header__logoBox">

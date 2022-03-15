@@ -11,6 +11,7 @@ import Searchbar from "../../../components/searchBar/Searchbar";
 import Pagination from "../../../components/Pagination/Pagination";
 import { notify } from "../../../utils/services/notification";
 import { getChainNetwork } from "../../../utils/services/chainNetwork";
+import { getAddress } from "../../../utils/services/auth";
 
 
 function Myspace() {
@@ -23,9 +24,7 @@ function Myspace() {
     const _fileAC = bindActionCreators(fileAC, dispatch);
     const data = store.file || [];
     useEffect(() => {
-        let userdata = store.auth;
-        console.log(userdata, 'USERDATA');
-        axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${getChainNetwork()}&publicKey=${userdata.address}`)
+        axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${getChainNetwork()}&publicKey=${getAddress()}`)
             .then(response => {
                 console.log(response);
                 if (response['status'] === 200) {
