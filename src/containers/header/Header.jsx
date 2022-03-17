@@ -1,7 +1,6 @@
 import React from 'react';
 import './header.scss'
 import { CgProfile } from 'react-icons/cg'
-import { useSelector } from 'react-redux';
 
 function Header() {
     const _auth = JSON.parse(localStorage.getItem('authData') || '{}');
@@ -15,7 +14,7 @@ function Header() {
             <div className="header__infoBox">
                 <CgProfile />&nbsp;
                 <span>|</span>&nbsp;
-                <span className='userName'>{userId}</span>
+                <span className='userName'>{userId ? userId.substring(0, 4) + '....' + userId.substring(userId.length - 4) : ''}</span>
             </div>
         </div>
     )

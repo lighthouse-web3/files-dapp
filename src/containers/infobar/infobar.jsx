@@ -69,7 +69,7 @@ function Infobar({ infoBarData, setInfoBarData }) {
                     <p>File Cost
                         <br />
                         <span className="content">
-                            {(parseInt(infoBarData?.fileCost?.hex, 16) / Math.pow(10, 18)).toFixed(3)}
+                            {(parseInt(infoBarData?.fileCost?.hex, 16) / Math.pow(10, 18)).toFixed(5)}
                         </span>
                     </p>
                 </div>
