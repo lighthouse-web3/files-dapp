@@ -12,6 +12,8 @@ import Pagination from "../../../components/Pagination/Pagination";
 import { notify } from "../../../utils/services/notification";
 import { getChainNetwork } from "../../../utils/services/chainNetwork";
 import { getAddress } from "../../../utils/services/auth";
+import { useMountedLayoutEffect } from "react-table/dist/react-table.development";
+import { getFileIcon } from "../../../utils/services/fileTypeIcons";
 
 
 function Myspace() {
@@ -20,12 +22,11 @@ function Myspace() {
     const [orignalItems, setOrignalItems] = useState([]);
     const [itemsPerPage, setitemsPerPage] = useState(7);
     const tableRef = useRef(null)
-    const columnRef = useRef(null)
     const [totalSize, setTotalSize] = useState(0);
     const store = useSelector((store) => store);
     const dispatch = useDispatch()
     const _fileAC = bindActionCreators(fileAC, dispatch);
-    const data = store.file || [];
+    const data = [];
 
     useEffect(() => {
         axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${getChainNetwork()}&publicKey=${getAddress()}`)
@@ -41,11 +42,24 @@ function Myspace() {
                         total = total + (parseInt(element?.fileSize?.hex, 16) / 1024)
                     });
                     setTotalSize(total.toFixed(2));
+
+                    setTableItemsLength();
+
                 }
             });
-        // table
-        setitemsPerPage(Math.floor(tableRef.current.clientHeight / 70) - 1);
+
     }, []);
+
+    const setTableItemsLength = () => {
+        let tableHeight = tableRef?.current?.clientHeight || 0;
+        let coulumnHeight = 52;
+        console.log(Math.floor(tableHeight / coulumnHeight) - 2)
+        setitemsPerPage(Math.floor(tableHeight / coulumnHeight) - 2);
+    }
+
+
+
+
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
         notify('Copied To Clipboard', 'success')
@@ -71,8 +85,8 @@ function Myspace() {
                     </thead>
                     <tbody>
                         {(currentItems?.length > 0) && currentItems.map((item, i) =>
-                            <tr key={i} className="ptr" onClick={() => { setInfoBarData(item) }} ref={columnRef}>
-                                <td >{item?.fileName}</td>
+                            <tr key={i} className="ptr" onClick={() => { setInfoBarData(item) }}>
+                                <td >{getFileIcon(item?.fileName)}&nbsp;{item?.fileName}</td>
                                 <td>
                                     <span className="cid">{item.cid}</span>
                                     &nbsp;
@@ -89,7 +103,7 @@ function Myspace() {
                 <div className="sizeBar">
                     <p>Total Size : {totalSize + ' Kb'}</p>
                 </div>
-                <Pagination orignalData={data} setCurrentData={setCurrentItems} currentData={currentItems} itemsPerPage={itemsPerPage} />
+                <Pagination orignalData={orignalItems} setCurrentData={setCurrentItems} itemsPerPage={itemsPerPage} />
 
             </div>
         </div>
