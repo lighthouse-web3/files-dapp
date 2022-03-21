@@ -12,7 +12,7 @@ import Pagination from "../../../components/Pagination/Pagination";
 import { notify } from "../../../utils/services/notification";
 import { getChainNetwork } from "../../../utils/services/chainNetwork";
 import { getAddress } from "../../../utils/services/auth";
-import { useMountedLayoutEffect } from "react-table/dist/react-table.development";
+
 import { getFileIcon } from "../../../utils/services/fileTypeIcons";
 
 

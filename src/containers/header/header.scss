@@ -24,13 +24,23 @@
     }
   }
 
+  &__chainBox {
+    flex: 1;
+    padding: 0px 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    justify-content: flex-end;
+  }
+
   &__infoBox {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     padding-right: 1rem;
-    width: 70%;
+    width: fit-content;
     color: white;
 
     &:nth-child(n) {
@@ -45,3 +55,4 @@
     }
   }
 }
+
