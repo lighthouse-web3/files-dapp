@@ -12,8 +12,8 @@ import Pagination from "../../../components/Pagination/Pagination";
 import { notify } from "../../../utils/services/notification";
 import { getChainNetwork } from "../../../utils/services/chainNetwork";
 import { getAddress } from "../../../utils/services/auth";
-
 import { getFileIcon } from "../../../utils/services/fileTypeIcons";
+import ReactLoading from 'react-loading';
 
 
 function Myspace() {
@@ -22,7 +22,7 @@ function Myspace() {
     const [orignalItems, setOrignalItems] = useState([]);
     const [itemsPerPage, setitemsPerPage] = useState(7);
     const tableRef = useRef(null)
-    const [totalSize, setTotalSize] = useState(0);
+    const [totalSize, setTotalSize] = useState('0 kb');
     const store = useSelector((store) => store);
     const dispatch = useDispatch()
     const _fileAC = bindActionCreators(fileAC, dispatch);
@@ -55,10 +55,14 @@ function Myspace() {
                     setOrignalItems(response['data']);
                     let allFiles = response['data'];
                     let total = 0;
+                    let totalShow = '';
                     allFiles.forEach(element => {
-                        total = total + (parseInt(element?.fileSize?.hex, 16) / 1024)
+                        total = total + (parseInt(element?.fileSize?.hex, 16) / (1024))
                     });
-                    setTotalSize(total.toFixed(2));
+                    total < 1024 && (totalShow = total.toFixed(2) + ' KB')
+                    total >= 1024 && (totalShow = (total / 1024).toFixed(2) + ' MB')
+                    total >= 1024 * 1024 && (totalShow = (total / 1024 * 1024).toFixed(2) + ' GB')
+                    setTotalSize(totalShow);
                     setTableItemsLength();
                 }
             }, (error) => {
@@ -73,7 +77,11 @@ function Myspace() {
         notify('Copied To Clipboard', 'success')
     }
     return (
-        <div className="mySpace">
+        <>
+            {
+                currentItems?.length > 0 ?  
+                    <div className="mySpace">
+
             <div className="mySpace__title">
                 <p>My Space</p>
                 <div className="searchBar">
@@ -109,12 +117,18 @@ function Myspace() {
             </div>
             <div className="mySpace__lowerContainer">
                 <div className="sizeBar">
-                    <p>Total Size : {totalSize + ' Kb'}</p>
+                                <p>Total Size : {totalSize}</p>
                 </div>
                 <Pagination orignalData={orignalItems} setCurrentData={setCurrentItems} itemsPerPage={itemsPerPage} />
 
             </div>
-        </div>
+                    </div> : <div className="mySpace_loading">
+                        <ReactLoading type={'bubbles'} color={'#4452FE'} height={667} width={375} />
+                    </div>
+            }
+
+        </>
+
     );
 }
 
