@@ -32,6 +32,11 @@
     align-items: center;
     color: white;
     justify-content: flex-end;
+    .container{
+      padding: 5px 10px;
+      border: 1px solid;
+      border-radius: 10px;
+    }
   }
 
   &__infoBox {

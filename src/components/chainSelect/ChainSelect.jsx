@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Popover } from 'react-tiny-popover';
 import './chainselect.scss'
 import { getChainNetwork } from "../../utils/services/chainNetwork";
+import { AiOutlineCaretDown } from "react-icons/ai";
 
 function ChainSelect() {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -15,6 +16,7 @@ function ChainSelect() {
         <Popover
             isOpen={isPopoverOpen}
             positions={['bottom', 'left', 'right']}
+            onClickOutside={() => setIsPopoverOpen(false)}
             content={<div className="chainsList">
                 <div className="chainsList__chainItem">
                     <img src="/chain_icons/fantom.png" alt="" />
@@ -29,7 +31,7 @@ function ChainSelect() {
                 </div>
             </div>}
         >
-            <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
+            <div className='popoverBtn' onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
                 {
                     (currentChain === 'fantom' || currentChain === 'fantom-testnet') && <>
                         Fantom
@@ -44,7 +46,7 @@ function ChainSelect() {
                     (currentChain === 'polygon' || currentChain === 'polygon-testnet') && <>
                         Polygon
                     </>
-                }
+                }&nbsp; <AiOutlineCaretDown />
             </div>
         </Popover>
     )

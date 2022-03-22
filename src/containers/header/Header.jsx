@@ -14,7 +14,9 @@ function Header() {
                 <p className="gradient__text">Lighthouse</p>
             </div>
             <div className="header__chainBox">
-                <ChainSelect />
+                <div className="container">
+                    <ChainSelect />
+                </div>
             </div>
             <div className="header__infoBox">
                 <CgProfile />

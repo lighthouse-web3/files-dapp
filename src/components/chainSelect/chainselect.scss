@@ -12,6 +12,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
         img{
             width: auto;
             height: 40px;
@@ -29,4 +30,11 @@
     }
 
   }
+}
+
+.popoverBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
