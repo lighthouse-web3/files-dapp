@@ -26,10 +26,27 @@ function Myspace() {
     const store = useSelector((store) => store);
     const dispatch = useDispatch()
     const _fileAC = bindActionCreators(fileAC, dispatch);
-    const data = [];
+
 
     useEffect(() => {
-        axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${getChainNetwork()}&publicKey=${getAddress()}`)
+        getData()
+        window.ethereum.on("chainChanged", () => {
+            getData()
+        });
+        return () => {
+            window.ethereum.removeListener("chainChanged", () => { });
+        };
+    }, []);
+
+    const setTableItemsLength = () => {
+        let tableHeight = tableRef?.current?.clientHeight || 0;
+        let coulumnHeight = 52;
+        console.log(Math.floor(tableHeight / coulumnHeight) - 2)
+        setitemsPerPage(Math.floor(tableHeight / coulumnHeight) - 2);
+    }
+
+    const getData = async () => {
+        axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${await getChainNetwork()}&publicKey=${getAddress()}`)
             .then(response => {
                 console.log(response);
                 if (response['status'] === 200) {
@@ -42,21 +59,12 @@ function Myspace() {
                         total = total + (parseInt(element?.fileSize?.hex, 16) / 1024)
                     });
                     setTotalSize(total.toFixed(2));
-
                     setTableItemsLength();
-
                 }
+            }, (error) => {
+                console.log(error);
             });
-
-    }, []);
-
-    const setTableItemsLength = () => {
-        let tableHeight = tableRef?.current?.clientHeight || 0;
-        let coulumnHeight = 52;
-        console.log(Math.floor(tableHeight / coulumnHeight) - 2)
-        setitemsPerPage(Math.floor(tableHeight / coulumnHeight) - 2);
     }
-
 
 
 

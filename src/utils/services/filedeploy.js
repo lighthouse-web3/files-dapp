@@ -87,7 +87,7 @@ export const uploadFile = async (
 ) => {
   uploadedFile.persist();
   setUploadProgress(10);
-  let network = getChainNetwork();
+  let network = await getChainNetwork();
   if (network) {
     try {
       const signing_response = await sign_message();
@@ -102,7 +102,6 @@ export const uploadFile = async (
         .toString();
       setUploadProgress(50);
       console.log(cost);
-
       const deploy_response = await lighthouse.deploy(
         uploadedFile,
         signing_response.address,
@@ -139,7 +138,7 @@ export const uploadFolder = async (
 ) => {
   uploadedFile.persist();
 
-  let network = getChainNetwork();
+  let network = await getChainNetwork();
   setUploadProgress(10);
 
   if (network) {

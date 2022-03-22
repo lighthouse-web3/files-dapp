@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { authAC } from "../../store/action-creators";
-import { getChainNetwork } from "../../utils/services/chainNetwork";
 import axios from 'axios';
 import { ethers } from "ethers";
 import { notify } from "../../utils/services/notification";
@@ -79,12 +78,8 @@ function Landingpage() {
     useEffect(() => {
         if (userAddress.length > 0) {
             let networkVersion = window.ethereum.networkVersion;
-            let chain = getChainNetwork(networkVersion);
-            let network = getChainNetwork(networkVersion);
             _auth.setAuthData({
                 address: userAddress,
-                chain: chain,
-                network: network,
                 networkVersion: networkVersion,
             });
             login(userAddress, _navigate);

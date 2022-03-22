@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, {
+    useState, useEffect
+} from "react";
 import "./header.scss";
 import { CgProfile } from "react-icons/cg";
-import { Popover } from "react-tiny-popover";
 import ChainSelect from "../../components/chainSelect/ChainSelect";
 
 function Header() {
     const _auth = JSON.parse(localStorage.getItem("authData") || "{}");
     const userId = _auth?.userAddress || "-";
+
     return (
         <div className="header">
             <div className="header__logoBox">

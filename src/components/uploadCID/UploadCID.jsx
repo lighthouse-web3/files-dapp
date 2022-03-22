@@ -18,7 +18,7 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
 
     const uploadFile = async () => {
         // setUploadProgress(10);
-        let network = getChainNetwork()
+        let network = await getChainNetwork()
 
         if (network) {
             try {

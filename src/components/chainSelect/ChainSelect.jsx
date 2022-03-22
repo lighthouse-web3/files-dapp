@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Popover } from 'react-tiny-popover';
 import './chainselect.scss'
-import { getChainNetwork } from "../../utils/services/chainNetwork";
+import { changeNetwork, getChainNetwork } from "../../utils/services/chainNetwork";
 import { AiOutlineCaretDown } from "react-icons/ai";
 
 function ChainSelect() {
@@ -9,7 +9,22 @@ function ChainSelect() {
     const [currentChain, setCurrentChain] = useState(false);
 
     useEffect(() => {
-        setCurrentChain(getChainNetwork());
+        window.ethereum.on("chainChanged", () => {
+            window.location.reload();
+        });
+        return () => {
+            window.ethereum.removeListener("chainChanged", () => { });
+        };
+    }, []);
+    const handleNetworkSwitch = async (networkName) => {
+        await changeNetwork({ networkName });
+        setCurrentChain(await getChainNetwork());
+    };
+
+    useEffect(() => {
+        (async () => {
+            setCurrentChain(await getChainNetwork());
+        })();
     }, [])
 
     return (
@@ -18,15 +33,15 @@ function ChainSelect() {
             positions={['bottom', 'left', 'right']}
             onClickOutside={() => setIsPopoverOpen(false)}
             content={<div className="chainsList">
-                <div className="chainsList__chainItem">
+                <div className="chainsList__chainItem" onClick={() => handleNetworkSwitch('fantom')}>
                     <img src="/chain_icons/fantom.png" alt="" />
                     <p>Fantom</p>
                 </div>
-                <div className="chainsList__chainItem">
+                <div className="chainsList__chainItem" onClick={() => handleNetworkSwitch('polygon')}>
                     <img src="/chain_icons/polygon.png" alt="" />
                     <p>Polygon</p>
                 </div>
-                <div className="chainsList__chainItem">
+                <div className="chainsList__chainItem" onClick={() => handleNetworkSwitch('optimism')}>
                     <img src="/chain_icons/optimism.svg" alt="" />
                 </div>
             </div>}
@@ -43,8 +58,8 @@ function ChainSelect() {
                     </>
                 }
                 {
-                    (currentChain === 'polygon' || currentChain === 'polygon-testnet') && <>
-                        Polygon
+                    (currentChain === 'optimism' || currentChain === 'optimism-testnet') && <>
+                        Optimism
                     </>
                 }&nbsp; <AiOutlineCaretDown />
             </div>
