@@ -21,6 +21,7 @@ function Myspace() {
     const [currentItems, setCurrentItems] = useState([]);
     const [orignalItems, setOrignalItems] = useState([]);
     const [itemsPerPage, setitemsPerPage] = useState(7);
+    const [responseReceived, setResponseReceived] = useState(false);
     const tableRef = useRef(null)
     const [totalSize, setTotalSize] = useState('0 kb');
     const store = useSelector((store) => store);
@@ -53,6 +54,7 @@ function Myspace() {
                     _fileAC.setFileData(response['data']);
                     setCurrentItems(response['data']);
                     setOrignalItems(response['data']);
+                    setResponseReceived(true);
                     let allFiles = response['data'];
                     let total = 0;
                     let totalShow = '';
@@ -67,6 +69,7 @@ function Myspace() {
                 }
             }, (error) => {
                 console.log(error);
+                setResponseReceived(true);
             });
     }
 
@@ -79,7 +82,7 @@ function Myspace() {
     return (
         <>
             {
-                currentItems?.length > 0 ?  
+                responseReceived ?  
                     <div className="mySpace">
 
             <div className="mySpace__title">
