@@ -28,7 +28,7 @@ async function Connect(onConnected) {
         });
         onConnected(accounts[0]);
     } catch (err) {
-        console.log(err, '----');
+      //console.log(err, '----');
         notify(err['message'], 'error');
     }
 }
@@ -51,7 +51,7 @@ const sign_message = async (setUserAddress) => {
             notify('Please Login to Metamask', 'error');
             return;
         }
-        console.log(address, '---');
+      //console.log(address, '---');
         const res = await axios.get(`https://api.lighthouse.storage/api/lighthouse/get_message?publicKey=${address}`);
         const message = res.data;
         const signed_message = await signer.signMessage(message);

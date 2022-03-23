@@ -92,7 +92,7 @@ export async function getChainNetwork() {
       ]
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 

@@ -47,7 +47,7 @@ function Dropzone({ setUploadedFiles }) {
 
     function getEvent(e) {
         setUploadedFiles(e);
-        console.log(e)
+      //console.log(e)
     };
 
 
