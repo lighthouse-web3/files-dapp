@@ -1,5 +1,5 @@
 export const setFileData = (data) => {
-  console.log(data, "inside ac");
+  //console.log(data, "inside ac");
   return (dispatch) => {
     dispatch({
       type: "setFile",

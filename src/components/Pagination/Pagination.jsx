@@ -11,13 +11,15 @@ function Pagination({ orignalData, setCurrentData, itemsPerPage }) {
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % orignalData.length;
         setItemOffset(newOffset);
-        console.log('newOffset', newOffset);
     };
     useEffect(() => {
+      //console.log(orignalData)
+        if (orignalData?.length > 0) {
         const endOffset = itemOffset + itemsPerPage;
         setCurrentData(orignalData?.slice(itemOffset, endOffset));
-        console.log('newOffset', orignalData);
+          //console.log('newOffset', orignalData, itemsPerPage);
         setPageCount(Math.ceil(orignalData.length / itemsPerPage));
+        }
     }, [itemOffset, itemsPerPage, orignalData]);
     return (
         <ReactPaginate

@@ -18,12 +18,12 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
 
     const uploadFile = async () => {
         // setUploadProgress(10);
-        let network = getChainNetwork()
+        let network = await getChainNetwork()
 
         if (network) {
             try {
                 const signing_response = await sign_message();
-                console.log(signing_response)
+              //console.log(signing_response)
                 // setUploadProgress(20);
 
                 const costRes = await axios.get(`https://ipfs.io/api/v0/dag/stat?arg=${CID}&progress=true`);
@@ -34,7 +34,7 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
                 }
                 const cost = (await lighthouse.getQuote(costRes['data']['Size'], network)).total_cost.toFixed(18).toString();
                 // setUploadProgress(50);
-                console.log('COST', cost + '');
+              //console.log('COST', cost + '');
 
                 const transaction = await execute_transaction(CID, fileName, costRes['data']['Size'], cost, network);
 
@@ -50,7 +50,7 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
                 setUploadProgress(0);
             }
         } else {
-            console.log("Please connect to a supported network");
+          //console.log("Please connect to a supported network");
         }
     }
 
@@ -60,9 +60,9 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
 
 
     const UploadCID = () => {
-        console.log(fileName, CID)
+      //console.log(fileName, CID)
         if (fileName.length > 0 && CID.length > 0) {
-            console.log('Start Upload file')
+          //console.log('Start Upload file')
             uploadFile()
         } else {
             fileName.length === 0 && notify('Please Enter File Name', 'error');

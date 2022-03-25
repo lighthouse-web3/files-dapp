@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { authAC } from "../../store/action-creators";
-import { getChainNetwork } from "../../utils/services/chainNetwork";
 import axios from 'axios';
 import { ethers } from "ethers";
 import { notify } from "../../utils/services/notification";
+import { login } from "../../utils/services/auth";
 
 
 function isMobileDevice() {
@@ -28,7 +28,7 @@ async function Connect(onConnected) {
         });
         onConnected(accounts[0]);
     } catch (err) {
-        console.log(err, '----');
+      //console.log(err, '----');
         notify(err['message'], 'error');
     }
 }
@@ -51,7 +51,7 @@ const sign_message = async (setUserAddress) => {
             notify('Please Login to Metamask', 'error');
             return;
         }
-        console.log(address, '---');
+      //console.log(address, '---');
         const res = await axios.get(`https://api.lighthouse.storage/api/lighthouse/get_message?publicKey=${address}`);
         const message = res.data;
         const signed_message = await signer.signMessage(message);
@@ -78,15 +78,11 @@ function Landingpage() {
     useEffect(() => {
         if (userAddress.length > 0) {
             let networkVersion = window.ethereum.networkVersion;
-            let chain = getChainNetwork(networkVersion);
-            let network = getChainNetwork(networkVersion);
             _auth.setAuthData({
                 address: userAddress,
-                chain: chain,
-                network: network,
                 networkVersion: networkVersion,
             });
-            userAddress.length > 0 && _navigate("/dashboard");
+            login(userAddress, _navigate);
         }
     }, [_auth, _navigate, userAddress]);
 
@@ -101,7 +97,7 @@ function Landingpage() {
                 </div>
                 <div className="title">
                     <p>
-                        Your Personal <br /> <span className="gradient__text">Web 3.0</span>{" "}
+                        Your <br /> <span className="gradient__text">Web 3.0</span>{" "}
                         storage
                         <br /> in <span className="gradient__text">Metaverse</span>
                     </p>
@@ -117,7 +113,7 @@ function Landingpage() {
                     </div>
 
                     <div className="footer__chains">
-                        <img src="/chain_icons/binance.png" alt="binanceLogo" />
+                        {/* <img src="/chain_icons/binance.png" alt="binanceLogo" /> */}
                         <img src="/chain_icons/polygon.png" alt="polygonLogo" />
                         <img src="/chain_icons/fantom.png" alt="fantomLogo" />
                         <img src="/chain_icons/optimism.svg" alt="optimismLogo" />

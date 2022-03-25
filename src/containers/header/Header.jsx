@@ -1,24 +1,39 @@
-import React from 'react';
-import './header.scss'
-import { CgProfile } from 'react-icons/cg'
-import { useSelector } from 'react-redux';
+import React, {
+    useState, useEffect
+} from "react";
+import "./header.scss";
+import { CgProfile } from "react-icons/cg";
+import ChainSelect from "../../components/chainSelect/ChainSelect";
 
 function Header() {
-    const _auth = useSelector((store) => store.auth)
-    const userId = _auth.address;
+    const _auth = JSON.parse(localStorage.getItem("authData") || "{}");
+    const userId = _auth?.userAddress || "-";
+
     return (
         <div className="header">
             <div className="header__logoBox">
                 <img src="/logo.png" alt="" />
-                <p className='gradient__text'>Lighthouse</p>
+                <p className="gradient__text">Lighthouse</p>
+            </div>
+            <div className="header__chainBox">
+                <div className="container">
+                    <ChainSelect />
+                </div>
             </div>
             <div className="header__infoBox">
-                <CgProfile />&nbsp;
+                <CgProfile />
+                &nbsp;
                 <span>|</span>&nbsp;
-                <span className='userName'>{userId}</span>
+                <span className="userName">
+                    {userId
+                        ? userId.substring(0, 4) +
+                        "...." +
+                        userId.substring(userId.length - 4)
+                        : ""}
+                </span>
             </div>
         </div>
-    )
+    );
 }
 
 export default Header;

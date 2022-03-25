@@ -20,20 +20,21 @@
 
   &__tableContainer {
     flex: 1;
+    overflow: auto;
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0 0.4rem;
     }
 
-    tr td:first-child {
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
-    }
-    tr td:last-child {
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
+    // tr td:first-child {
+    //   border-top-left-radius: 10px;
+    //   border-bottom-left-radius: 10px;
+    // }
+    // tr td:last-child {
+    //   border-top-right-radius: 10px;
+    //   border-bottom-right-radius: 10px;
+    // }
 
     table th,
     table td {
@@ -60,9 +61,9 @@
       }
     }
 
-    table > tbody > tr {
-      background: rgba(196, 196, 196, 0.26);
-      height: 45px;
+    table > tbody > tr > td {
+      height: 40px !important;
+      border-bottom: 1px solid #00000029;
     }
     table > tbody > tr > td {
       font-family: var(--font-tertiary);
@@ -103,4 +104,12 @@
     justify-content: space-between;
     align-items: center;
   }
+}
+
+.mySpace_loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem;
 }

@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import CollectionSearch from '../../../components/CollectionSearch/CollectionSearch';
 import Pagination from "../../../components/Pagination/Pagination";
 import { nftAC } from '../../../store/action-creators';
+import { getAddress } from '../../../utils/services/auth';
 
 
 
@@ -18,40 +19,33 @@ function Collection() {
     const [collection, setCollection] = useState([]);
     const [orignalCollection, setOrignalCollection] = useState([]);
     const Web3Api = useMoralisWeb3Api()
-    const _auth = useSelector((store) => store.auth)
-    const userId = _auth.address;
+    const userId = getAddress();
     const dispatch = useDispatch()
     const _nftAC = bindActionCreators(nftAC, dispatch);
     const navigate = useNavigate();
 
 
-
-
-
     async function getNFT() {
-        // get polygon NFTs for address
         const address = userId;
-        // const address = "0x29b1d432a40f40F5418DA2d4ABf740e5E491629B";
         const options = { chain: 'matic', address: address };
-        console.log(Web3Api);
+      //console.log(Web3Api);
         const polygonNFTs = await Web3Api.account.getNFTs(options);
         const userEthNFTs = await Web3Api.account.getNFTs({ address: address });
-        console.log('mainnetnfts', userEthNFTs);
-        console.log('nfts:', polygonNFTs);
+      //console.log('mainnetnfts', userEthNFTs);
+      //console.log('nfts:', polygonNFTs);
         let totalCollection = [...userEthNFTs.result, ...polygonNFTs.result];
-        console.log(totalCollection);
+      //console.log(totalCollection);
         totalCollection.forEach(item => {
             let meta = JSON.parse(item?.metadata || '{}');
             meta['name'] && (item.metadata = meta)
         })
-        console.log(totalCollection);
+      //console.log(totalCollection);
         _nftAC.setNFTData(totalCollection);
         setCollection(totalCollection);
         setOrignalCollection(totalCollection)
     }
 
     useEffect(() => {
-        console.log('initial')
         getNFT()
     }, [])
 
