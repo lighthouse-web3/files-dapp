@@ -1,7 +1,6 @@
 export function login(address, _navigate) {
   let expirationDate = new Date();
   expirationDate = expirationDate.setDate(expirationDate.getDate() + 7);
-  //console.log(expirationDate);
   localStorage.setItem(
     "authData",
     JSON.stringify({

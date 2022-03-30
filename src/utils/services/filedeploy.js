@@ -29,7 +29,7 @@ export const execute_transaction = async (
   network
 ) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //console.log(network);
+  console.log(network);
   const contract_address = lighthouse.getContractAddress(network);
 
   const signer = provider.getSigner();
@@ -58,7 +58,7 @@ export const deployDir = async (e, address, signed_message) => {
 
     const token = "Bearer " + address + " " + signed_message;
     xhr.setRequestHeader("Authorization", token);
-    //console.log("sending");
+    console.log("sending");
     xhr.send(formData);
 
     xhr.onload = function () {
@@ -93,41 +93,49 @@ export const uploadFile = async (
       const signing_response = await sign_message();
       setUploadProgress(20);
 
-      //console.log(uploadedFile.target.files[0].size);
-      //console.log(network);
-      const cost = (
-        await lighthouse.getQuote(uploadedFile.target.files[0].size, network)
-      ).totalCost
-        .toFixed(18)
-        .toString();
-      setUploadProgress(50);
-      //console.log(cost);
-      const deploy_response = await lighthouse.deploy(
-        uploadedFile,
-        signing_response.address,
-        signing_response.signed_message,
-        true
-      );
-      //console.log(deploy_response);
-      setUploadProgress(70);
+      console.log(uploadedFile.target.files[0].size);
+      console.log(network);
+      let balance = await lighthouse.getBalance(signing_response.address);
+      console.log(balance, "BALANCE");
+      if (!balance?.dataUsed) {
+        setUploadProgress(50);
+        // const cost = (
+        //   await lighthouse.getQuote(uploadedFile.target.files[0].size, network)
+        // ).totalCost
+        //   .toFixed(18)
+        //   .toString();
+        // console.log(cost);
+        const deploy_response = await lighthouse.deploy(
+          uploadedFile,
+          null,
+          signing_response.address,
+          signing_response.signed_message
+        );
+        console.log(deploy_response);
+        setUploadProgress(70);
 
-      const transaction = await execute_transaction(
-        deploy_response.Hash,
-        deploy_response.Name,
-        deploy_response.Size,
-        cost,
-        network
-      );
+        // const transaction = await execute_transaction(
+        //   deploy_response.Hash,
+        //   deploy_response.Name,
+        //   deploy_response.Size,
+        //   cost,
+        //   network
+        // );
 
-      setUploadProgress(0);
-      notify(`File Upload Success:  ${transaction?.hash}`, "success");
+        setUploadProgress(0);
+        notify(`File Upload Success:  ${deploy_response?.Hash}`, "success");
+      } else {
+        setUploadProgress(0);
+        notify(`Free Data Usage Exeeded`, "error");
+      }
     } catch (e) {
       notify(`ERROR:${e}`, "error");
+      console.log(e);
       setUploadProgress(0);
     }
   } else {
     notify(`Please connect to a supported network`, "error");
-    //console.log("Please connect to a supported network");
+    console.log("Please connect to a supported network");
   }
 };
 
@@ -148,16 +156,16 @@ export const uploadFolder = async (
 
       const deploy_response_folder = await lighthouse.deploy(
         uploadedFile,
+        null,
         signing_response.address,
-        signing_response.signed_message,
-        false
+        signing_response.signed_message
       );
       let deploy_response = deploy_response_folder;
       deploy_response = deploy_response.split("\n");
       deploy_response = JSON.parse(deploy_response[deploy_response.length - 2]);
 
-      //console.log("deploy_response");
-      //console.log(deploy_response);
+      console.log("deploy_response");
+      console.log(deploy_response);
 
       const cost = (
         await lighthouse.getQuote(deploy_response.Size, network)
@@ -165,7 +173,7 @@ export const uploadFolder = async (
         .toFixed(18)
         .toString();
 
-      //console.log(cost);
+      console.log(cost);
       setUploadProgress(50);
 
       const transaction = await execute_transaction(
@@ -176,7 +184,7 @@ export const uploadFolder = async (
         network
       );
       setUploadProgress(100);
-      //console.log(transaction);
+      console.log(transaction);
       setUploadProgress(0);
       notify(`File Upload Success:\n  ${transaction?.hash}`, "success");
     } catch (e) {
@@ -185,6 +193,6 @@ export const uploadFolder = async (
     }
   } else {
     notify(`Please connect to a supported network`, "error");
-    //console.log("Please connect to a supported network");
+    console.log("Please connect to a supported network");
   }
 };

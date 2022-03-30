@@ -4,7 +4,7 @@ import { BsSearch } from 'react-icons/bs'
 
 
 function CollectionSearch({ orignal, setCurrent }) {
-  //console.log(orignal, setCurrent)
+    console.log(orignal, setCurrent)
     const filterSelection = (e) => {
         if (e !== '' && orignal.length > 0) {
             let filteredItems = orignal.filter((item) => {
