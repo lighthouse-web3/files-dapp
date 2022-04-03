@@ -1,5 +1,5 @@
 export function getContractAddress(version) {
-  //console.log("NETWORK VERSION - CONTRACT ADDRESS", version);
+  console.log("NETWORK VERSION - CONTRACT ADDRESS", version);
   let contractAddress = null;
   let allAddress = [
     {

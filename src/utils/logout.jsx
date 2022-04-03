@@ -7,7 +7,7 @@ import { authAC } from '../store/action-creators';
 
 
 function Logout() {
-  //console.log('inside Logout')
+  console.log('inside Logout')
     const dispatch = useDispatch();
     const _auth = bindActionCreators(authAC, dispatch);
     _auth.setAuthData(null);

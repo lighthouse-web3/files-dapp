@@ -42,14 +42,14 @@ function Myspace() {
     const setTableItemsLength = () => {
         let tableHeight = tableRef?.current?.clientHeight || 0;
         let coulumnHeight = 52;
-      //console.log(Math.floor(tableHeight / coulumnHeight) - 2)
+        console.log(Math.floor(tableHeight / coulumnHeight) - 2)
         setitemsPerPage(Math.floor(tableHeight / coulumnHeight) - 2);
     }
 
     const getData = async () => {
         axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${await getChainNetwork()}&publicKey=${getAddress()}`)
             .then(response => {
-              //console.log(response);
+                console.log(response);
                 if (response['status'] === 200) {
                     _fileAC.setFileData(response['data']);
                     setCurrentItems(response['data']);
@@ -59,7 +59,7 @@ function Myspace() {
                     let total = 0;
                     let totalShow = '';
                     allFiles.forEach(element => {
-                        total = total + (parseInt(element?.fileSize?.hex, 16) / (1024))
+                        total = total + (element?.fileSizeInBytes / (1024))
                     });
                     total < 1024 && (totalShow = total.toFixed(2) + ' KB')
                     total >= 1024 && (totalShow = (total / 1024).toFixed(2) + ' MB')
@@ -68,7 +68,7 @@ function Myspace() {
                     setTableItemsLength();
                 }
             }, (error) => {
-              //console.log(error);
+                console.log(error);
                 setResponseReceived(true);
             });
     }
@@ -111,8 +111,8 @@ function Myspace() {
                                     &nbsp;
                                     <span className="icon" onClick={() => { copyToClipboard(item.cid) }}><MdOutlineContentCopy /></span>
                                 </td>
-                                <td>{(parseInt(item?.fileSize?.hex, 16) / 1024).toFixed(1) + ' KB'}</td>
-                                <td>{moment(parseInt(item?.timestamp?.hex, 16) * 1000).format("DD-MM-YYYY h:mm:ss")}</td>
+                                <td>{(item?.fileSizeInBytes / 1024).toFixed(1) + ' KB'}</td>
+                                <td>{moment(item?.createdAt).format("DD-MM-YYYY h:mm:ss")}</td>
                             </tr>
                         )}
                     </tbody>

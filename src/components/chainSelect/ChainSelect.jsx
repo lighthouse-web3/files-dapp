@@ -42,7 +42,8 @@ function ChainSelect() {
                     <p>Polygon</p>
                 </div>
                 <div className="chainsList__chainItem" onClick={() => handleNetworkSwitch('optimism')}>
-                    <img src="/chain_icons/optimism.svg" alt="" />
+                    <img src="/chain_icons/optimism.png" alt="" />
+                    <p>Optimism</p>
                 </div>
             </div>}
         >

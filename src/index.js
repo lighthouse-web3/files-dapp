@@ -8,14 +8,12 @@ import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import { MoralisProvider } from "react-moralis";
 
-let appIdmoralis = process.env.appId;
-let serverUrlmoralis = process.env.serverUrl;
+let appIdmoralis = process.env.REACT_APP_APP_ID;
+let serverUrlmoralis = process.env.REACT_APP_SERVER_URL;
 
 ReactDOM.render(
-  <MoralisProvider
-    appId={appIdmoralis}
-    serverUrl={serverUrlmoralis}
-  >
+  <MoralisProvider appId={appIdmoralis} serverUrl={serverUrlmoralis}>
+    {console.log(appIdmoralis, serverUrlmoralis, "ENV-----")}
     <BrowserRouter>
       <Provider store={store}>
         <App />
