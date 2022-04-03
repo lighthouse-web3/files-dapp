@@ -59,7 +59,7 @@ function Myspace() {
                     let total = 0;
                     let totalShow = '';
                     allFiles.forEach(element => {
-                        total = total + (parseInt(element?.fileSize?.hex, 16) / (1024))
+                        total = total + (element?.fileSizeInBytes / (1024))
                     });
                     total < 1024 && (totalShow = total.toFixed(2) + ' KB')
                     total >= 1024 && (totalShow = (total / 1024).toFixed(2) + ' MB')
@@ -111,8 +111,8 @@ function Myspace() {
                                     &nbsp;
                                     <span className="icon" onClick={() => { copyToClipboard(item.cid) }}><MdOutlineContentCopy /></span>
                                 </td>
-                                <td>{(parseInt(item?.fileSize?.hex, 16) / 1024).toFixed(1) + ' KB'}</td>
-                                <td>{moment(parseInt(item?.timestamp?.hex, 16) * 1000).format("DD-MM-YYYY h:mm:ss")}</td>
+                                <td>{(item?.fileSizeInBytes / 1024).toFixed(1) + ' KB'}</td>
+                                <td>{moment(item?.createdAt).format("DD-MM-YYYY h:mm:ss")}</td>
                             </tr>
                         )}
                     </tbody>

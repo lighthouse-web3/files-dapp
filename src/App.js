@@ -11,6 +11,7 @@ import UploadNew from "./pages/adminPanel/uploadNew/uploadNew";
 import RequireAuth from "./utils/RequireAuth";
 import Collection from "./pages/adminPanel/Collection/Collection";
 import ViewNFT from "./pages/adminPanel/ViewNFT/ViewNFT";
+import Apikey from "./pages/adminPanel/ApiKey/Apikey";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route index element={<Myspace />} />
         <Route path="gateway" element={<Gateway />} />
         <Route path="collection" element={<Collection />} />
+        <Route path="apikey" element={<Apikey />} />
         <Route path="viewNFT/:id" element={<ViewNFT />} />
         <Route path="mintNFT" element={<MintNFT />} />
         <Route path="uploadNew" element={<UploadNew />} />

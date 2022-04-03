@@ -1,0 +1,112 @@
+.Apikey {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1.5rem;
+    color: black;
+
+    &__title {
+        color: var(--background-black);
+        font-weight: 600;
+        font-size: 1.3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    &__tableContainer {
+        flex: 1;
+        overflow: auto;
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.4rem;
+        }
+
+        table th,
+        table td {
+            padding: 10px 6px;
+        }
+
+        table>thead>tr>th {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 1px solid #000000;
+
+            &:nth-of-type(1) {
+                width: 30%;
+            }
+
+            &:nth-of-type(2) {
+                width: 50%;
+            }
+
+            &:nth-of-type(3) {
+                width: 10%;
+            }
+
+        }
+
+        table>tbody>tr>td {
+            height: 40px !important;
+            border-bottom: 1px solid #00000029;
+        }
+
+        table>tbody>tr>td {
+            font-family: var(--font-tertiary);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 0.9rem;
+            line-height: 1rem;
+            color: var(--content-grey);
+
+            .icon {
+                z-index: 10;
+
+                :hover {
+                    transform: scale(1.05);
+                }
+            }
+
+            // Name Style
+            &:nth-of-type(1) {
+                padding-left: 15px;
+                color: var(--background-black);
+            }
+
+            &:nth-of-type(2) {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                .cid {
+                    max-width: 80%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            &:nth-of-type(3) {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    &__lowerContainer {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.Apikey_loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem;
+}

@@ -42,3 +42,15 @@ input[type="text"] , textarea{
   margin: 0.5rem 0rem;
   padding-left: 10px;
 }
+.fillBtn__blue {
+  border: none;
+  padding: 10px 30px;
+  font-size: 1rem;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  font-family: inherit;
+  background: var(--primary-blue);
+  margin: 0px 10px;
+
+}

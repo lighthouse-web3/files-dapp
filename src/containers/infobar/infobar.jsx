@@ -50,11 +50,11 @@ function Infobar({ infoBarData, setInfoBarData }) {
             <SidebarContent>
                 <div className="row">
                     <p>Size</p>
-                    <p className='content'>{(parseInt(infoBarData?.fileSize?.hex, 16) / 1024).toFixed(1) + ' KB'}</p>
+                    <p className='content'>{(infoBarData?.fileSizeInBytes / 1024).toFixed(1) + ' KB'}</p>
                 </div>
                 <div className="row">
                     <p>Created At</p>
-                    <p className='content'>{moment(parseInt(infoBarData?.timestamp?.hex, 16) * 1000).format("DD-MM-YYYY")} <br /> {moment(parseInt(infoBarData?.timestamp?.hex, 16) * 1000).format("h:mm:ss")}</p>
+                    <p className='content'>{moment(infoBarData?.createdAt).format("DD-MM-YYYY")} <br /> {moment(infoBarData?.createdAt).format("h:mm:ss")}</p>
                 </div>
                 <div className="row">
                     <p>CID
@@ -66,12 +66,12 @@ function Infobar({ infoBarData, setInfoBarData }) {
 
                 </div>
                 <div className="row">
-                    <p>File Cost
+                    {/* <p>File Cost
                         <br />
                         <span className="content">
                             {(parseInt(infoBarData?.fileCost?.hex, 16) / Math.pow(10, 18)).toFixed(5)}
                         </span>
-                    </p>
+                    </p> */}
                 </div>
 
                 <hr />
