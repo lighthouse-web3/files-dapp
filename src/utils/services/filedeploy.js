@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import axios from "axios";
 import { getChainNetwork } from "./chainNetwork";
 import { notify } from "./notification";
+import { getAddress } from "./auth";
 
 export const sign_message = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -195,4 +196,10 @@ export const uploadFolder = async (
     notify(`Please connect to a supported network`, "error");
     console.log("Please connect to a supported network");
   }
+};
+
+export const getBalance = async () => {
+  let balance = await lighthouse.getBalance(getAddress());
+  console.log(balance);
+  // return balance;
 };

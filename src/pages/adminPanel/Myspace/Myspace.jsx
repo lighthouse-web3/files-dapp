@@ -120,7 +120,7 @@ function Myspace() {
             </div>
             <div className="mySpace__lowerContainer">
                 <div className="sizeBar">
-                                <p>Total Size : {totalSize}</p>
+                                <p>Total Size : {totalSize} / 1 GB</p>
                 </div>
                 <Pagination orignalData={orignalItems} setCurrentData={setCurrentItems} itemsPerPage={itemsPerPage} />
 
