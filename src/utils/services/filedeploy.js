@@ -5,14 +5,13 @@ import axios from "axios";
 import { getChainNetwork } from "./chainNetwork";
 import { notify } from "./notification";
 import { getAddress } from "./auth";
+import { baseUrl } from "../config/urls";
 
 export const sign_message = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const address = await signer.getAddress();
-  const res = await axios.get(
-    `https://api.lighthouse.storage/api/lighthouse/get_message?publicKey=${address}`
-  );
+  const res = await axios.get(`${baseUrl}/get_message?publicKey=${address}`);
   const message = res.data;
   const signed_message = await signer.signMessage(message);
   return {
@@ -59,7 +58,7 @@ export const deployDir = async (e, address, signed_message) => {
 
     const token = "Bearer " + address + " " + signed_message;
     xhr.setRequestHeader("Authorization", token);
-    console.log("sending");
+    // console.log("sending");
     xhr.send(formData);
 
     xhr.onload = function () {
@@ -94,10 +93,10 @@ export const uploadFile = async (
       const signing_response = await sign_message();
       setUploadProgress(20);
 
-      console.log(uploadedFile.target.files[0].size);
-      console.log(network);
+      // console.log(uploadedFile.target.files[0].size);
+      // console.log(network);
       let balance = await lighthouse.getBalance(signing_response.address);
-      console.log(balance, "BALANCE");
+      // console.log(balance, "BALANCE");
       if (!balance?.dataUsed) {
         setUploadProgress(50);
         // const cost = (
@@ -112,7 +111,7 @@ export const uploadFile = async (
           signing_response.address,
           signing_response.signed_message
         );
-        console.log(deploy_response);
+        // console.log(deploy_response);
         setUploadProgress(70);
 
         // const transaction = await execute_transaction(
@@ -131,12 +130,12 @@ export const uploadFile = async (
       }
     } catch (e) {
       notify(`ERROR:${e}`, "error");
-      console.log(e);
+      // console.log(e);
       setUploadProgress(0);
     }
   } else {
     notify(`Please connect to a supported network`, "error");
-    console.log("Please connect to a supported network");
+    // console.log("Please connect to a supported network");
   }
 };
 
@@ -165,8 +164,8 @@ export const uploadFolder = async (
       deploy_response = deploy_response.split("\n");
       deploy_response = JSON.parse(deploy_response[deploy_response.length - 2]);
 
-      console.log("deploy_response");
-      console.log(deploy_response);
+      // console.log("deploy_response");
+      // console.log(deploy_response);
 
       const cost = (
         await lighthouse.getQuote(deploy_response.Size, network)
@@ -174,7 +173,7 @@ export const uploadFolder = async (
         .toFixed(18)
         .toString();
 
-      console.log(cost);
+      // console.log(cost);
       setUploadProgress(50);
 
       const transaction = await execute_transaction(
@@ -185,7 +184,7 @@ export const uploadFolder = async (
         network
       );
       setUploadProgress(100);
-      console.log(transaction);
+      // console.log(transaction);
       setUploadProgress(0);
       notify(`File Upload Success:\n  ${transaction?.hash}`, "success");
     } catch (e) {
@@ -194,12 +193,12 @@ export const uploadFolder = async (
     }
   } else {
     notify(`Please connect to a supported network`, "error");
-    console.log("Please connect to a supported network");
+    // console.log("Please connect to a supported network");
   }
 };
 
 export const getBalance = async () => {
   let balance = await lighthouse.getBalance(getAddress());
-  console.log(balance);
-  // return balance;
+  // console.log(balance);
+  return balance;
 };

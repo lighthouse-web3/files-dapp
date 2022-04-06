@@ -1,16 +1,16 @@
-export const setFileData = (data) => {
+export const setOtherData = (data) => {
   return (dispatch) => {
     dispatch({
-      type: "setFile",
+      type: "setData",
       payload: data,
     });
   };
 };
 
-export const getFileData = (data) => {
+export const getOtherData = (data) => {
   return (dispatch) => {
     dispatch({
-      type: "getFile",
+      type: "getData",
       payload: data,
     });
   };

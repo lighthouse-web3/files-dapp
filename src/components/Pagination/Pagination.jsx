@@ -13,11 +13,11 @@ function Pagination({ orignalData, setCurrentData, itemsPerPage }) {
         setItemOffset(newOffset);
     };
     useEffect(() => {
-        console.log(orignalData)
+     // console.log(orignalData)
         if (orignalData?.length > 0) {
         const endOffset = itemOffset + itemsPerPage;
         setCurrentData(orignalData?.slice(itemOffset, endOffset));
-            console.log('newOffset', orignalData, itemsPerPage);
+         // console.log('newOffset', orignalData, itemsPerPage);
         setPageCount(Math.ceil(orignalData.length / itemsPerPage));
         }
     }, [itemOffset, itemsPerPage, orignalData]);
