@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Apikey.scss";
 import { MdOutlineContentCopy } from "react-icons/md";
+import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 import { notify } from "../../../utils/services/notification";
 import ReactLoading from "react-loading";
 import axios from "axios";
@@ -13,6 +14,7 @@ import { otherDataAC } from "../../../store/action-creators";
 function Apikey() {
 
     const [currentAPI, setCurrentAPI] = useState(null);
+    const [keyVisible, setKeyVisible] = useState(false);
     const [responseReceived, setResponseReceived] = useState(true);
     const tableRef = useRef(null);
 
@@ -84,10 +86,25 @@ function Apikey() {
                                         className="ptr"
                                     >
                                         <td>
-                                            <span className="cid">{currentAPI}</span>
+                                            <span className="cid">{
+                                                keyVisible ?
+                                                    currentAPI : `${currentAPI.replace(/./g, '*')}`
+                                            }</span>
                                             &nbsp;
                                         </td>
                                         <td>
+                                            <span
+                                                className="icon"
+                                                onClick={() => {
+                                                    setKeyVisible(keyVisible ? false : true)
+                                                }}
+                                            >
+                                                {
+                                                    keyVisible ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />
+                                                }
+
+                                            </span>
+                                            &nbsp;
                                             <span
                                                 className="icon"
                                                 onClick={() => {
