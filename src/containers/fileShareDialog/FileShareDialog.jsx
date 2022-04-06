@@ -26,13 +26,13 @@ const sendEmail = (emailIds, cid, setMailAddress) => {
     };
     emailjs.send('service_wtwdhbv', 'template_osbkn86', message, 'user_sWuohBQz7vY1wvfFSbCDF')
         .then(function (response) {
-            console.log('SUCCESS!', response.status, response.text);
+         // console.log('SUCCESS!', response.status, response.text);
             if (response.status === 200) {
                 notify('File Shared Successfully')
                 setMailAddress([]);
             }
         }, function (error) {
-            console.log('FAILED...', error);
+         // console.log('FAILED...', error);
         });
 };
 
@@ -48,7 +48,7 @@ const chipTheme = {
 };
 
 function FileShareDialog({ shareDialogData, setShareDialogData }) {
-    console.log(shareDialogData);
+ // console.log(shareDialogData);
     const [mailAddress, setMailAddress] = useState([]);
     const [isError, setError] = useState(false);
 

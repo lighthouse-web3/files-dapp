@@ -11,7 +11,7 @@ function ViewNFT() {
     const allNfts = useSelector((store) => store.nft);
 
     useEffect(() => {
-        console.log(allNfts);
+     // console.log(allNfts);
         let currentNFT = allNfts.filter(nft => nft.block_number_minted === id);
         setCurrentNFT(currentNFT[0]);
     }, [])

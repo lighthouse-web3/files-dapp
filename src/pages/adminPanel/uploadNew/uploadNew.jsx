@@ -11,7 +11,7 @@ import UploadFile from "../../../components/uploadFile/UploadFile";
 
 const GetTotalFolderSize = (fileArr) => {
     let total = 0;
-    console.log(fileArr, 'arr');
+ // console.log(fileArr, 'arr');
     for (let index = 0; index < fileArr['length']; index++) {
         total = total + fileArr[index]?.size
     }
@@ -33,7 +33,7 @@ function UploadNew() {
 
     useEffect(() => {
         if (uploadedFolder?.target?.files.length > 0) {
-            console.log(uploadedFolder?.target?.files)
+         // console.log(uploadedFolder?.target?.files)
             setUploadProgress(5);
             uploadFolder(uploadedFolder, setUploadProgress, _authDetails);
         }
