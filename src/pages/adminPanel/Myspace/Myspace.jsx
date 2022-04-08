@@ -14,6 +14,8 @@ import { getChainNetwork } from "../../../utils/services/chainNetwork";
 import { getAddress } from "../../../utils/services/auth";
 import { getFileIcon } from "../../../utils/services/fileTypeIcons";
 import ReactLoading from 'react-loading';
+import { baseUrl } from "../../../utils/config/urls";
+import { getBalance } from "../../../utils/services/filedeploy";
 
 
 function Myspace() {
@@ -22,6 +24,7 @@ function Myspace() {
     const [orignalItems, setOrignalItems] = useState([]);
     const [itemsPerPage, setitemsPerPage] = useState(7);
     const [responseReceived, setResponseReceived] = useState(false);
+    const [userBalance, setUserBalance] = useState(null);
     const tableRef = useRef(null)
     const [totalSize, setTotalSize] = useState('0 kb');
     const store = useSelector((store) => store);
@@ -31,6 +34,7 @@ function Myspace() {
 
     useEffect(() => {
         getData()
+
         window.ethereum.on("chainChanged", () => {
             getData()
         });
@@ -42,14 +46,14 @@ function Myspace() {
     const setTableItemsLength = () => {
         let tableHeight = tableRef?.current?.clientHeight || 0;
         let coulumnHeight = 52;
-        console.log(Math.floor(tableHeight / coulumnHeight) - 2)
+     // console.log(Math.floor(tableHeight / coulumnHeight) - 2)
         setitemsPerPage(Math.floor(tableHeight / coulumnHeight) - 2);
     }
 
     const getData = async () => {
-        axios.get(`https://api.lighthouse.storage/api/lighthouse/get_uploads?network=${await getChainNetwork()}&publicKey=${getAddress()}`)
+        axios.get(`${baseUrl}/get_uploads?network=${await getChainNetwork()}&publicKey=${getAddress()}`)
             .then(response => {
-                console.log(response);
+             // console.log(response);
                 if (response['status'] === 200) {
                     _fileAC.setFileData(response['data']);
                     setCurrentItems(response['data']);
@@ -68,10 +72,12 @@ function Myspace() {
                     setTableItemsLength();
                 }
             }, (error) => {
-                console.log(error);
+             // console.log(error);
                 setResponseReceived(true);
             });
+        setUserBalance(await getBalance());
     }
+
 
 
 
@@ -120,12 +126,16 @@ function Myspace() {
             </div>
             <div className="mySpace__lowerContainer">
                 <div className="sizeBar">
-                                <p>Total Size : {totalSize}</p>
+
+                                {
+                                    userBalance && <p>Total Size : {totalSize} / {(userBalance['dataLimit'] / Math.pow(1024, 3)).toFixed(2)} GB</p>
+                                }
+
                 </div>
                 <Pagination orignalData={orignalItems} setCurrentData={setCurrentItems} itemsPerPage={itemsPerPage} />
 
             </div>
-                    </div> : <div className="mySpace_loading">
+                    </div> : <div className="loadingContainer">
                         <ReactLoading type={'bubbles'} color={'#4452FE'} height={667} width={375} />
                     </div>
             }

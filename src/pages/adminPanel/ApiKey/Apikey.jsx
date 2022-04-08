@@ -1,105 +1,136 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Apikey.scss";
-import { MdOutlineContentCopy, MdOutlineDelete } from 'react-icons/md';
-import { useOutletContext } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { fileAC } from '../../../store/action-creators/index'
-import { bindActionCreators } from "redux";
-import Pagination from "../../../components/Pagination/Pagination";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 import { notify } from "../../../utils/services/notification";
-import ReactLoading from 'react-loading';
-
+import ReactLoading from "react-loading";
+import axios from "axios";
+import { getAddress, getSignMessage } from "../../../utils/services/auth";
+import { baseUrl } from "../../../utils/config/urls";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { otherDataAC } from "../../../store/action-creators";
 
 function Apikey() {
-    const [infoBarData, setInfoBarData] = useOutletContext();
-    const [currentItems, setCurrentItems] = useState([1, 1]);
-    const [orignalItems, setOrignalItems] = useState([1, 1]);
-    const [itemsPerPage, setitemsPerPage] = useState(7);
+
+    const [currentAPI, setCurrentAPI] = useState(null);
+    const [keyVisible, setKeyVisible] = useState(false);
     const [responseReceived, setResponseReceived] = useState(true);
-    const tableRef = useRef(null)
-    const [totalSize, setTotalSize] = useState('0 kb');
+    const tableRef = useRef(null);
+
     const store = useSelector((store) => store);
     const dispatch = useDispatch()
-    const _fileAC = bindActionCreators(fileAC, dispatch);
-
+    const _otherData = bindActionCreators(otherDataAC, dispatch);
 
 
     useEffect(() => {
-        getData()
-        window.ethereum.on("chainChanged", () => {
-            getData()
-        });
-        return () => {
-            window.ethereum.removeListener("chainChanged", () => { });
-        };
+        store?.otherData?.['apiKey']?.length > 0 ? setCurrentAPI(store?.otherData?.['apiKey']) : setCurrentAPI(null);
+        console.log(store);
     }, []);
 
-    const setTableItemsLength = () => {
-        let tableHeight = tableRef?.current?.clientHeight || 0;
-        let coulumnHeight = 52;
-        console.log(Math.floor(tableHeight / coulumnHeight) - 2)
-        setitemsPerPage(Math.floor(tableHeight / coulumnHeight) - 2);
-    }
+
 
     const getData = async () => {
+        setResponseReceived(false);
+        axios
+            .get(
+                `${baseUrl}/get_api_key?publicKey=${getAddress()}&signed_message=${getSignMessage()}`
+            )
+            .then(
+                (response) => {
+                    setCurrentAPI(response['data']);
 
-    }
-
-
+                    let tempStore = store?.otherData || {};
+                    tempStore['apiKey'] = response['data'];
+                    _otherData.setOtherData(tempStore);
+                    setResponseReceived(true);
+                },
+                (error) => {
+                    setResponseReceived(true);
+                 // console.log(error);
+                }
+        );
+    };
 
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
-        notify('Copied To Clipboard', 'success')
-    }
+        notify("Copied To Clipboard", "success");
+    };
     return (
         <>
-            {
-                responseReceived ?
-                    <div className="Apikey">
-
-                        <div className="Apikey__title">
-                            <p>API Keys</p>
-                            <div className="searchBar">
-                                <button className="fillBtn__blue">New Key</button>
-
-                            </div>
+            {responseReceived ? (
+                <div className="Apikey">
+                    <div className="Apikey__title">
+                        <p>API Keys</p>
+                        <div className="searchBar">
+                            <button onClick={() => { getData() }} className="fillBtn__blue ptr">
+                                {
+                                    currentAPI?.length ? 'Regenerate Key' : 'Generate Key'
+                                }
+                            </button>
                         </div>
-
-                        <div className="Apikey__tableContainer" ref={tableRef}>
-                            <table>
-                                <thead>
-                                    <tr className="tableHead">
-                                        <th>Name</th>
-                                        <th>Key</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {(currentItems?.length > 0) && currentItems.map((item, i) =>
-                                        <tr key={i} className="ptr" onClick={() => { setInfoBarData(item) }}>
-                                            <td >Key Name</td>
-                                            <td>
-                                                <span className="cid">{'iu782989jj9292i0..'}</span>
-                                                &nbsp;
-                                                <span className="icon" onClick={() => { copyToClipboard('key') }}><MdOutlineContentCopy /></span>
-                                            </td>
-                                            <td><MdOutlineDelete /></td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="Apikey__lowerContainer">
-                            <Pagination orignalData={orignalItems} setCurrentData={setCurrentItems} itemsPerPage={itemsPerPage} />
-
-                        </div>
-                    </div> : <div className="Apikey_loading">
-                        <ReactLoading type={'bubbles'} color={'#4452FE'} height={667} width={375} />
                     </div>
-            }
 
+                    <div className="Apikey__tableContainer" ref={tableRef}>
+                        <table>
+                            <thead>
+                                <tr className="tableHead">
+                                    {/* <th>Name</th> */}
+                                    <th>Key ID</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {currentAPI?.length > 0 &&
+                                    <tr
+                                        className="ptr"
+                                    >
+                                        <td>
+                                            <span className="cid">{
+                                                keyVisible ?
+                                                    currentAPI : `${currentAPI.replace(/./g, '*')}`
+                                            }</span>
+                                            &nbsp;
+                                        </td>
+                                        <td>
+                                            <span
+                                                className="icon"
+                                                onClick={() => {
+                                                    setKeyVisible(keyVisible ? false : true)
+                                                }}
+                                            >
+                                                {
+                                                    keyVisible ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />
+                                                }
+
+                                            </span>
+                                            &nbsp;
+                                            <span
+                                                className="icon"
+                                                onClick={() => {
+                                                    copyToClipboard(currentAPI);
+                                                }}
+                                            >
+                                                <MdOutlineContentCopy />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            ) : (
+                    <div className="loadingContainer">
+                    <ReactLoading
+                        type={"bubbles"}
+                        color={"#4452FE"}
+                        height={667}
+                        width={375}
+                    />
+                </div>
+            )}
         </>
-
     );
 }
 

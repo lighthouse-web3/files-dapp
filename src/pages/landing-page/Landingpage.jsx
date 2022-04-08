@@ -9,6 +9,7 @@ import axios from 'axios';
 import { ethers } from "ethers";
 import { notify } from "../../utils/services/notification";
 import { login } from "../../utils/services/auth";
+import { baseUrl } from "../../utils/config/urls";
 
 
 function isMobileDevice() {
@@ -28,13 +29,13 @@ async function Connect(onConnected) {
         });
         onConnected(accounts[0]);
     } catch (err) {
-        console.log(err, '----');
+
         notify(err['message'], 'error');
     }
 }
 
 
-const sign_message = async (setUserAddress) => {
+const sign_message = async (setUserAddress, _navigate) => {
     if (!window.ethereum) {
         notify('Metamask Missing - Please Install Metamask', 'error');
         return;
@@ -51,8 +52,7 @@ const sign_message = async (setUserAddress) => {
             notify('Please Login to Metamask', 'error');
             return;
         }
-        console.log(address, '---');
-        const res = await axios.get(`https://api.lighthouse.storage/api/lighthouse/get_message?publicKey=${address}`);
+        const res = await axios.get(`${baseUrl}/get_message?publicKey=${address}`);
         const message = res.data;
         const signed_message = await signer.signMessage(message);
         const obj = {
@@ -61,6 +61,7 @@ const sign_message = async (setUserAddress) => {
             address: await signer.getAddress()
         }
         setUserAddress(obj.address);
+        login(obj.address, signed_message, _navigate);
         return;
     }
 }
@@ -81,7 +82,7 @@ function Landingpage() {
                 address: userAddress,
                 networkVersion: networkVersion,
             });
-            login(userAddress, _navigate);
+
         }
     }, [_auth, _navigate, userAddress]);
 
@@ -124,7 +125,7 @@ function Landingpage() {
                 <div className="landingPage__loginBar_pattern"></div>
 
                 <div className="landingPage__loginBar_iconsContainer">
-                    <div className="loginBox ptr" onClick={() => sign_message(setUserAddress)}>
+                    <div className="loginBox ptr" onClick={() => sign_message(setUserAddress, _navigate)}>
                         <img src="/icons/metamask.png" alt="metamaskIcon" />
                         <p className="m-1">Metamask</p>
                     </div>

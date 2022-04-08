@@ -5,7 +5,7 @@ import { BsSearch } from 'react-icons/bs'
 function Searchbar({ orignalItems, setCurrentItems }) {
 
     const filterSelection = (e) => {
-        console.log(orignalItems, e);
+     // console.log(orignalItems, e);
         if (e !== '') {
             let filteredItems = orignalItems.filter((item) => {
                 return (item?.cid.toLowerCase().includes(e.toLowerCase()) || item?.fileName.toLowerCase().includes(e.toLowerCase()))

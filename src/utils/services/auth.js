@@ -1,4 +1,4 @@
-export function login(address, _navigate) {
+export function login(address, signed_message, _navigate) {
   let expirationDate = new Date();
   expirationDate = expirationDate.setDate(expirationDate.getDate() + 7);
   localStorage.setItem(
@@ -6,6 +6,7 @@ export function login(address, _navigate) {
     JSON.stringify({
       userAddress: address,
       expirationDate: expirationDate,
+      signedMessage: signed_message,
     })
   );
   _navigate("/dashboard");
@@ -28,6 +29,13 @@ export function getAddress() {
     address = JSON.parse(localStorage.getItem("authData"))["userAddress"];
   }
   return address;
+}
+export function getSignMessage() {
+  let message = null;
+  if (isLogin()) {
+    message = JSON.parse(localStorage.getItem("authData"))["signedMessage"];
+  }
+  return message;
 }
 
 export function logout() {
