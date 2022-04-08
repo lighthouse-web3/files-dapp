@@ -10,6 +10,35 @@
       font-weight: 600;
       font-size: 1.3rem;
     }
-  
+
+    &__content {
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    
+      p {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 5px;
+      }
+    
+      input[type="text"] {
+        height: 30px;
+        width: 50%;
+      }
+    
+      .btn {
+        border: none;
+        padding: 10px 30px;
+        font-size: 1rem;
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        font-family: inherit;
+        background: var(--primary-blue);
+    
+      }
+    }
   }
   
