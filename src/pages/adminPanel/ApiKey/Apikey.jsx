@@ -75,7 +75,6 @@ function Apikey() {
                         <table>
                             <thead>
                                 <tr className="tableHead">
-                                    {/* <th>Name</th> */}
                                     <th>Key ID</th>
                                     <th>Actions</th>
                                 </tr>
