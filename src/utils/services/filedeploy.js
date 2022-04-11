@@ -97,7 +97,7 @@ export const uploadFile = async (
       // console.log(network);
       let balance = await lighthouse.getBalance(signing_response.address);
       // console.log(balance, "BALANCE");
-      if (!balance?.dataUsed) {
+      if (balance?.dataUsed < balance?.dataLimit) {
         setUploadProgress(50);
         // const cost = (
         //   await lighthouse.getQuote(uploadedFile.target.files[0].size, network)
