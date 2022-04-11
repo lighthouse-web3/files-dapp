@@ -46,12 +46,11 @@ function Myspace() {
     const setTableItemsLength = () => {
         let tableHeight = tableRef?.current?.clientHeight || 0;
         let coulumnHeight = 52;
-     // console.log(Math.floor(tableHeight / coulumnHeight) - 2)
         setitemsPerPage(Math.floor(tableHeight / coulumnHeight) - 2);
     }
 
     const getData = async () => {
-        axios.get(`${baseUrl}/get_uploads?network=${await getChainNetwork()}&publicKey=${getAddress()}`)
+        axios.get(`${baseUrl}/api/user/get_uploads?publicKey=${getAddress()}`)
             .then(response => {
              // console.log(response);
                 if (response['status'] === 200) {

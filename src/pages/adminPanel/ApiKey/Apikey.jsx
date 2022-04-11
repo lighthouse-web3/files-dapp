@@ -32,11 +32,10 @@ function Apikey() {
 
     const getData = async () => {
         setResponseReceived(false);
-        axios
-            .get(
-                `${baseUrl}/get_api_key?publicKey=${getAddress()}&signed_message=${getSignMessage()}`
-            )
-            .then(
+        axios.post(`${baseUrl}/api/auth/get_api_key`, {
+            "publicKey": getAddress(),
+            "signedMessage": getSignMessage()
+        }).then(
                 (response) => {
                     setCurrentAPI(response['data']);
 

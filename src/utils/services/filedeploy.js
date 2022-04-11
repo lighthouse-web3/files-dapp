@@ -11,7 +11,9 @@ export const sign_message = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const address = await signer.getAddress();
-  const res = await axios.get(`${baseUrl}/get_message?publicKey=${address}`);
+  const res = await axios.get(
+    `${baseUrl}/api/auth/get_message?publicKey=${address}`
+  );
   const message = res.data;
   const signed_message = await signer.signMessage(message);
   return {
@@ -97,7 +99,7 @@ export const uploadFile = async (
       // console.log(network);
       let balance = await lighthouse.getBalance(signing_response.address);
       // console.log(balance, "BALANCE");
-      if (!balance?.dataUsed) {
+      if (balance?.dataUsed < balance?.dataLimit) {
         setUploadProgress(50);
         // const cost = (
         //   await lighthouse.getQuote(uploadedFile.target.files[0].size, network)
@@ -112,6 +114,7 @@ export const uploadFile = async (
           signing_response.signed_message
         );
         // console.log(deploy_response);
+
         setUploadProgress(70);
 
         // const transaction = await execute_transaction(
@@ -198,7 +201,9 @@ export const uploadFolder = async (
 };
 
 export const getBalance = async () => {
-  let balance = await lighthouse.getBalance(getAddress());
+  let balance = await lighthouse.getBalance(
+    "0x29b1d432a40f40F5418DA2d4ABf740e5E491629B"
+  );
   // console.log(balance);
   return balance;
 };
