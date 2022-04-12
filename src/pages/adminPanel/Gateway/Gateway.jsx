@@ -50,7 +50,7 @@ function Gateway() {
     }, [])
 
     return <div className="gateway">
-        {/* <Overlay /> */}
+        <Overlay />
         <div className="gateway__title">
             <p>Gateway</p>
         </div>

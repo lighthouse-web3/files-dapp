@@ -34,7 +34,6 @@ function Myspace() {
 
     useEffect(() => {
         getData()
-
         window.ethereum.on("chainChanged", () => {
             getData()
         });
