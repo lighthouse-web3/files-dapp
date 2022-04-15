@@ -45,6 +45,14 @@ function ChainSelect() {
                     <img src="/chain_icons/optimism.png" alt="" />
                     <p>Optimism</p>
                 </div>
+                <div className="chainsList__chainItem" onClick={() => handleNetworkSwitch('ethereum')}>
+                    <img src="/chain_icons/ethereum.png" alt="" />
+                    <p>Ethereum</p>
+                </div>
+                <div className="chainsList__chainItem" onClick={() => handleNetworkSwitch('binance')}>
+                    <img src="/chain_icons/binance.png" alt="" />
+                    <p>Binance</p>
+                </div>
             </div>}
         >
             <div className='popoverBtn' onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
@@ -56,6 +64,16 @@ function ChainSelect() {
                 {
                     (currentChain === 'polygon' || currentChain === 'polygon-testnet') && <>
                         Polygon
+                    </>
+                }
+                {
+                    (currentChain === 'binance' || currentChain === 'binance-testnet') && <>
+                        Binance
+                    </>
+                }
+                {
+                    (currentChain === 'ethereum' || currentChain === 'etherem-testnet') && <>
+                        Ethereum
                     </>
                 }
                 {

@@ -72,6 +72,14 @@ function Sidebar() {
             </SidebarContent>
             <SidebarFooter>
                 <Menu iconShape="round">
+                    <MenuItem icon={<AiOutlinePlus />} active={currentPage === '/dashboard/topup' ? true : false}
+                    >
+                        <p>
+                            <small>Low Balance</small><br />
+                            Recharge Now
+                        </p>
+                        <Link to='topup' />
+                    </MenuItem>
                     <MenuItem icon={<BiLogOut />} active={false}
                         onClick={() => { logout(_auth, _navigate) }}
                     >Logout</MenuItem>

@@ -1,0 +1,43 @@
+.topup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    padding: 1.5rem;
+
+    &__title {
+        color: var(--background-black);
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+
+    &__content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 0rem;
+
+        .planCard {
+            border: 1px solid;
+            border-radius: 10px;
+            padding: 10px;
+            width: 20%;
+            text-align: center;
+            cursor: pointer;
+
+            .title {
+                font-size: 1rem;
+                font-weight: 600;
+            }
+
+            .desc {
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+
+        }
+    }
+
+
+}
