@@ -29,5 +29,5 @@ export const contractAddress = [
   },
 ];
 
-export const receiverAddress = "0x049d68029688eAbF473097a2fC38ef61633A3C7A";
+export const receiverAddress = "0x56dE82f1CAE3FD7183FEf95A1427b77DC9984a54";
 export const tokenCost = "0.1";

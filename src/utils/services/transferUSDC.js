@@ -4,14 +4,14 @@ import {
   tokenCost,
   receiverAddress,
   contractAddress,
-  abiURL,
 } from "../config/tokenTransferData";
 import { getChainNetwork } from "./chainNetwork";
+import { usdtABI } from "../contract_abi/usdcABi";
 const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
 export async function SendTransaction() {
-  const abi = (await axios.get(`${abiURL}`)).data;
-  const send_abi = JSON.parse(abi.result);
+  const send_abi = usdtABI;
+  console.log(send_abi);
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   let chainInfo = await getContractInfo();
