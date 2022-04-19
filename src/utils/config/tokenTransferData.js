@@ -1,6 +1,3 @@
-export const abiURL =
-  "https://api.bscscan.com/api?module=contract&action=getabi&address=0x55d398326f99059fF775485246999027B3197955&apikey=H2JKE5NV61GF5A1XZ7Z8X79VKGDJ2A1KNW";
-
 export const contractAddress = [
   {
     chain: "fantom",

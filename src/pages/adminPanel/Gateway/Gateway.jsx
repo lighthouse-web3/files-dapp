@@ -18,20 +18,21 @@ const getData = async (setSubdomain) => {
 }
 
 const createGateway = async (value) => {
-    await SendTransaction()
-    if (value.length > 0) {
-        axios.post(`${baseUrl}/api/gateway/add_subdomain`, {
-            "publicKey": getAddress(),
-            "subDomain": value,
-            "signedMessage": getSignMessage()
-        }).then((res) => {
-            console.log(res);
-            notify('Custom Gateway Created', 'success');
-        })
+    SendTransaction().then((res) => {
+        if (value.length > 0) {
+            axios.post(`${baseUrl}/api/gateway/add_subdomain`, {
+                "publicKey": getAddress(),
+                "subDomain": value,
+                "signedMessage": getSignMessage()
+            }).then((res) => {
+                console.log(res);
+                notify('Custom Gateway Created', 'success');
+            })
 
-    } else {
-        notify('Enter Custom Gateway Domain', 'error')
-    }
+        } else {
+            notify('Enter Custom Gateway Domain', 'error')
+        }
+    })
 }
 
 

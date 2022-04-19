@@ -80,7 +80,13 @@ function ChainSelect() {
                     (currentChain === 'optimism' || currentChain === 'optimism-testnet') && <>
                         Optimism
                     </>
-                }&nbsp; <AiOutlineCaretDown />
+                }
+                {
+                    (currentChain === null) && <>
+                        Change Network
+                    </>
+                }
+                &nbsp; <AiOutlineCaretDown />
             </div>
         </Popover>
     )
