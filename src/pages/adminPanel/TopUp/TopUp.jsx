@@ -44,11 +44,12 @@ function TopUp() {
 
     return <div className="topup">
         {/* <Overlay /> */}
-        <div className="topup__title">
+        <div className="topupMain">
+            <div className="topupMain__title">
             <p>Topup Lighthouse Storage</p>
         </div>
 
-        <div className="topup__description">
+            <div className="topupMain__description">
             <div className="container">
                 <p>Add Quick Value Topups</p>
                 <div className="valueTopups">
@@ -61,6 +62,7 @@ function TopUp() {
                     }
                 </div>
             </div>
+                <div className="line"></div>
             <div className="container">
                 <p>Add Quick Storage Topups</p>
                 <div className="valueTopups">
@@ -76,9 +78,13 @@ function TopUp() {
 
         </div>
 
-        <div className="topup__content">
+            <div className="topupMain__content">
 
-            <input type="number" placeholder='Enter Topup Amount (USDC)' ref={inputRef} onChange={() => { calculateStorage(inputRef.current.value, setTopupStorage) }} />
+                <div class="input-box">
+                    <span class="prefix">$</span>
+                    <input type="number" placeholder="Enter Topup Amount" ref={inputRef} onChange={() => { calculateStorage(inputRef.current.value, setTopupStorage) }} />
+                    <span class="suffix">.00</span>
+                </div>
 
             <button className="btn" onClick={() => {
                 addTopup(inputRef.current.value)
@@ -94,6 +100,10 @@ function TopUp() {
 
             </button>
 
+            </div>
+        </div>
+        <div className="topupDesign">
+            <div className="pattern"></div>
         </div>
     </div>
 }

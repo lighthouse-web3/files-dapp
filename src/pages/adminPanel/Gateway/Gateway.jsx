@@ -4,16 +4,20 @@ import Overlay from '../../../containers/Overlay/Overlay';
 import { baseUrl } from '../../../utils/config/urls';
 import { getAddress, getSignMessage } from '../../../utils/services/auth';
 import { notify } from '../../../utils/services/notification';
+import { copyToClipboard } from '../../../utils/services/other';
 import { SendTransaction } from '../../../utils/services/transferUSDC';
 import './Gateway.scss'
 
+import { GoThumbsdown, GoThumbsup } from 'react-icons/go';
 
-const getData = async (setSubdomain) => {
+
+const getData = async (setSubdomain, setInputTerm) => {
     axios.get(`${baseUrl}/api/gateway/get_subdomain?publicKey=${getAddress()}`)
         .then(response => {
-            console.log(response);
-            setSubdomain(response?.subDomain || null)
+            setSubdomain(response?.data || null)
+            setInputTerm(response?.data || null)
         }, (error) => {
+            setSubdomain('')
         });
 }
 
@@ -35,26 +39,73 @@ const createGateway = async (value) => {
     })
 }
 
+const checkSubdomain = async (value, setDomainAvailable) => {
+    axios.get(`${baseUrl}/api/gateway/check_subdomain?subDomain=${value}`)
+        .then(response => {
+            console.log(response, 'check SUBDOMAIN');
+            response['data'] === 'Exists' && setDomainAvailable(false)
+        }, (error) => {
+            setDomainAvailable(true)
+        });
+}
+
 
 function Gateway() {
     const [subdomain, setSubdomain] = useState(null);
-    const inputRef = useRef(null)
+    const [inputTerm, setInputTerm] = useState('')
+    const [domainAvailable, setDomainAvailable] = useState(null)
+
     useEffect(() => {
-        getData(setSubdomain);
+        setDomainAvailable(null);
+        const delayDebounceFn = setTimeout(async () => {
+            await checkSubdomain(inputTerm, setDomainAvailable);
+        }, 2000)
+        return () => clearTimeout(delayDebounceFn)
+    }, [inputTerm]);
+
+    useEffect(() => {
+        getData(setSubdomain, setInputTerm);
         return () => {
         }
-    }, [])
+    }, []);
     return <div className="gateway">
-        {/* <Overlay /> */}
-        <div className="gateway__title">
+        <div className="gatewayMain">
+            <div className="gatewayMain__title">
             <p>Gateway</p>
         </div>
+            <div className="gatewayMain__content">
 
-        <div className="gateway__content">
-            <p>Add Subdoamin at lighthouse.storage</p>
-            <input type="text" placeholder='Enter Subdomain' value={subdomain} ref={inputRef} />
+                <p>
+                    {
+                        subdomain ? 'Your Custom Sub-Domain' : 'Enter your custom subdomain at lighthouse'
+                    }
+                </p>
+                {/* <input type="text" placeholder='Enter Subdomain' value={inputTerm} onChange={(e) => setInputTerm(e.target.value)} /> */}
+
+                <div class="input-box">
+                    <span class="prefix">https://</span>
+                    <input type="text" placeholder="Enter Sub-Domain" value={inputTerm} onChange={(e) => setInputTerm(e.target.value)} />
+                    <span class="suffix">.lighthouse.storage</span>
+                </div>
+
+                {
+                    (subdomain !== inputTerm && domainAvailable !== null) && <p className='availability'>
+                        {domainAvailable ? `Sub-Domain Available` : `Sub-Domain Not Available`}&nbsp;
+                        {domainAvailable ? <GoThumbsup /> : <GoThumbsdown />}
+                    </p>
+
+                }
+
+
+                {
+                    subdomain && (
+                        <p className="subdomain">Your lighthouse sub-domain is &nbsp;
+                            <span className='link' onClick={() => { copyToClipboard(subdomain + '.lighthouse.storage') }} >{`${subdomain}.lighthouse.storage`}</span>
+                        </p>
+                    )
+                }
             <button className="btn" onClick={() => {
-                createGateway(inputRef.current.value)
+                    createGateway(inputTerm)
             }}>
                 {
                     subdomain ? <span>
@@ -67,6 +118,11 @@ function Gateway() {
 
             </button>
         </div>
+        </div>
+        <div className="gatewayDesign">
+            <div className="pattern"></div>
+        </div>
+
     </div>;
 }
 

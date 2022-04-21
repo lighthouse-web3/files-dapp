@@ -10,12 +10,11 @@ import moment from 'moment';
 import Searchbar from "../../../components/searchBar/Searchbar";
 import Pagination from "../../../components/Pagination/Pagination";
 import { notify } from "../../../utils/services/notification";
-import { getChainNetwork } from "../../../utils/services/chainNetwork";
 import { getAddress } from "../../../utils/services/auth";
 import { getFileIcon } from "../../../utils/services/fileTypeIcons";
 import ReactLoading from 'react-loading';
 import { baseUrl } from "../../../utils/config/urls";
-import { getBalance } from "../../../utils/services/filedeploy";
+import { bytesToString, copyToClipboard } from "../../../utils/services/other";
 
 
 function Myspace() {
@@ -26,7 +25,6 @@ function Myspace() {
     const [responseReceived, setResponseReceived] = useState(false);
     const [userBalance, setUserBalance] = useState(null);
     const tableRef = useRef(null)
-    const [totalSize, setTotalSize] = useState('0 kb');
     const store = useSelector((store) => store);
     const dispatch = useDispatch()
     const _fileAC = bindActionCreators(fileAC, dispatch);
@@ -57,32 +55,21 @@ function Myspace() {
                     setCurrentItems(response['data']);
                     setOrignalItems(response['data']);
                     setResponseReceived(true);
-                    let allFiles = response['data'];
-                    let total = 0;
-                    let totalShow = '';
-                    allFiles.forEach(element => {
-                        total = total + (element?.fileSizeInBytes / (1024))
-                    });
-                    total < 1024 && (totalShow = total.toFixed(2) + ' KB')
-                    total >= 1024 && (totalShow = (total / 1024).toFixed(2) + ' MB')
-                    total >= 1024 * 1024 && (totalShow = (total / 1024 * 1024).toFixed(2) + ' GB')
-                    setTotalSize(totalShow);
                     setTableItemsLength();
                 }
             }, (error) => {
              // console.log(error);
                 setResponseReceived(true);
             });
-        setUserBalance(await getBalance());
+
+        setUserBalance(store['balance']);
+
     }
 
 
 
 
-    const copyToClipboard = (text) => {
-        navigator.clipboard.writeText(text);
-        notify('Copied To Clipboard', 'success')
-    }
+
     return (
         <>
             {
@@ -126,7 +113,7 @@ function Myspace() {
                 <div className="sizeBar">
 
                                 {
-                                    userBalance && <p>Total Size : {totalSize} / {(userBalance['dataLimit'] / Math.pow(1024, 3)).toFixed(2)} GB</p>
+                                    userBalance && <p>Total Size : {bytesToString(userBalance['dataUsed'])} / {bytesToString(userBalance['dataLimit'])}</p>
                                 }
 
                 </div>

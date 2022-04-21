@@ -1,62 +1,120 @@
 .topup {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-    padding: 1.5rem;
+    flex-direction: row;
+  width: 100%;
+  position: relative;
 
+  .topupMain {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 1.5rem;
     &__title {
-        color: var(--background-black);
-        font-weight: 600;
-        font-size: 1.3rem;
+      color: var(--background-black);
+      font-weight: 600;
+      font-size: 1.3rem;
     }
 
     &__description {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .line{
+          height: inherit;
+          border: 1px solid;
+      }
+      .container {
+        padding: 1rem;
         .valueTopups {
             display: flex;
             width: 100%;
-        }
-    
-        .planCard {
-            border: 1px solid;
-            border-radius: 10px;
-            padding: 10px;
-            width: fit-content;
-            text-align: center;
-            cursor: pointer;
-            margin: 10px;
-        }
-    }
-        &__content {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 2rem 0rem;
-            input[type="number"] {
-                background: #fefefe;
-                border: 0.5px solid #c4c4c4;
-                box-sizing: border-box;
-                border-radius: 10px;
-                margin: 0.5rem 0rem;
-                padding-left: 10px;
-                height: 30px;
-                width: 50%;
-                }
-                .btn {
-                    border: none;
-                    padding: 10px 30px;
-                font-size: 1rem;
-                border-radius: 10px;
-                color: white;
-                font-weight: 600;
-                font-family: inherit;
-                background: var(--primary-blue);
+            .planCard {
+              border: 1px solid;
+              border-radius: 10px;
+              padding: 10px;
+              width: fit-content;
+              text-align: center;
+              cursor: pointer;
+              margin-right: 10px;
             }
+          }
 
-
+          &:nth-child(2){
+              .valueTopups .planCard{
+                  margin-right: 0;
+                  margin-left: 10px;
+              }
+          }
+      }
+   
     }
+    &__content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem 0rem;
+      .input-box {
+        display: flex;
+        align-items: center;
+        background: #fefefe;
+        border: 0.5px solid #c4c4c4;
+        box-sizing: border-box;
+        border-radius: 10px;
+        margin: 0.5rem 0rem;
+        padding: 10px;
+        height: 60px;
+        width: 100%;
+        font-size: 1.3rem;
+      }
 
+      .input-box .prefix,
+      .input-box .suffix {
+        font-weight: 300;
+        font-size: inherit;
+        color: #999;
+      }
 
+      .input-box input {
+        flex-grow: 1;
+        font-size: inherit;
+        background: #fff;
+        border: none;
+        outline: none;
+        padding: 0.5rem;
+      }
+
+      .input-box:focus-within {
+        border-color: #777;
+      }
+
+      .btn {
+        width: 100%;
+        height: 40px;
+        border: none;
+        padding: 10px 30px;
+        font-size: 1rem;
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        font-family: inherit;
+        background: var(--primary-blue);
+      }
+    }
+  }
+
+  .topupDesign{
+      flex: 1;
+      height: 100%;
+    
+      .pattern{
+        background: url("../../../../public/bg/bg_pattern.png");
+          width: 100%;
+          height: 100%;
+          opacity: 0.1;
+          filter: grayscale(100%);
+      }
+  }
 }

@@ -18,7 +18,10 @@ import { AiOutlineApi } from 'react-icons/ai';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { authAC } from '../../store/action-creators';
+import { authAC, balanceAC } from '../../store/action-creators';
+import { getBalance } from '../../utils/services/filedeploy';
+import { notify } from '../../utils/services/notification';
+import { bytesToString } from '../../utils/services/other';
 
 
 
@@ -30,16 +33,30 @@ function logout(_auth, _navigate) {
 
 function Sidebar() {
     const [currentPage, setCurrentPage] = useState('dashboard');
+    const [userBalance, setUserBalance] = useState('dashboard');
     const _location = useLocation();
-    const toastId = React.useRef(null);
     const dispatch = useDispatch();
     const _auth = bindActionCreators(authAC, dispatch);
+    const _balnceAC = bindActionCreators(balanceAC, dispatch);
     const _navigate = useNavigate();
 
 
-
-
-
+    useEffect(() => {
+        (async () => {
+            let userBalance = await getBalance();
+            console.log(userBalance, 'USER BALANCE')
+            _balnceAC.setBalanceData(userBalance);
+            setUserBalance(userBalance);
+        })().catch(err => {
+            notify(err, 'error');
+            let dummyBalance = {
+                "dataLimit": 0,
+                "dataUsed": 0
+            }
+            _balnceAC.setBalanceData(dummyBalance);
+            setUserBalance(dummyBalance);
+        });
+    }, [])
     useEffect(
         () => {
             setCurrentPage(_location.pathname);
@@ -65,8 +82,8 @@ function Sidebar() {
 
                 <MenuItem icon={<AiOutlineGateway />} active={currentPage === '/dashboard/gateway' ? true : false}
                 >Gateway <Link to='gateway' /></MenuItem>
-                <MenuItem icon={<HiOutlineDocument />} active={currentPage === '/dashboard/mintNFT' ? true : false}
-                >Mint NFT <Link to='mintNFT' /></MenuItem>
+                {/* <MenuItem icon={<HiOutlineDocument />} active={currentPage === '/dashboard/mintNFT' ? true : false}
+                >Mint NFT <Link to='mintNFT' /></MenuItem> */}
             </Menu>
             <SidebarContent>
             </SidebarContent>
@@ -75,8 +92,8 @@ function Sidebar() {
                     <MenuItem icon={<AiOutlinePlus />} active={currentPage === '/dashboard/topup' ? true : false}
                     >
                         <p>
-                            <small>Low Balance</small><br />
-                            Recharge Now
+                            <small>{bytesToString(userBalance['dataLimit'] - userBalance['dataUsed'])} Left </small><br />
+                            Top Up Storage
                         </p>
                         <Link to='topup' />
                     </MenuItem>

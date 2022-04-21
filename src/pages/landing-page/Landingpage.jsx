@@ -17,24 +17,6 @@ function isMobileDevice() {
 }
 
 
-
-async function Connect(onConnected) {
-    try {
-        if (!window.ethereum) {
-            alert("Get MetaMask!");
-            return;
-        }
-        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-        });
-        onConnected(accounts[0]);
-    } catch (err) {
-
-        notify(err['message'], 'error');
-    }
-}
-
-
 const sign_message = async (setUserAddress, _navigate) => {
     if (!window.ethereum) {
         notify('Metamask Missing - Please Install Metamask', 'error');
@@ -42,16 +24,10 @@ const sign_message = async (setUserAddress, _navigate) => {
     } else {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-        let address = undefined;
-        try {
-            address = await signer.getAddress();
-        } catch (e) {
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            notify('Please Login to Metamask', 'error');
-            return;
-        }
+        const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+        });
+        let address = await signer.getAddress();
         const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
         const message = res.data;
         const signed_message = await signer.signMessage(message);
@@ -76,6 +52,7 @@ function Landingpage() {
     const _currentAuth = useSelector((store) => store.auth);
 
     useEffect(() => {
+        console.log('enter')
         if (userAddress.length > 0) {
             let networkVersion = window.ethereum.networkVersion;
             _auth.setAuthData({

@@ -6,7 +6,7 @@ import {
 } from "../config/tokenTransferData";
 import { getChainNetwork } from "./chainNetwork";
 import { usdtABI } from "../contract_abi/usdcABi";
-const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+
 
 export async function SendTransaction() {
   const send_abi = usdtABI;
@@ -40,15 +40,15 @@ async function getContractInfo() {
   return contractObj[0];
 }
 
-async function getCurrentBlock() {
-  let currentBlock = await provider.getBlockNumber();
-  console.log(currentBlock);
-  return currentBlock;
-}
+// async function getCurrentBlock() {
+//   let currentBlock = await provider.getBlockNumber();
+//   console.log(currentBlock);
+//   return currentBlock;
+// }
 
-async function getBalance(wallet) {
-  let balance = await provider.getBalance(wallet);
-  // we use the code below to convert the balance from wei to eth
-  balance = ethers.utils.formatEther(balance);
-  console.log(balance);
-}
+// async function getBalance(wallet) {
+//   let balance = await provider.getBalance(wallet);
+//   // we use the code below to convert the balance from wei to eth
+//   balance = ethers.utils.formatEther(balance);
+//   console.log(balance);
+// }
