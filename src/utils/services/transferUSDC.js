@@ -6,11 +6,10 @@ import {
 } from "../config/tokenTransferData";
 import { getChainNetwork } from "./chainNetwork";
 import { usdtABI } from "../contract_abi/usdcABi";
-
+import { notify } from "./notification";
 
 export async function SendTransaction() {
   const send_abi = usdtABI;
-  console.log(send_abi);
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   let chainInfo = await getContractInfo();
@@ -19,21 +18,26 @@ export async function SendTransaction() {
     send_abi,
     signer
   );
+
   const numberOfTokens = ethers.utils.parseUnits(
     tokenCost,
     chainInfo["decimal"]
   );
+
   try {
     const txResponse = await contract.transfer(receiverAddress, numberOfTokens);
     const txReceipt = await txResponse.wait();
-    console.log(txReceipt);
+    return txReceipt;
   } catch (error) {
-    console.error(error.code);
+    notify(error["data"]["message"], "error");
+
+    return false;
   }
 }
 
 async function getContractInfo() {
   let currentChain = await getChainNetwork();
+
   let contractObj = contractAddress.filter(
     (chain) => chain.chain === currentChain
   );

@@ -72,10 +72,22 @@
           font-weight: 600;
           font-family: inherit;
           background: var(--primary-blue);
+          cursor: pointer;
+          &:disabled {
+            background:#777;
+            cursor: default;
+          }
         }
+
+  
           
           .availability {
             font-weight: 500;
+          }
+
+          .errorMsg{
+            font-weight: 500;
+            color: red;
           }
           
           .subdomain {

@@ -23,7 +23,7 @@ const getData = async (setSubdomain, setInputTerm) => {
 
 const createGateway = async (value) => {
     SendTransaction().then((res) => {
-        if (value.length > 0) {
+        if (value.length > 0 && res) {
             axios.post(`${baseUrl}/api/gateway/add_subdomain`, {
                 "publicKey": getAddress(),
                 "subDomain": value,
@@ -34,7 +34,7 @@ const createGateway = async (value) => {
             })
 
         } else {
-            notify('Enter Custom Gateway Domain', 'error')
+            notify('Error', 'error')
         }
     })
 }
@@ -49,17 +49,27 @@ const checkSubdomain = async (value, setDomainAvailable) => {
         });
 }
 
+const checkFormat = (value) => {
+    // check only numbers , letters and hyphens allowed 
+    var regex = new RegExp("^[a-zA-Z]+[a-zA-Z0-9\\-]*$");
+    console.log('REGEX', regex.test(value))
+    return regex.test(value);
+}
+
 
 function Gateway() {
     const [subdomain, setSubdomain] = useState(null);
     const [inputTerm, setInputTerm] = useState('')
+    const [isFormatError, setFormatError] = useState(false)
     const [domainAvailable, setDomainAvailable] = useState(null)
 
     useEffect(() => {
+        console.log(inputTerm, isFormatError)
         setDomainAvailable(null);
+        setFormatError(!checkFormat(inputTerm));
         const delayDebounceFn = setTimeout(async () => {
-            await checkSubdomain(inputTerm, setDomainAvailable);
-        }, 2000)
+            !isFormatError && await checkSubdomain(inputTerm, setDomainAvailable);
+        }, 1000)
         return () => clearTimeout(delayDebounceFn)
     }, [inputTerm]);
 
@@ -77,10 +87,10 @@ function Gateway() {
 
                 <p>
                     {
-                        subdomain ? 'Your Custom Sub-Domain' : 'Enter your custom subdomain at lighthouse'
+                        subdomain ? 'Your Custom IPFS Gateway' : 'Enter your custom IPFS Gateway at lighthouse'
                     }
                 </p>
-                {/* <input type="text" placeholder='Enter Subdomain' value={inputTerm} onChange={(e) => setInputTerm(e.target.value)} /> */}
+
 
                 <div class="input-box">
                     <span class="prefix">https://</span>
@@ -90,8 +100,14 @@ function Gateway() {
 
                 {
                     (subdomain !== inputTerm && domainAvailable !== null) && <p className='availability'>
-                        {domainAvailable ? `Sub-Domain Available` : `Sub-Domain Not Available`}&nbsp;
+                        {domainAvailable ? `Name Available` : `Name Not Available`}&nbsp;
                         {domainAvailable ? <GoThumbsup /> : <GoThumbsdown />}
+                    </p>
+
+                }
+                {
+                    (isFormatError) && <p className='errorMsg'>
+                        Subdomain can only contain Letters, Numbers and Hyphen/minus sign (-)
                     </p>
 
                 }
@@ -99,12 +115,12 @@ function Gateway() {
 
                 {
                     subdomain && (
-                        <p className="subdomain">Your lighthouse sub-domain is &nbsp;
+                        <p className="subdomain">Your lighthouse Gateway is &nbsp;
                             <span className='link' onClick={() => { copyToClipboard(subdomain + '.lighthouse.storage') }} >{`${subdomain}.lighthouse.storage`}</span>
                         </p>
                     )
                 }
-            <button className="btn" onClick={() => {
+                <button disabled={!!(subdomain !== inputTerm && domainAvailable !== null && domainAvailable) ? false : true} className="btn" onClick={() => {
                     createGateway(inputTerm)
             }}>
                 {
