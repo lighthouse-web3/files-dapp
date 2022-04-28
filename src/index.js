@@ -8,6 +8,8 @@ import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import { MoralisProvider } from "react-moralis";
 
+
+console.log("sss");
 let appIdmoralis = process.env.REACT_APP_APP_ID;
 let serverUrlmoralis = process.env.REACT_APP_SERVER_URL;
 

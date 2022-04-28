@@ -10,6 +10,19 @@ import { ethers } from "ethers";
 import { notify } from "../../utils/services/notification";
 import { login } from "../../utils/services/auth";
 import { baseUrl } from "../../utils/config/urls";
+import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
+import { Web3Auth } from "@web3auth/web3auth";
+import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
+
+
+console.log('sss');
+
+let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
+console.log(clientId);
+
+
+
+// -------------------------------
 
 
 function isMobileDevice() {
@@ -50,6 +63,71 @@ function Landingpage() {
     const _auth = bindActionCreators(authAC, dispatch);
     const [userAddress, setUserAddress] = useState("");
     const _currentAuth = useSelector((store) => store.auth);
+    const [web3auth, setWeb3auth] = useState(null);
+    const [provider, setProvider] = useState(null);
+
+    const loginWeb3Auth = async () => {
+        if (!web3auth) {
+            console.log("web3auth not initialized yet");
+            return;
+        }
+        const provider = await web3auth.connect();
+        setProvider(provider);
+    };
+
+
+
+    useEffect(() => {
+        console.log(clientId, 'ENV')
+        const init = async () => {
+            try {
+                const initParams = {}
+
+                const web3AuthCtorParams = {
+                    clientId,
+                    chainConfig: { chainNamespace: "eip155", chainId: "0x1" }
+                }
+
+
+                const web3auth = new Web3Auth(web3AuthCtorParams);
+                const openloginAdapter = new OpenloginAdapter({
+                    adapterSettings: {
+                        clientId,
+                        network: "testnet",
+                        uxMode: "redirect",
+                    },
+                });
+                web3auth.configureAdapter(openloginAdapter); web3auth.configureAdapter(openloginAdapter);
+                subscribeAuthEvents(web3auth);
+                setWeb3auth(web3auth);
+                await web3auth.initModal(initParams);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const subscribeAuthEvents = (web3auth) => {
+            // Can subscribe to all ADAPTER_EVENTS and LOGIN_MODAL_EVENTS
+            web3auth.on(ADAPTER_EVENTS.CONNECTED, (data) => {
+                console.log("Yeah!, you are successfully logged in", data);
+                setProvider(web3auth.provider);
+            });
+
+            web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
+                console.log("connecting");
+            });
+
+            web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
+                console.log("disconnected");
+            });
+
+            web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
+                console.error("some error or user has cancelled login request", error);
+            });
+        };
+
+        init();
+    }, []);
 
     useEffect(() => {
         console.log('enter')
@@ -106,10 +184,10 @@ function Landingpage() {
                         <img src="/icons/metamask.png" alt="metamaskIcon" />
                         <p className="m-1">Metamask</p>
                     </div>
-                    {/* <div className="loginBox ptr" onClick={goToDashboard}>
+                    <div className="loginBox ptr" onClick={loginWeb3Auth}>
                     <img src="/icons/walletConnect.png" alt="walletConnect" />
                     <p>Wallet Connect</p>
-                </div> */}
+                    </div>
                 </div>
             </div>
         </div>
