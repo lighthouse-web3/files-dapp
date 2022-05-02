@@ -96,7 +96,7 @@ function Gateway() {
         setFormatError(!checkFormat(inputTerm));
         const delayDebounceFn = setTimeout(async () => {
             !isFormatError && await checkSubdomain(inputTerm, setDomainAvailable);
-        }, 1000)
+        }, 20000)
         return () => clearTimeout(delayDebounceFn)
     }, [inputTerm]);
 
@@ -191,7 +191,7 @@ function Gateway() {
                     subdomain ? <span>
                         Update IPFS Gateway
                     </span> : <span>
-                        Create IPFS Gateway
+                                Create IPFS Gateway ( 5 USDC )
                     </span>
 
                 }

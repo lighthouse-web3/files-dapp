@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
+import Overlay from '../../../containers/Overlay/Overlay';
 import { topupAmount, topupStoragePacks, topupValuePacks } from '../../../utils/config/topupConfig';
 import { baseUrl } from '../../../utils/config/urls';
 import { getAddress, getSignMessage } from '../../../utils/services/auth';
@@ -43,7 +44,7 @@ function TopUp() {
     const inputRef = useRef(null)
 
     return <div className="topup">
-        {/* <Overlay /> */}
+        <Overlay />
         <div className="topupMain">
             <div className="topupMain__title">
             <p>Topup Lighthouse Storage</p>
