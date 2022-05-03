@@ -1,10 +1,11 @@
 import { ADAPTER_EVENTS } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
+import { getWeb3auth } from "./auth";
 
 let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 
-export const initWeb3Auth = async (setWeb3auth, setProvider) => {
+export const initWeb3Auth = async (setWeb3auth, setIsConnected) => {
   try {
     const initParams = {};
 
@@ -36,8 +37,7 @@ export const initWeb3Auth = async (setWeb3auth, setProvider) => {
     });
 
     web3auth.configureAdapter(openloginAdapter);
-    subscribeAuthEvents(web3auth, setProvider);
-    console.log(web3auth, "WEB3AUTH");
+    subscribeAuthEvents(web3auth, setIsConnected);
     setWeb3auth(web3auth);
     await web3auth.initModal(initParams);
   } catch (error) {
@@ -45,10 +45,10 @@ export const initWeb3Auth = async (setWeb3auth, setProvider) => {
   }
 };
 
-export const subscribeAuthEvents = (web3auth, setProvider) => {
+export const subscribeAuthEvents = (web3auth, setIsConnected) => {
   web3auth.on(ADAPTER_EVENTS.CONNECTED, (data) => {
+    setIsConnected(true);
     console.log("Yeah!, you are successfully logged in", data);
-    setProvider(web3auth.provider);
   });
 
   web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
@@ -64,4 +64,11 @@ export const subscribeAuthEvents = (web3auth, setProvider) => {
   });
 };
 
-// ===================================
+export const web3authLogout = async () => {
+  let web3auth = getWeb3auth();
+  if (!web3auth) {
+    console.log("web3auth not initialized yet");
+    return;
+  }
+  await web3auth.logout();
+};

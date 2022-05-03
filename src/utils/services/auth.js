@@ -1,3 +1,5 @@
+import Logout from "../logout";
+
 export function login(address, _navigate) {
   let expirationDate = new Date();
   expirationDate = expirationDate.setDate(expirationDate.getDate() + 7);
@@ -6,6 +8,7 @@ export function login(address, _navigate) {
     JSON.stringify({
       userAddress: address,
       expirationDate: expirationDate,
+      web3auth: "web3auth",
     })
   );
   _navigate("/dashboard");
@@ -13,11 +16,16 @@ export function login(address, _navigate) {
 
 export function isLogin() {
   let authData = JSON.parse(localStorage.getItem("authData") || "{}");
-  if (authData?.["userAddress"] && authData?.["expirationDate"]) {
+  if (
+    authData?.["userAddress"] &&
+    authData?.["expirationDate"] &&
+    authData?.["web3auth"]
+  ) {
     let currentDate = new Date();
     let expirationDate = new Date(authData?.["expirationDate"]);
     return expirationDate.getTime() > currentDate.getTime() ? true : false;
   } else {
+    <Logout />;
     return false;
   }
 }
@@ -36,7 +44,10 @@ export function getSignMessage() {
   }
   return message;
 }
-
-export function logout() {
-  localStorage.clear();
+export function getWeb3auth() {
+  let web3auth = null;
+  if (isLogin()) {
+    web3auth = JSON.parse(localStorage.getItem("authData"))["web3auth"];
+  }
+  return web3auth;
 }

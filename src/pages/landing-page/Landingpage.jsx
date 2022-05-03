@@ -7,10 +7,12 @@ import { bindActionCreators } from "redux";
 import { authAC } from "../../store/action-creators";
 import axios from 'axios';
 import { ethers } from "ethers";
-import { notify } from "../../utils/services/notification";
 import { login } from "../../utils/services/auth";
 import { baseUrl } from "../../utils/config/urls";
-import { initWeb3Auth } from "../../utils/web3auth-service/auth";
+import { initWeb3Auth } from "../../utils/services/web3auth";
+
+
+
 
 
 
@@ -20,16 +22,27 @@ function isMobileDevice() {
 }
 
 
-const sign_message = async (setUserAddress, _navigate) => {
-    if (!window.ethereum) {
-        notify('Metamask Missing - Please Install Metamask', 'error');
-        return;
-    } else {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+
+
+
+function Landingpage() {
+    const _navigate = useNavigate();
+    const dispatch = useDispatch();
+    const _auth = bindActionCreators(authAC, dispatch);
+    const _currentAuth = useSelector((store) => store.auth);
+    const [web3auth, setWeb3auth] = useState(null);
+    const [isConnected, setIsConnected] = useState(false);
+
+
+    const loginWeb3Auth = async () => {
+        if (!web3auth) {
+            console.log("web3auth not initialized yet");
+            return;
+        }
+        const web3provider = await web3auth.connect();
+        const provider = new ethers.providers.Web3Provider(web3provider);
         const signer = provider.getSigner();
-        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-        });
         let address = await signer.getAddress();
         const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
         const message = res.data;
@@ -39,46 +52,20 @@ const sign_message = async (setUserAddress, _navigate) => {
             signed_message: signed_message,
             address: await signer.getAddress()
         }
-        setUserAddress(obj.address);
-        login(obj.address, signed_message, _navigate);
+
+        _auth.setAuthData(obj);
+        login(obj.address, _navigate);
         return;
-    }
-}
-
-
-
-function Landingpage() {
-    const _navigate = useNavigate();
-    const dispatch = useDispatch();
-    const _auth = bindActionCreators(authAC, dispatch);
-    const [userAddress, setUserAddress] = useState("");
-    const _currentAuth = useSelector((store) => store.auth);
-    const [web3auth, setWeb3auth] = useState(null);
-    const [provider, setProvider] = useState(null);
-
-    const loginWeb3Auth = async () => {
-        if (!web3auth) {
-            console.log("web3auth not initialized yet");
-            return;
-        }
-        const provider = await web3auth.connect();
-        console.log(provider, 'PROVIDER');
-        setProvider(provider);
     };
 
     useEffect(() => {
-        initWeb3Auth(setWeb3auth, setProvider)
+        initWeb3Auth(setWeb3auth, setIsConnected);
     }, []);
 
     useEffect(() => {
-        if (userAddress.length > 0) {
-            let networkVersion = window.ethereum.networkVersion;
-            _auth.setAuthData({
-                address: userAddress,
-                networkVersion: networkVersion,
-            });
-        }
-    }, [_auth, _navigate, userAddress]);
+        loginWeb3Auth();
+    }, [isConnected]);
+
 
     return (
         <div className="landingPage">
@@ -119,10 +106,10 @@ function Landingpage() {
                 <div className="landingPage__loginBar_pattern"></div>
 
                 <div className="landingPage__loginBar_iconsContainer">
-                    <div className="loginBox ptr" onClick={() => sign_message(setUserAddress, _navigate)}>
+                    {/* <div className="loginBox ptr" onClick={() => sign_message(setUserAddress, _navigate)}>
                         <img src="/icons/metamask.png" alt="metamaskIcon" />
                         <p className="m-1">Metamask</p>
-                    </div>
+                    </div> */}
                     <div className="loginBox ptr" onClick={loginWeb3Auth}>
                     <img src="/icons/walletConnect.png" alt="walletConnect" />
                     <p>Wallet Connect</p>

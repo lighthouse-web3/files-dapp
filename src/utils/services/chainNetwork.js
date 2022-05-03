@@ -1,6 +1,4 @@
 import { notify } from "./notification";
-// import Web3 from "web3";
-
 
 const networks = {
   polygon: {
@@ -114,5 +112,3 @@ export const changeNetwork = async ({ networkName }) => {
     notify(err, "error");
   }
 };
-
-
