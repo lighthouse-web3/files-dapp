@@ -1,5 +1,3 @@
-import Logout from "../logout";
-
 export function login(address, _navigate) {
   let expirationDate = new Date();
   expirationDate = expirationDate.setDate(expirationDate.getDate() + 7);
@@ -25,7 +23,21 @@ export function isLogin() {
     let expirationDate = new Date(authData?.["expirationDate"]);
     return expirationDate.getTime() > currentDate.getTime() ? true : false;
   } else {
-    <Logout />;
+    return false;
+  }
+}
+
+export function logout() {
+  let authData = JSON.parse(localStorage.getItem("authData") || "{}");
+  if (
+    authData?.["userAddress"] &&
+    authData?.["expirationDate"] &&
+    authData?.["web3auth"]
+  ) {
+    let currentDate = new Date();
+    let expirationDate = new Date(authData?.["expirationDate"]);
+    return expirationDate.getTime() > currentDate.getTime() ? true : false;
+  } else {
     return false;
   }
 }

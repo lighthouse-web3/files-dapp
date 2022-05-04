@@ -12,7 +12,6 @@ import {
 import { AiOutlinePlus, AiOutlineGateway } from 'react-icons/ai';
 import { MdFolderShared } from 'react-icons/md';
 import { BiLogOut } from 'react-icons/bi';
-import { HiOutlineDocument } from 'react-icons/hi';
 import { BsCollection } from 'react-icons/bs';
 import { AiOutlineApi } from 'react-icons/ai';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -26,8 +25,9 @@ import { bytesToString } from '../../utils/services/other';
 
 
 function logout(_auth, _navigate) {
-    _auth.setAuthData(null);
-    _navigate('/');
+    // _auth.setAuthData(null);
+    // _navigate('/');
+    // <Logout />
 }
 
 
@@ -103,6 +103,7 @@ function Sidebar() {
                 </Menu>
             </SidebarFooter>
         </ProSidebar>
+
     );
 }
 

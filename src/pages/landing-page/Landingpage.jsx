@@ -59,11 +59,12 @@ function Landingpage() {
     };
 
     useEffect(() => {
+        // localStorage.clear();
         initWeb3Auth(setWeb3auth, setIsConnected);
     }, []);
 
     useEffect(() => {
-        loginWeb3Auth();
+        // loginWeb3Auth();
     }, [isConnected]);
 
 
