@@ -96,7 +96,7 @@ function Gateway() {
         setFormatError(!checkFormat(inputTerm));
         const delayDebounceFn = setTimeout(async () => {
             !isFormatError && await checkSubdomain(inputTerm, setDomainAvailable);
-        }, 20000)
+        }, 2000)
         return () => clearTimeout(delayDebounceFn)
     }, [inputTerm]);
 
@@ -105,7 +105,7 @@ function Gateway() {
         checkTransaction(setTransaction)
         setInterval(function () {
             (transaction === null) && checkTransaction(setTransaction)
-        }, 10000)
+        }, 20000)
         return () => {
         }
     }, []);
