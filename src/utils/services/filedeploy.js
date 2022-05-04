@@ -56,18 +56,19 @@ export const uploadFile = async (
       let balance = await getBalance();
       if (+balance?.dataUsed < +balance?.dataLimit) {
         setUploadProgress(50);
+        let signed_message = await sign_message();
         const deploy_response = await lighthouse.deploy(
           uploadedFile,
           null,
           getAddress(),
-          getSignMessage()
+          signed_message["signed_message"]
         );
         setUploadProgress(70);
         setUploadProgress(0);
         notify(`File Upload Success:  ${deploy_response?.Hash}`, "success");
       } else {
         setUploadProgress(0);
-        notify(`Free Data Usage Exeeded`, "error");
+        notify(`Free Data Usage Exeeded `, "error");
       }
     } catch (e) {
       notify(`ERROR:${e}`, "error");
@@ -90,13 +91,14 @@ export const uploadFolder = async (
     try {
       setUploadProgress(20);
       let balance = await getBalance();
+      let signed_message = await sign_message();
       if (+balance?.dataUsed < +balance?.dataLimit) {
         setUploadProgress(50);
         const deploy_response = await lighthouse.deploy(
           uploadedFile,
           null,
           getAddress(),
-          getSignMessage()
+          signed_message["signed_message"]
         );
         setUploadProgress(70);
         let newResponse = deploy_response.split("\n");
