@@ -9,30 +9,13 @@ import axios from 'axios';
 import { ethers } from "ethers";
 import { login } from "../../utils/services/auth";
 import { baseUrl } from "../../utils/config/urls";
-import { initWeb3Auth } from "../../utils/services/web3auth";
-
-
-
-
-
-
-
-function isMobileDevice() {
-    return "ontouchstart" in window || "onmsgesturechange" in window;
-}
-
-
-
-
-
+import { subscribeAuthEvents, web3auth } from "../../utils/services/web3auth";
 
 function Landingpage() {
-    const _navigate = useNavigate();
     const dispatch = useDispatch();
     const _auth = bindActionCreators(authAC, dispatch);
     const _currentAuth = useSelector((store) => store.auth);
-    const [web3auth, setWeb3auth] = useState(null);
-    const [isConnected, setIsConnected] = useState(false);
+    const [isW3AConnected, setw3AConnected] = useState(false);
 
 
     const loginWeb3Auth = async () => {
@@ -48,24 +31,26 @@ function Landingpage() {
         const message = res.data;
         const signed_message = await signer.signMessage(message);
         const obj = {
-            message: message,
             signed_message: signed_message,
             address: await signer.getAddress()
         }
 
         _auth.setAuthData(obj);
-        login(obj.address, _navigate);
+        login(obj.address, obj.signed_message);
         return;
     };
 
     useEffect(() => {
-        // localStorage.clear();
-        initWeb3Auth(setWeb3auth, setIsConnected);
-    }, []);
+        console.log(web3auth)
+        return () => { }
+    }, [])
+    // useEffect(() => {
+    //     loginWeb3Auth();
+    //     return () => { }
+    // }, [isW3AConnected])
 
-    useEffect(() => {
-        // loginWeb3Auth();
-    }, [isConnected]);
+
+
 
 
     return (

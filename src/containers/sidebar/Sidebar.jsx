@@ -21,13 +21,12 @@ import { authAC, balanceAC } from '../../store/action-creators';
 import { getBalance } from '../../utils/services/filedeploy';
 import { notify } from '../../utils/services/notification';
 import { bytesToString } from '../../utils/services/other';
+import { logout } from '../../utils/services/auth';
 
 
 
-function logout(_auth, _navigate) {
-    // _auth.setAuthData(null);
-    // _navigate('/');
-    // <Logout />
+async function systemLogout() {
+    await logout();
 }
 
 
@@ -98,7 +97,7 @@ function Sidebar() {
                         <Link to='topup' />
                     </MenuItem>
                     <MenuItem icon={<BiLogOut />} active={false}
-                        onClick={() => { logout(_auth, _navigate) }}
+                        onClick={() => { systemLogout(_auth, _navigate) }}
                     >Logout</MenuItem>
                 </Menu>
             </SidebarFooter>

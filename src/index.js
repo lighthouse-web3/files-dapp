@@ -7,15 +7,15 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import { MoralisProvider } from "react-moralis";
+import NavigationSetter from "./utils/services/GlobalNavigation/NavigationSetter";
 
-
-console.log("sss");
 let appIdmoralis = process.env.REACT_APP_APP_ID;
 let serverUrlmoralis = process.env.REACT_APP_SERVER_URL;
 
 ReactDOM.render(
   <MoralisProvider appId={appIdmoralis} serverUrl={serverUrlmoralis}>
     <BrowserRouter>
+      <NavigationSetter />
       <Provider store={store}>
         <App />
       </Provider>
