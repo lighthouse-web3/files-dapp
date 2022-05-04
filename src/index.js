@@ -13,7 +13,6 @@ let serverUrlmoralis = process.env.REACT_APP_SERVER_URL;
 
 ReactDOM.render(
   <MoralisProvider appId={appIdmoralis} serverUrl={serverUrlmoralis}>
-    {console.log(appIdmoralis, serverUrlmoralis, "ENV-----")}
     <BrowserRouter>
       <Provider store={store}>
         <App />
