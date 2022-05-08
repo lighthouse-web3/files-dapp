@@ -40,7 +40,7 @@ export const initWeb3Auth = async () => {
     web3auth.configureAdapter(openloginAdapter);
     await web3auth.initModal(initParams);
   } catch (error) {
-    console.error(error);
+    console.error(error, "INSIDE WEB3AUTH");
   }
 };
 

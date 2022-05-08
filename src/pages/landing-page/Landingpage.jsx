@@ -41,13 +41,16 @@ function Landingpage() {
     };
 
     useEffect(() => {
-        console.log(web3auth)
+        setTimeout(function () {
+            console.log('init useefflect')
+            let loginDone = JSON.parse(localStorage.getItem('openlogin_store') || '{}');
+            loginDone['verifierId'] && loginWeb3Auth();
+            console.log('init useefflect - 2')
+        }, 3000);
+
         return () => { }
-    }, [])
-    // useEffect(() => {
-    //     loginWeb3Auth();
-    //     return () => { }
-    // }, [isW3AConnected])
+    })
+
 
 
 
