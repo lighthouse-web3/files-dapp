@@ -100,8 +100,8 @@ function Landingpage() {
                         <p className="m-1">Metamask</p>
                     </div> */}
                     <div className="loginBox ptr" onClick={loginWeb3Auth}>
-                    <img src="/icons/walletConnect.png" alt="walletConnect" />
-                    <p>Wallet Connect</p>
+                        <img src="/icons/logo.png" alt="walletConnect" />
+                        <p>Login</p>
                     </div>
                 </div>
             </div>
