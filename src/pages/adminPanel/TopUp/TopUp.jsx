@@ -44,40 +44,40 @@ function TopUp() {
     const inputRef = useRef(null)
 
     return <div className="topup">
-        <Overlay />
+        {/* <Overlay /> */}
         <div className="topupMain">
             <div className="topupMain__title">
-            <p>Topup Lighthouse Storage</p>
-        </div>
+                <p>Topup Lighthouse Storage</p>
+            </div>
 
             <div className="topupMain__description">
-            <div className="container">
-                <p>Add Quick Value Topups</p>
-                <div className="valueTopups">
-                    {
-                        topupValuePacks.map((item, i) =>
-                            <p className="planCard" key={i} onClick={() => { changeInput('value', item, inputRef, setTopupStorage) }}>
-                                {`$ ${item.toFixed(2)}`}
-                            </p>
-                        )
-                    }
+                <div className="container">
+                    <p>Add Quick Value Topups</p>
+                    <div className="valueTopups">
+                        {
+                            topupValuePacks.map((item, i) =>
+                                <p className="planCard" key={i} onClick={() => { changeInput('value', item, inputRef, setTopupStorage) }}>
+                                    {`$ ${item.toFixed(2)}`}
+                                </p>
+                            )
+                        }
+                    </div>
                 </div>
-            </div>
                 <div className="line"></div>
-            <div className="container">
-                <p>Add Quick Storage Topups</p>
-                <div className="valueTopups">
-                    {
-                        topupStoragePacks.map((item, i) =>
-                            <p className="planCard" key={i} onClick={() => { changeInput('storage', item, inputRef, setTopupStorage) }}>
-                                {`${item} GB`}
-                            </p>
-                        )
-                    }
+                <div className="container">
+                    <p>Add Quick Storage Topups</p>
+                    <div className="valueTopups">
+                        {
+                            topupStoragePacks.map((item, i) =>
+                                <p className="planCard" key={i} onClick={() => { changeInput('storage', item, inputRef, setTopupStorage) }}>
+                                    {`${item} GB`}
+                                </p>
+                            )
+                        }
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
 
             <div className="topupMain__content">
 
@@ -87,19 +87,19 @@ function TopUp() {
                     <span class="suffix">.00</span>
                 </div>
 
-            <button className="btn" onClick={() => {
-                addTopup(inputRef.current.value)
-            }}>
-                {
-                    topupStorage > 0 ? <span>
-                        Add {topupStorage + ' GB'} to Lighthouse
-                    </span> : <span>
-                        Add Storage to Lighthouse
-                    </span>
+                <button className="btn" onClick={() => {
+                    addTopup(inputRef.current.value)
+                }}>
+                    {
+                        topupStorage > 0 ? <span>
+                            Add {topupStorage + ' GB'} to Lighthouse
+                        </span> : <span>
+                            Add Storage to Lighthouse
+                        </span>
 
-                }
+                    }
 
-            </button>
+                </button>
 
             </div>
         </div>
