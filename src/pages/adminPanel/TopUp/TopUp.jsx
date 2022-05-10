@@ -48,6 +48,7 @@ function TopUp() {
         <div className="topupMain">
             <div className="topupMain__title">
                 <p>Topup Lighthouse Storage</p>
+                <button className="btn">Get 1.00 GB</button>
             </div>
 
             <div className="topupMain__description">
@@ -102,6 +103,17 @@ function TopUp() {
                 </button>
 
             </div>
+
+            {/* <Dialog open={shareDialogData != null ? true : false} onClose={() => { setShareDialogData(null) }}>
+                <FileShareDialog shareDialogData={shareDialogData} setShareDialogData={setShareDialogData} />
+            </Dialog> */}
+
+            {/* <div className="topupMain__tweeter">
+
+                <p>Get 1GB Free Storage</p>
+                <p>To request funds via Twitter, make a tweet with your Ethereum address pasted into the contents (surrounding text doesn't matter).</p>
+
+            </div> */}
         </div>
         <div className="topupDesign">
             <div className="pattern"></div>
