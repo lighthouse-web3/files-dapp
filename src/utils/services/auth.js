@@ -50,10 +50,4 @@ export function getSignMessage() {
   }
   return message;
 }
-export function getWeb3auth() {
-  let web3auth = null;
-  if (isLogin()) {
-    web3auth = JSON.parse(localStorage.getItem("authData"))["web3auth"];
-  }
-  return web3auth;
-}
+
