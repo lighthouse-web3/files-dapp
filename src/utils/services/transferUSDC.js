@@ -31,10 +31,15 @@ export async function SendTransaction() {
     chainInfo["decimal"]
   );
 
+  console.log(numberOfTokens, contract);
+
   try {
     const txResponse = await contract.transfer(receiverAddress, numberOfTokens);
-    const txReceipt = await txResponse.wait();
-    return txReceipt;
+    console.log(txResponse);
+
+    return txResponse;
+    // const txReceipt = await txResponse.wait();
+    // return txReceipt;
   } catch (error) {
     notify(error["data"]["message"], "error");
 
@@ -49,6 +54,7 @@ async function getContractInfo() {
   let contractObj = contractAddress.filter(
     (chain) => chain.chain === currentChain
   );
+  console.log("Chain", contractObj[0]);
   return contractObj[0];
 }
 

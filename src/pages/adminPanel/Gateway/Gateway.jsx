@@ -8,7 +8,9 @@ import { copyToClipboard } from '../../../utils/services/other';
 import { SendTransaction } from '../../../utils/services/transferUSDC';
 import './Gateway.scss'
 
+
 import { GoThumbsdown, GoThumbsup } from 'react-icons/go';
+import { MdContentCopy } from 'react-icons/md';
 
 
 const getData = async (setSubdomain, setInputTerm) => {
@@ -21,22 +23,35 @@ const getData = async (setSubdomain, setInputTerm) => {
         });
 }
 
-const createGateway = async (value) => {
-    SendTransaction().then((res) => {
-        if (value.length > 0 && res) {
-            axios.post(`${baseUrl}/api/gateway/add_subdomain`, {
-                "publicKey": getAddress(),
-                "subDomain": value,
-                "signedMessage": getSignMessage()
-            }).then((res) => {
-                console.log(res);
-                notify('Custom Gateway Created', 'success');
-            })
+const createGateway = async (value, transaction) => {
+    if (transaction) {
+        axios.post(`${baseUrl}/api/gateway/add_subdomain`, {
+            "publicKey": getAddress(),
+            "subDomain": value,
+            "signedMessage": getSignMessage()
+        }).then((res) => {
+            console.log(res);
+            notify('Custom Gateway Created', 'success');
+        })
+    }
+}
 
-        } else {
-            notify('Error', 'error')
-        }
-    })
+const createTransaction = async (value, setTxResponse, transaction) => {
+    if (value.length > 0) {
+        SendTransaction().then((res) => {
+            if (res) {
+                console.log(res);
+                setTxResponse(res['hash'] || 'error')
+                createGateway(value, transaction);
+            }
+        }, (err) => {
+            notify(err, 'error')
+        })
+
+    } else {
+        notify('Please Enter A valid Custom IPFS', 'error')
+    }
+
 }
 
 const checkSubdomain = async (value, setDomainAvailable) => {
@@ -47,6 +62,16 @@ const checkSubdomain = async (value, setDomainAvailable) => {
         }, (error) => {
             setDomainAvailable(true)
         });
+}
+
+const checkTransaction = async (setTransaction) => {
+    axios.get(`${baseUrl}/api/gateway/get_transaction_details?publicKey=${getAddress()}`)
+        .then(response => {
+            setTransaction(response['data'] || null)
+        }, (error) => {
+            setTransaction(null)
+        });
+
 }
 
 const checkFormat = (value) => {
@@ -62,6 +87,8 @@ function Gateway() {
     const [inputTerm, setInputTerm] = useState('')
     const [isFormatError, setFormatError] = useState(false)
     const [domainAvailable, setDomainAvailable] = useState(null)
+    const [txHash, setTxHash] = useState(null)
+    const [transaction, setTransaction] = useState(null)
 
     useEffect(() => {
         console.log(inputTerm, isFormatError)
@@ -69,12 +96,16 @@ function Gateway() {
         setFormatError(!checkFormat(inputTerm));
         const delayDebounceFn = setTimeout(async () => {
             !isFormatError && await checkSubdomain(inputTerm, setDomainAvailable);
-        }, 1000)
+        }, 2000)
         return () => clearTimeout(delayDebounceFn)
     }, [inputTerm]);
 
     useEffect(() => {
         getData(setSubdomain, setInputTerm);
+        checkTransaction(setTransaction)
+        setInterval(function () {
+            (transaction === null) && checkTransaction(setTransaction)
+        }, 20000)
         return () => {
         }
     }, []);
@@ -106,6 +137,38 @@ function Gateway() {
 
                 }
                 {
+                    (txHash) && <p className='availability'>
+                        Transaction in Process <br />
+                        {`Transaction Hash: ${txHash}`}&nbsp;
+                        <span className='link' onClick={() => { copyToClipboard(txHash + '') }} ><MdContentCopy /></span>
+                    </p>
+
+                }
+                {
+                    (transaction) &&
+                    <div className="transactionBox">
+                        <p className="title">Transaction Available</p>
+
+                        <table>
+                            <tr>
+                                <td>Chain</td>
+                                <td>{transaction.network}</td>
+                            </tr>
+                            <tr>
+                                <td>Transaction Hash</td>
+                                <td>{transaction.txHash}</td>
+                            </tr>
+                            <tr>
+                                <td>Amount</td>
+                                <td>{transaction.value}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+
+                }
+                {
                     (isFormatError) && <p className='errorMsg'>
                         Subdomain can only contain Letters, Numbers and Hyphen/minus sign (-)
                     </p>
@@ -121,13 +184,14 @@ function Gateway() {
                     )
                 }
                 <button disabled={!!(subdomain !== inputTerm && domainAvailable !== null && domainAvailable) ? false : true} className="btn" onClick={() => {
-                    createGateway(inputTerm)
+                    transaction ? createGateway(inputTerm, transaction) :
+                        createTransaction(inputTerm, setTxHash, transaction)
             }}>
                 {
                     subdomain ? <span>
                         Update IPFS Gateway
                     </span> : <span>
-                        Create IPFS Gateway
+                                Create IPFS Gateway ( 5 USDC )
                     </span>
 
                 }

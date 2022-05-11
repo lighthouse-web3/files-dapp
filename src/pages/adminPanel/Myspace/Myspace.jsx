@@ -102,7 +102,7 @@ function Myspace() {
                                     &nbsp;
                                     <span className="icon" onClick={() => { copyToClipboard(item.cid) }}><MdOutlineContentCopy /></span>
                                 </td>
-                                <td>{(item?.fileSizeInBytes / 1024).toFixed(1) + ' KB'}</td>
+                                <td>{bytesToString(item?.fileSizeInBytes)}</td>
                                 <td>{moment(item?.createdAt).format("DD-MM-YYYY h:mm:ss")}</td>
                             </tr>
                         )}

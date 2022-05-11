@@ -1,17 +1,17 @@
 export const contractAddress = [
   {
     chain: "fantom",
-    contractAddress: "0x049d68029688eAbF473097a2fC38ef61633A3C7A",
+    contractAddress: "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     decimal: 6,
   },
   {
     chain: "polygon",
-    contractAddress: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    contractAddress: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     decimal: 6,
   },
   {
     chain: "optimism",
-    contractAddress: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+    contractAddress: "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
     decimal: 6,
   },
   {
@@ -27,4 +27,4 @@ export const contractAddress = [
 ];
 
 export const receiverAddress = "0x56dE82f1CAE3FD7183FEf95A1427b77DC9984a54";
-export const tokenCost = "0.1";
+export const tokenCost = "5";
