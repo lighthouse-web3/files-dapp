@@ -7,13 +7,17 @@ import {
 import { getChainNetwork } from "./chainNetwork";
 import { usdtABI } from "../contract_abi/usdcABi";
 import { notify } from "./notification";
-import { web3auth } from "./web3auth";
+import {
+  currentWeb3AuthChain,
+  getWeb3AuthProvider,
+  web3auth,
+} from "./web3auth";
 
 export async function SendTransaction() {
   const send_abi = usdtABI;
-  const web3provider = await web3auth.connect();
+  const web3provider = await getWeb3AuthProvider();
   const provider = new ethers.providers.Web3Provider(web3provider);
-  // const provider = new ethers.providers.Web3Provider(window.ethereum);
+
   const signer = provider.getSigner();
   let chainInfo = await getContractInfo();
   const contract = new ethers.Contract(
@@ -39,7 +43,8 @@ export async function SendTransaction() {
 }
 
 async function getContractInfo() {
-  let currentChain = await getChainNetwork();
+  // let currentChain = await getChainNetwork();
+  let currentChain = currentWeb3AuthChain;
 
   let contractObj = contractAddress.filter(
     (chain) => chain.chain === currentChain

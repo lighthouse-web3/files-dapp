@@ -45,5 +45,25 @@ export const availableNetworks = {
   },
   ethereum: {
     chainId: `0x${Number(1).toString(16)}`,
+    chainName: "Ethereum Mainnet",
+    nativeCurrency: {
+      name: "Ethereum",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["https://mainnet.infura.io/v3/3d635004c08743daae3a5cb579559dbd"],
+    blockExplorerUrls: ["https://etherscan.io"],
   },
 };
+
+
+// const ethChainConfig = {
+//   chainNamespace: CHAIN_NAMESPACES.EIP155,
+//   chainId: `0x${Number(1).toString(16)}`,
+//   rpcTarget: `https://mainnet.infura.io/v3/3d635004c08743daae3a5cb579559dbd`,
+//   displayName: "mainnet",
+//   blockExplorer:
+//     "wss://mainnet.infura.io/ws/v3/3d635004c08743daae3a5cb579559dbd",
+//   ticker: "ETH",
+//   tickerName: "Ethereum",
+// };

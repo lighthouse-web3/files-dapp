@@ -17,7 +17,7 @@ function Header() {
             </div>
             <div className="header__chainBox">
                 <div className="container">
-                    {/* <ChainSelect /> */}
+                    <ChainSelect />
                 </div>
             </div>
             <div className="header__infoBox">

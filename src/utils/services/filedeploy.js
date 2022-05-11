@@ -6,12 +6,15 @@ import { getChainNetwork } from "./chainNetwork";
 import { notify } from "./notification";
 import { getAddress, getSignMessage } from "./auth";
 import { baseUrl } from "../config/urls";
-import { web3auth } from "./web3auth";
+import {
+  currentWeb3AuthChain,
+  getWeb3AuthProvider,
+  web3auth,
+} from "./web3auth";
 
 export const sign_message = async () => {
-  const web3provider = await web3auth.connect();
+  const web3provider = await getWeb3AuthProvider();
   const provider = new ethers.providers.Web3Provider(web3provider);
-  // const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const address = await signer.getAddress();
   const res = await axios.get(
@@ -24,7 +27,7 @@ export const sign_message = async () => {
     signed_message: signed_message,
     address: await signer.getAddress(),
   };
-};;
+};
 
 export const execute_transaction = async (
   cid,
@@ -54,7 +57,7 @@ export const uploadFile = async (
 ) => {
   uploadedFile.persist();
   setUploadProgress(10);
-  let network = await getChainNetwork();
+  let network = currentWeb3AuthChain;
   if (network) {
     try {
       setUploadProgress(20);
@@ -90,7 +93,7 @@ export const uploadFolder = async (
   _authDetails
 ) => {
   uploadedFile.persist();
-  let network = await getChainNetwork();
+  let network = currentWeb3AuthChain;
   setUploadProgress(10);
   if (network) {
     try {

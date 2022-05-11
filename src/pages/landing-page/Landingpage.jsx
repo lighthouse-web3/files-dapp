@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Landingpage.scss";
 import { BsDiscord, BsFacebook, BsTwitter } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { authAC } from "../../store/action-creators";
@@ -9,11 +9,16 @@ import axios from 'axios';
 import { ethers } from "ethers";
 import { login } from "../../utils/services/auth";
 import { baseUrl } from "../../utils/config/urls";
-import { subscribeAuthEvents, web3auth } from "../../utils/services/web3auth";
+import { getWeb3AuthProvider, web3auth } from "../../utils/services/web3auth";
+import { AiOutlineLogin } from "react-icons/ai";
+import History from "../../utils/services/GlobalNavigation/navigationHistory";
 
 function Landingpage() {
     const dispatch = useDispatch();
     const _auth = bindActionCreators(authAC, dispatch);
+    const _location = useLocation();
+
+
     const _currentAuth = useSelector((store) => store.auth);
     const [isW3AConnected, setw3AConnected] = useState(false);
 
@@ -23,8 +28,9 @@ function Landingpage() {
             console.log("web3auth not initialized yet");
             return;
         }
-        const web3provider = await web3auth.connect();
+        const web3provider = await getWeb3AuthProvider();
         const provider = new ethers.providers.Web3Provider(web3provider);
+
         const signer = provider.getSigner();
         let address = await signer.getAddress();
         const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
@@ -34,22 +40,18 @@ function Landingpage() {
             signed_message: signed_message,
             address: await signer.getAddress()
         }
-
         _auth.setAuthData(obj);
         login(obj.address, obj.signed_message);
-        return;
     };
 
     useEffect(() => {
-        setTimeout(function () {
-            console.log('init useefflect')
-            let loginDone = JSON.parse(localStorage.getItem('openlogin_store') || '{}');
-            loginDone['verifierId'] && loginWeb3Auth();
-            console.log('init useefflect - 2')
-        }, 3000);
+        localStorage.getItem('reloadKey') ? localStorage.removeItem('reloadKey') : localStorage.setItem('reloadKey', '1');
+
+        let isReloaded = localStorage.getItem('reloadKey');
+        (isReloaded) && (_location?.state?.from === 'logout') && window.location.reload()
 
         return () => { }
-    })
+    }, [])
 
 
 
@@ -100,7 +102,10 @@ function Landingpage() {
                         <p className="m-1">Metamask</p>
                     </div> */}
                     <div className="loginBox ptr" onClick={loginWeb3Auth}>
-                        <img src="/icons/logo.png" alt="walletConnect" />
+                        <div className="icon" style={{ fontSize: '2rem' }}>
+                            <AiOutlineLogin />
+                        </div>
+                        {/* <img src="/icons/logo.png" alt="walletConnect" /> */}
                         <p>Login</p>
                     </div>
                 </div>

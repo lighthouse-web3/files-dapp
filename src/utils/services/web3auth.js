@@ -2,38 +2,26 @@ import { ADAPTER_EVENTS } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
-
-const ethChainConfig = {
-  chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: `0x${Number(1).toString(16)}`,
-  rpcTarget: `https://mainnet.infura.io/v3/3d635004c08743daae3a5cb579559dbd`,
-  displayName: "mainnet",
-  blockExplorer:
-    "wss://mainnet.infura.io/ws/v3/3d635004c08743daae3a5cb579559dbd",
-  ticker: "ETH",
-  tickerName: "Ethereum",
-};
+import { availableNetworks } from "../config/availableNetworks";
 
 let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 export var web3auth = undefined;
+export var web3authProvider = undefined;
+export var currentWeb3AuthChain = "polygon";
 
 export const initWeb3Auth = async () => {
   try {
     const initParams = {};
-
     const web3AuthCtorParams = {
       clientId,
-      chainConfig: ethChainConfig,
+      chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
       uiConfig: {
         theme: "dark",
         loginMethodsOrder: ["facebook", "google", "github", "discord"],
         appLogo: "/logo.png",
       },
     };
-
     web3auth = new Web3Auth(web3AuthCtorParams);
-    console.log(window.location.host, "HOST");
-
     const openloginAdapter = new OpenloginAdapter({
       adapterSettings: {
         clientId,
@@ -49,35 +37,15 @@ export const initWeb3Auth = async () => {
       },
       loginSettings: {
         relogin: true,
-        redirectUrl: `https://${window.location.host}/dashboard`,
+        redirectUrl: `http://${window.location.host}/dashboard`,
       },
-      chainConfig: ethChainConfig,
+      chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
     });
-
     web3auth.configureAdapter(openloginAdapter);
     await web3auth.initModal(initParams);
   } catch (error) {
     console.error(error, "INSIDE WEB3AUTH");
   }
-};
-
-export const subscribeAuthEvents = (setStatus) => {
-  web3auth.on(ADAPTER_EVENTS.CONNECTED, (data) => {
-    console.log("Yeah!, you are successfully logged in", data);
-    setStatus && setStatus(data);
-  });
-
-  web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
-    console.log("connecting");
-  });
-
-  web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
-    console.log("disconnected");
-  });
-
-  web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
-    console.error("some error or user has cancelled login request", error);
-  });
 };
 
 export const checkWeb3AuthConnection = () => {
@@ -93,4 +61,36 @@ export const web3authLogout = async () => {
     return;
   }
   await web3auth.logout();
+};
+
+export const getWeb3AuthChainConfig = (chainName) => {
+  let chainData = availableNetworks[chainName];
+  if (chainData) {
+    let chainConfig = {
+      chainNamespace: CHAIN_NAMESPACES.EIP155,
+      chainId: chainData.chainId,
+      rpcTarget: chainData.rpcUrls,
+      displayName: chainData.chainName,
+      blockExplorer: chainData.blockExplorerUrls,
+      ticker: chainData?.nativeCurrency?.symbol,
+      tickerName: chainData?.nativeCurrency?.name,
+    };
+    return chainConfig;
+  } else {
+    console.log("Invalid Chain Name");
+    return;
+  }
+};
+
+export const changeWeb3AuthChain = (chainName) => {
+  currentWeb3AuthChain = chainName;
+  initWeb3Auth();
+};
+
+export const getWeb3AuthProvider = async () => {
+  if (web3authProvider) {
+  } else {
+    web3authProvider = await web3auth.connect();
+  }
+  return web3authProvider;
 };
