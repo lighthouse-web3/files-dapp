@@ -1,11 +1,9 @@
-import "./App.scss";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Landingpage from "./pages/landing-page/Landingpage";
 import AdminLayout from "./pages/adminPanel/AdminLayout/AdminLayout";
 import Myspace from "./pages/adminPanel/Myspace/Myspace";
 import Gateway from "./pages/adminPanel/Gateway/Gateway";
 import NoPage from "./pages/NoPage/NoPage";
-import "react-toastify/dist/ReactToastify.css";
 import MintNFT from "./pages/adminPanel/MintNFT/MintNFT";
 import UploadNew from "./pages/adminPanel/uploadNew/uploadNew";
 import RequireAuth from "./utils/RequireAuth";
@@ -13,8 +11,16 @@ import Collection from "./pages/adminPanel/Collection/Collection";
 import ViewNFT from "./pages/adminPanel/ViewNFT/ViewNFT";
 import Apikey from "./pages/adminPanel/ApiKey/Apikey";
 import TopUp from "./pages/adminPanel/TopUp/TopUp";
+import "./App.scss";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { initWeb3Auth } from "./utils/services/web3auth";
 
 function App() {
+  useEffect(() => {
+    initWeb3Auth();
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Landingpage />}></Route>

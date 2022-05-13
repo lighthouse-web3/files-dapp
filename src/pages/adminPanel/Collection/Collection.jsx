@@ -32,18 +32,25 @@ function Collection() {
     async function getNFT() {
         const address = userId;
         const options = { chain: 'matic', address: address };
-     // console.log(Web3Api);
-        const polygonNFTs = await Web3Api.account.getNFTs(options);
-        const userEthNFTs = await Web3Api.account.getNFTs({ address: address });
-     // console.log('mainnetnfts', userEthNFTs);
-     // console.log('nfts:', polygonNFTs);
-        let totalCollection = [...userEthNFTs.result, ...polygonNFTs.result];
-     // console.log(totalCollection);
+        let totalCollection = []
+        try {
+            const polygonNFTs = await Web3Api.account.getNFTs(options);
+            const userEthNFTs = await Web3Api.account.getNFTs({ address: address });
+
+            console.log(polygonNFTs, userEthNFTs);
+            totalCollection = [...userEthNFTs.result, ...polygonNFTs.result];
+
+        } catch (err) {
+            setResponseReceived(true);
+        }
+
+
+
+
         totalCollection.forEach(item => {
             let meta = JSON.parse(item?.metadata || '{}');
             meta['name'] && (item.metadata = meta)
         })
-     // console.log(totalCollection);
         _nftAC.setNFTData(totalCollection);
         setCollection(totalCollection);
         setOrignalCollection(totalCollection)
