@@ -32,12 +32,12 @@ function Myspace() {
 
     useEffect(() => {
         getData()
-        window.ethereum.on("chainChanged", () => {
-            getData()
-        });
-        return () => {
-            window.ethereum.removeListener("chainChanged", () => { });
-        };
+        // window.ethereum.on("chainChanged", () => {
+        //     getData()
+        // });
+        // return () => {
+        //     window.ethereum.removeListener("chainChanged", () => { });
+        // };
     }, []);
 
     const setTableItemsLength = () => {

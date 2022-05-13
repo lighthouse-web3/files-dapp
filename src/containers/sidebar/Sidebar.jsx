@@ -12,7 +12,6 @@ import {
 import { AiOutlinePlus, AiOutlineGateway } from 'react-icons/ai';
 import { MdFolderShared } from 'react-icons/md';
 import { BiLogOut } from 'react-icons/bi';
-import { HiOutlineDocument } from 'react-icons/hi';
 import { BsCollection } from 'react-icons/bs';
 import { AiOutlineApi } from 'react-icons/ai';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -22,12 +21,12 @@ import { authAC, balanceAC } from '../../store/action-creators';
 import { getBalance } from '../../utils/services/filedeploy';
 import { notify } from '../../utils/services/notification';
 import { bytesToString } from '../../utils/services/other';
+import { logout } from '../../utils/services/auth';
 
 
 
-function logout(_auth, _navigate) {
-    _auth.setAuthData(null);
-    _navigate('/');
+async function systemLogout() {
+    await logout();
 }
 
 
@@ -98,11 +97,12 @@ function Sidebar() {
                         <Link to='topup' />
                     </MenuItem>
                     <MenuItem icon={<BiLogOut />} active={false}
-                        onClick={() => { logout(_auth, _navigate) }}
+                        onClick={() => { systemLogout(_auth, _navigate) }}
                     >Logout</MenuItem>
                 </Menu>
             </SidebarFooter>
         </ProSidebar>
+
     );
 }
 

@@ -4,6 +4,7 @@ import lighthouse from "lighthouse-web3";
 import axios from 'axios';
 import { notify } from '../../utils/services/notification';
 import { getChainNetwork } from '../../utils/services/chainNetwork';
+import { currentWeb3AuthChain } from '../../utils/services/web3auth';
 
 
 
@@ -18,7 +19,7 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
 
     const uploadFile = async () => {
         // setUploadProgress(10);
-        let network = await getChainNetwork()
+        let network = currentWeb3AuthChain
 
         if (network) {
             try {
