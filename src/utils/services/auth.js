@@ -31,12 +31,9 @@ export function isLogin() {
 }
 
 export async function logout() {
-  let walletConnected = JSON.parse(
-    localStorage.getItem("openlogin_store") || "{}"
-  );
-  walletConnected?.verifierId && (await web3auth.logout());
-
-  // await web3auth.logout();
+  if (web3auth.provider) {
+    await web3auth.logout();
+  }
   localStorage.clear();
   History.push("/", { state: { from: "logout" } });
 }
