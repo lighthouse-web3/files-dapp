@@ -11,7 +11,6 @@ export var currentWeb3AuthChain = "polygon";
 
 export const initWeb3Auth = async () => {
   try {
-    const initParams = {};
     const web3AuthCtorParams = {
       clientId,
       chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
@@ -36,13 +35,14 @@ export const initWeb3Auth = async () => {
         },
       },
       loginSettings: {
-        relogin: true,
-        redirectUrl: `http://${window.location.host}/dashboard`,
+        relogin: false,
+        redirectUrl: `https://${window.location.host}/dashboard`,
       },
       chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
     });
     web3auth.configureAdapter(openloginAdapter);
-    await web3auth.initModal(initParams);
+    console.log(openloginAdapter);
+    await web3auth.initModal();
   } catch (error) {
     console.error(error, "INSIDE WEB3AUTH");
   }

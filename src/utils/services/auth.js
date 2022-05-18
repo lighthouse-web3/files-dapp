@@ -34,7 +34,7 @@ export async function logout() {
   if (web3auth.provider) {
     await web3auth.logout();
   }
-  localStorage.clear();
+  localStorage.removeItem("authData");
   History.push("/", { state: { from: "logout" } });
 }
 
