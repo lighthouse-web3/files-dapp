@@ -1,4 +1,7 @@
-export function login(address, signed_message, _navigate) {
+import History from "./GlobalNavigation/navigationHistory";
+import { web3auth } from "./web3auth";
+
+export function login(address, signedMessage) {
   let expirationDate = new Date();
   expirationDate = expirationDate.setDate(expirationDate.getDate() + 7);
   localStorage.setItem(
@@ -6,21 +9,33 @@ export function login(address, signed_message, _navigate) {
     JSON.stringify({
       userAddress: address,
       expirationDate: expirationDate,
-      signedMessage: signed_message,
+      signedMessage: signedMessage,
     })
   );
-  _navigate("/dashboard");
+  History.navigate("/dashboard");
 }
 
 export function isLogin() {
   let authData = JSON.parse(localStorage.getItem("authData") || "{}");
-  if (authData?.["userAddress"] && authData?.["expirationDate"]) {
+  if (
+    authData?.["userAddress"] &&
+    authData?.["expirationDate"] &&
+    authData?.["signedMessage"]
+  ) {
     let currentDate = new Date();
     let expirationDate = new Date(authData?.["expirationDate"]);
     return expirationDate.getTime() > currentDate.getTime() ? true : false;
   } else {
     return false;
   }
+}
+
+export async function logout() {
+  if (web3auth.provider) {
+    await web3auth.logout();
+  }
+  localStorage.removeItem("authData");
+  History.push("/", { state: { from: "logout" } });
 }
 
 export function getAddress() {
@@ -38,6 +53,3 @@ export function getSignMessage() {
   return message;
 }
 
-export function logout() {
-  localStorage.clear();
-}
