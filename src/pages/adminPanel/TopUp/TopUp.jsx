@@ -1,6 +1,8 @@
+import { Dialog } from '@material-ui/core';
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import Overlay from '../../../containers/Overlay/Overlay';
+import TweeterTopupDialog from '../../../containers/tweeterTopUpDialog/TweeterTopupDialog';
 import { topupAmount, topupStoragePacks, topupValuePacks } from '../../../utils/config/topupConfig';
 import { baseUrl } from '../../../utils/config/urls';
 import { getAddress, getSignMessage } from '../../../utils/services/auth';
@@ -41,6 +43,7 @@ const changeInput = (type, value, inputRef, setTopupStorage) => {
 function TopUp() {
 
     const [topupStorage, setTopupStorage] = useState(0);
+    const [tweeterTopup, setTweeterTopup] = useState(false);
     const inputRef = useRef(null)
 
     return <div className="topup">
@@ -48,7 +51,7 @@ function TopUp() {
         <div className="topupMain">
             <div className="topupMain__title">
                 <p>Topup Lighthouse Storage</p>
-                <button className="btn">Get 1.00 GB</button>
+                <button className="btn" onClick={() => { setTweeterTopup(true) }}>Get 1.00 GB</button>
             </div>
 
             <div className="topupMain__description">
@@ -104,9 +107,9 @@ function TopUp() {
 
             </div>
 
-            {/* <Dialog open={shareDialogData != null ? true : false} onClose={() => { setShareDialogData(null) }}>
-                <FileShareDialog shareDialogData={shareDialogData} setShareDialogData={setShareDialogData} />
-            </Dialog> */}
+            <Dialog open={tweeterTopup} onClose={() => { setTweeterTopup(false) }}>
+                <TweeterTopupDialog />
+            </Dialog>
 
             {/* <div className="topupMain__tweeter">
 

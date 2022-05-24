@@ -36,7 +36,9 @@ export const initWeb3Auth = async () => {
       },
       loginSettings: {
         relogin: false,
-        redirectUrl: `https://${window.location.host}/dashboard`,
+        redirectUrl: `${
+          window.location.host.includes("localhost") ? "http" : "https"
+        }://${window.location.host}/dashboard`,
       },
       chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
     });
