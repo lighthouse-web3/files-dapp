@@ -14,6 +14,7 @@ import { MdFolderShared } from 'react-icons/md';
 import { BiLogOut } from 'react-icons/bi';
 import { BsCollection } from 'react-icons/bs';
 import { AiOutlineApi } from 'react-icons/ai';
+import { HiOutlineDocument } from 'react-icons/hi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -81,8 +82,10 @@ function Sidebar() {
 
                 <MenuItem icon={<AiOutlineGateway />} active={currentPage === '/dashboard/gateway' ? true : false}
                 >Gateway <Link to='gateway' /></MenuItem>
-                {/* <MenuItem icon={<HiOutlineDocument />} active={currentPage === '/dashboard/mintNFT' ? true : false}
-                >Mint NFT <Link to='mintNFT' /></MenuItem> */}
+                <MenuItem icon={<HiOutlineDocument />} onClick={() => {
+                    window.open('https://lighthouse-storage.gitbook.io/lighthouse/', '_blank')
+                }}
+                >Documentation </MenuItem>
             </Menu>
             <SidebarContent>
             </SidebarContent>
