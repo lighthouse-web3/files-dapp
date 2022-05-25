@@ -111,12 +111,7 @@ function TopUp() {
                 <TweeterTopupDialog />
             </Dialog>
 
-            {/* <div className="topupMain__tweeter">
 
-                <p>Get 1GB Free Storage</p>
-                <p>To request funds via Twitter, make a tweet with your Ethereum address pasted into the contents (surrounding text doesn't matter).</p>
-
-            </div> */}
         </div>
         <div className="topupDesign">
             <div className="pattern"></div>

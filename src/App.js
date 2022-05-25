@@ -4,7 +4,7 @@ import AdminLayout from "./pages/adminPanel/AdminLayout/AdminLayout";
 import Myspace from "./pages/adminPanel/Myspace/Myspace";
 import Gateway from "./pages/adminPanel/Gateway/Gateway";
 import NoPage from "./pages/NoPage/NoPage";
-import MintNFT from "./pages/adminPanel/MintNFT/MintNFT";
+
 import UploadNew from "./pages/adminPanel/uploadNew/uploadNew";
 import RequireAuth from "./utils/RequireAuth";
 import Collection from "./pages/adminPanel/Collection/Collection";
@@ -38,7 +38,7 @@ function App() {
         <Route path="collection" element={<Collection />} />
         <Route path="apikey" element={<Apikey />} />
         <Route path="viewNFT/:id" element={<ViewNFT />} />
-        <Route path="mintNFT" element={<MintNFT />} />
+
         <Route path="uploadNew" element={<UploadNew />} />
       </Route>
       <Route path="*" element={<NoPage />} />

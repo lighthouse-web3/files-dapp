@@ -10,17 +10,13 @@
     }
     input[type="text"]{
       height: 30px;
-      width: 50%;
+      width: 80%;
     }
-    .btn{
-      border: none;
-      padding: 10px 30px;
-      font-size: 1rem;
-      border-radius: 10px;
-      color: white;
-      font-weight: 600;
-      font-family: inherit;
-      background: var(--primary-blue);
 
-    }
+  }
+
+  .ActionContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
