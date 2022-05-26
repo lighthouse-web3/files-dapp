@@ -74,8 +74,10 @@
 
     .footer{
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       padding-left: 10px;
+      justify-content: space-between;
+      align-items: center;
       &__heading{
         font-size: 0.8rem;
         border-bottom: 1px solid grey;
@@ -99,6 +101,20 @@
           }
         }
       }
+
+      &__icons{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        :nth-child(n){
+          color: white;
+          margin-right: 10px;
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+
+
+      }
     }
   }
 
@@ -106,7 +122,6 @@
     z-index: 3;
     color: white;
     width: 30%;
-   
     background: #4452fe;
     position: relative;
 

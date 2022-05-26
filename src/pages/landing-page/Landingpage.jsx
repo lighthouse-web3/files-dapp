@@ -74,23 +74,29 @@ function Landingpage() {
                         <br /> in <span className="gradient__text">Metaverse</span>
                     </p>
 
-                    <div className="icons">
+
+                </div>
+                <div className="footer">
+
+                    <section>
+                        <div className="footer__heading">
+                            Supported Chains:
+                        </div>
+
+                        <div className="footer__chains">
+                            <img src="/chain_icons/binance.png" alt="binanceLogo" />
+                            <img src="/chain_icons/polygon.png" alt="polygonLogo" />
+                            <img src="/chain_icons/fantom.png" alt="fantomLogo" />
+                            <img src="/chain_icons/ethereum.png" alt="ethereum" />
+                            <img src="/chain_icons/optimism.svg" alt="optimismLogo" />
+                        </div>
+                    </section>
+
+                    <div className="footer__icons">
                         <a href="https://discord.com/invite/c4a4CGCdJG" target="_blank" rel="noreferrer"> <BsDiscord /></a>
                         <a href="https://twitter.com/lighthouseweb3" target="_blank" rel="noreferrer"> <BsTwitter /></a>
                     </div>
-                </div>
-                <div className="footer">
-                    <div className="footer__heading">
-                        Supported Chains:
-                    </div>
 
-                    <div className="footer__chains">
-                        <img src="/chain_icons/binance.png" alt="binanceLogo" />
-                        <img src="/chain_icons/polygon.png" alt="polygonLogo" />
-                        <img src="/chain_icons/fantom.png" alt="fantomLogo" />
-                        <img src="/chain_icons/ethereum.png" alt="ethereum" />
-                        <img src="/chain_icons/optimism.svg" alt="optimismLogo" />
-                    </div>
 
                 </div>
             </div>
@@ -98,18 +104,14 @@ function Landingpage() {
                 <div className="landingPage__loginBar_pattern"></div>
 
                 <div className="landingPage__loginBar_iconsContainer">
-                    {/* <div className="loginBox ptr" onClick={() => sign_message(setUserAddress, _navigate)}>
-                        <img src="/icons/metamask.png" alt="metamaskIcon" />
-                        <p className="m-1">Metamask</p>
-                    </div> */}
                     <div className="loginBox ptr" onClick={loginWeb3Auth}>
                         <div className="icon" style={{ fontSize: '2rem' }}>
                             <AiOutlineLogin />
                         </div>
-                        {/* <img src="/icons/logo.png" alt="walletConnect" /> */}
                         <p>Login</p>
                     </div>
                 </div>
+
             </div>
         </div>
     );
