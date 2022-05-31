@@ -15,6 +15,7 @@ import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { initWeb3Auth } from "./utils/services/web3auth";
+import Profile from "./pages/adminPanel/Profile/Profile";
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
         <Route path="collection" element={<Collection />} />
         <Route path="apikey" element={<Apikey />} />
         <Route path="viewNFT/:id" element={<ViewNFT />} />
+        <Route path="profile" element={<Profile />} />
 
         <Route path="uploadNew" element={<UploadNew />} />
       </Route>

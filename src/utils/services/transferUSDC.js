@@ -4,13 +4,13 @@ import {
   receiverAddress,
   contractAddress,
 } from "../config/tokenTransferData";
-import { getChainNetwork } from "./chainNetwork";
 import { usdtABI } from "../contract_abi/usdcABi";
+import { erc20ABI } from "../contract_abi/erc20Abi";
 import { notify } from "./notification";
 import {
+  changeWeb3AuthChain,
   currentWeb3AuthChain,
   getWeb3AuthProvider,
-  web3auth,
 } from "./web3auth";
 
 export async function SendTransaction() {
@@ -35,11 +35,7 @@ export async function SendTransaction() {
 
   try {
     const txResponse = await contract.transfer(receiverAddress, numberOfTokens);
-    console.log(txResponse);
-
     return txResponse;
-    // const txReceipt = await txResponse.wait();
-    // return txReceipt;
   } catch (error) {
     notify(error["data"]["message"], "error");
 
@@ -48,25 +44,31 @@ export async function SendTransaction() {
 }
 
 async function getContractInfo() {
-  // let currentChain = await getChainNetwork();
   let currentChain = currentWeb3AuthChain;
-
   let contractObj = contractAddress.filter(
     (chain) => chain.chain === currentChain
   );
-  console.log("Chain", contractObj[0]);
   return contractObj[0];
 }
 
-// async function getCurrentBlock() {
-//   let currentBlock = await provider.getBlockNumber();
-//   console.log(currentBlock);
-//   return currentBlock;
-// }
-
-// async function getBalance(wallet) {
-//   let balance = await provider.getBalance(wallet);
-//   // we use the code below to convert the balance from wei to eth
-//   balance = ethers.utils.formatEther(balance);
-//   console.log(balance);
-// }
+export const getCoinBalance = async (coinAddress) => {
+  let currentChain = currentWeb3AuthChain;
+  let balance = 0;
+  if (currentChain === "ethereum") {
+    const ERC20ABI = erc20ABI;
+    const web3provider = await getWeb3AuthProvider();
+    const tokenContractAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
+    const provider = new ethers.providers.Web3Provider(web3provider);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      tokenContractAddress,
+      ERC20ABI,
+      signer
+    );
+    const address = await signer.getAddress();
+    balance = (await contract.balanceOf(address)).toString();
+  } else {
+    // changeWeb3AuthChain("ethereum");
+  }
+  return balance;
+};

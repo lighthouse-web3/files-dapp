@@ -4,10 +4,11 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 import { availableNetworks } from "../config/availableNetworks";
 
+
 let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 export var web3auth = undefined;
 export var web3authProvider = undefined;
-export var currentWeb3AuthChain = "polygon";
+export var currentWeb3AuthChain = "ethereum";
 
 export const initWeb3Auth = async () => {
   try {
@@ -24,7 +25,8 @@ export const initWeb3Auth = async () => {
     const openloginAdapter = new OpenloginAdapter({
       adapterSettings: {
         clientId,
-        network: "mainnet",
+        network: "testnet",
+        // network: "mainnet",
         uxMode: "popup",
         whitelabel: {
           name: "Lighthouse",
@@ -93,6 +95,8 @@ export const getWeb3AuthProvider = async () => {
   if (web3authProvider) {
   } else {
     web3authProvider = await web3auth.connect();
+    console.log(web3authProvider, "Web3auth Provider");
   }
   return web3authProvider;
 };
+

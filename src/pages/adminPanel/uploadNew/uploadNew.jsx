@@ -65,7 +65,6 @@ function UploadNew() {
                 <div className="uploadNew__title">
                     <p>Upload New</p>
                 </div>
-                {/* Disclaimer */}
                 {
                     isDisclaimer && <DisclaimerBar title={'Disclaimer'} content={'Lighthouse currently deploys the files on public IPFS, uploading private files is not advisable'} setIsDisclaimer={setIsDisclaimer} />
                 }

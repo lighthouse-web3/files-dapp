@@ -31,13 +31,7 @@ function Myspace() {
 
 
     useEffect(() => {
-        getData()
-        // window.ethereum.on("chainChanged", () => {
-        //     getData()
-        // });
-        // return () => {
-        //     window.ethereum.removeListener("chainChanged", () => { });
-        // };
+        getData();
     }, []);
 
     const setTableItemsLength = () => {
@@ -49,7 +43,6 @@ function Myspace() {
     const getData = async () => {
         axios.get(`${baseUrl}/api/user/get_uploads?publicKey=${getAddress()}`)
             .then(response => {
-             // console.log(response);
                 if (response['status'] === 200) {
                     _fileAC.setFileData(response['data']);
                     setCurrentItems(response['data']);
@@ -58,7 +51,6 @@ function Myspace() {
                     setTableItemsLength();
                 }
             }, (error) => {
-             // console.log(error);
                 setResponseReceived(true);
             });
 

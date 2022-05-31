@@ -64,14 +64,19 @@ function Apikey() {
     };
 
     const downloadFile = (text) => {
-        const element = document.createElement("a");
-        const file = new Blob([text], {
-            type: "text/plain"
-        });
-        element.href = URL.createObjectURL(file);
-        element.download = "lighthouse_API_Key.txt";
-        document.body.appendChild(element);
-        element.click();
+        try {
+            const element = document.createElement("a");
+            const file = new Blob([text], {
+                type: "text/plain"
+            });
+            element.href = URL.createObjectURL(file);
+            element.download = "lighthouse_API_Key.txt";
+            document.body.appendChild(element);
+            element.click();
+
+        } catch (err) {
+            console.log(err)
+        }
     }
     return (
         <>
