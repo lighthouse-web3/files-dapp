@@ -72,6 +72,10 @@
       }
     }
 
+    .loginBox{
+      display: none;
+    }
+
     .footer{
       display: flex;
       flex-direction: row;
@@ -165,4 +169,82 @@
         }
     }
   }
+}
+
+
+@media screen and (max-width: 800px) {
+
+  .landingPage{
+    &__sideBar{
+      width: 100%;
+      padding: 1rem;
+      .header{
+        height: auto;
+        img{
+          height: 3.5rem;
+        }
+        p{
+          font-size: 1.5rem;
+        }
+    }
+
+    .title{
+      text-align: center;
+      margin: 10px;
+      p{
+        font-size: 2.5rem;
+      }
+    }
+
+    .loginBox{
+      width: 100%;
+      display: flex;
+      justify-content: center;   
+      align-items: center;
+      border: 1px solid;
+      padding: 10px 0px;
+      border-radius: 10px;
+      .loginBtn{
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        
+        p{
+          margin: 0;
+          margin-left: 5px;
+        }
+      }
+     
+    }
+  }
+
+    &__loginBar{
+      display: none;
+    }
+
+    &__overlayRings{
+      width: 100%;
+    }
+
+    .footer{
+      flex-direction: column;
+      align-items: flex-start;
+      &__heading{
+        font-size: 0.8rem;
+      }
+      &__chains{
+        img{
+          height: 1rem;
+        }
+      }
+
+      &__icons{
+       display: none;
+      }
+    }
+
+  }
+ 
 }

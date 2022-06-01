@@ -20,11 +20,4 @@ export const stableCoinContractAddress = [
     logo: "/chain_icons/dai_logo.png",
     chain: ["ethereum"],
   },
-  //   {
-  //     name: "Matic Token",
-  //     contractAddress: "0x0000000000000000000000000000000000001010",
-  //     abb: "Matic",
-  //     logo: "/chain_icons/dai_logo.png",
-  //     chain: ["polygon"],
-  //   },
 ];

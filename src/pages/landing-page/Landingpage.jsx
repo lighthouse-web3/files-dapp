@@ -11,7 +11,7 @@ import { login } from "../../utils/services/auth";
 import { baseUrl } from "../../utils/config/urls";
 import { getWeb3AuthProvider, web3auth } from "../../utils/services/web3auth";
 import { AiOutlineLogin } from "react-icons/ai";
-import History from "../../utils/services/GlobalNavigation/navigationHistory";
+
 
 function Landingpage() {
     const dispatch = useDispatch();
@@ -74,6 +74,13 @@ function Landingpage() {
                         <br /> in <span className="gradient__text">Metaverse</span>
                     </p>
 
+
+                </div>
+                <div className="loginBox" >
+                    <div className="loginBtn ptr" onClick={loginWeb3Auth}>
+                        <AiOutlineLogin />
+                        <p>Login</p>
+                    </div>
 
                 </div>
                 <div className="footer">
