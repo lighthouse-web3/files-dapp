@@ -51,7 +51,7 @@ function TopUp() {
         <div className="topupMain">
             <div className="topupMain__title">
                 <p>Topup Lighthouse Storage</p>
-                <button className="btn" onClick={() => { setTweeterTopup(true) }}>Get 1.00 GB</button>
+                <button className="btn" onClick={() => { setTweeterTopup(true) }}>Get 1 GB for free</button>
             </div>
 
             <div className="topupMain__description">

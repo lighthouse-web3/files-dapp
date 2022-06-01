@@ -41,23 +41,8 @@
 
   &__infoBox {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    padding-right: 1rem;
-    width: fit-content;
-    color: white;
-
-    &:nth-child(n) {
-      font-size: 1rem;
-    }
-
-    .userName {
-      font-weight: 400;
-      // width: 30%;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-    }
   }
 }
 

@@ -13,7 +13,7 @@ function Profile() {
     const [userBalance, setUserBalance] = useState(null);
     const store = useSelector((store) => store);
     const stableCoins = stableCoinContractAddress;
-    console.log(stableCoins);
+
 
     useEffect(() => {
         setUserBalance(store["balance"]);
@@ -64,7 +64,6 @@ function Profile() {
             <div className="Profile__TokenBalanceContainer">
                 <div className="title">Available Tokens</div>
                 <div className="tokenContainer">
-                    {console.log(stableCoins)}
                     {stableCoins && stableCoins.map((coin, key) =>
                         <TokenCard {...coin} key={key} />
                     )}

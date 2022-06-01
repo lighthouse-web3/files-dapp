@@ -1,0 +1,57 @@
+.react-tiny-popover-container {
+    top: 25px !important;
+    .ProfileDropdown {
+      box-shadow: 1px 0px 12px 3px rgb(0 0 0 / 22%);
+      height: fit-content;
+      width: 200px;
+      background: white;
+      border-radius: 10px;
+      padding: 10px 20px;
+      .label{
+          font-size: 0.7rem;
+          margin-bottom: 5px;
+      }
+
+      .userName{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-bottom: 5px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid grey;
+      }
+
+      .tokenContainer{
+          display: flex;
+          flex-direction: column;
+      }
+  
+
+  
+    }
+  }
+
+
+.ProfileDropdownBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+    width: fit-content;
+    color: white;
+
+    &:nth-child(n) {
+      font-size: 1rem;
+    }
+
+    .userName {
+      font-weight: 400;
+    }
+    .dropdown{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 5px;
+    }
+  }

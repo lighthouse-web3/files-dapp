@@ -1,43 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { Popover } from 'react-tiny-popover';
 import './chainselect.scss'
-import { changeNetwork, getChainNetwork } from "../../utils/services/chainNetwork";
 import { AiOutlineCaretDown } from "react-icons/ai";
-import { changeWeb3AuthChain, currentWeb3AuthChain, web3auth } from '../../utils/services/web3auth';
-import { ethers } from 'ethers';
+import { changeWeb3AuthChain, currentWeb3AuthChain } from '../../utils/services/web3auth';
 
 function ChainSelect() {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [currentChain, setCurrentChain] = useState(false);
 
     useEffect(() => {
-        // window.ethereum.on("chainChanged", () => {
-        //     window.location.reload();
-        // });
-        // return () => {
-        //     window.ethereum.removeListener("chainChanged", () => { });
-        // };
         setCurrentChain(currentWeb3AuthChain);
     }, []);
-    // const handleNetworkSwitch = async (networkName) => {
-    //     await changeNetwork({ networkName });
-    //     setCurrentChain(await getChainNetwork());
-    // };
+
     const handleNetworkSwitch = async (networkName) => {
         changeWeb3AuthChain(networkName);
-        setCurrentChain(currentWeb3AuthChain);
-        // web3auth
-        console.log(web3auth);
-        const provider = new ethers.providers.Web3Provider(await web3auth.connect());
+        setCurrentChain(currentWeb3AuthChain);      
 
-        console.log(provider);
     };
 
-    // useEffect(() => {
-    //     (async () => {
-    //         setCurrentChain(await getChainNetwork());
-    //     })();
-    // }, [])
+
 
     return (
         <Popover

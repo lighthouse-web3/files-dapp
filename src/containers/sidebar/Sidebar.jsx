@@ -23,6 +23,8 @@ import { getBalance } from '../../utils/services/filedeploy';
 import { notify } from '../../utils/services/notification';
 import { bytesToString } from '../../utils/services/other';
 import { logout } from '../../utils/services/auth';
+import History from '../../utils/services/GlobalNavigation/navigationHistory';
+import { CgProfile } from 'react-icons/cg';
 
 
 
@@ -99,6 +101,9 @@ function Sidebar() {
                         </p>
                         <Link to='topup' />
                     </MenuItem>
+                    <MenuItem icon={<CgProfile />} active={false}
+                        onClick={() => { History.navigate('/dashboard/profile') }}
+                    >Profile</MenuItem>
                     <MenuItem icon={<BiLogOut />} active={false}
                         onClick={() => { systemLogout(_auth, _navigate) }}
                     >Logout</MenuItem>

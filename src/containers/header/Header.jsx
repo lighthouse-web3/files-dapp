@@ -1,22 +1,16 @@
 import React, {
-    useState, useEffect
+    useState
 } from "react";
 import "./header.scss";
 import { CgProfile } from "react-icons/cg";
 import ChainSelect from "../../components/chainSelect/ChainSelect";
-import { getCoinBalance } from '../../utils/services/transferUSDC';
 import History from "../../utils/services/GlobalNavigation/navigationHistory";
+import { AiOutlineCaretDown } from "react-icons/ai";
+import ProfileDropdown from "../../components/ProfileDropdown/ProfileDropdown";
 
 
 
 function Header() {
-    const _auth = JSON.parse(localStorage.getItem("authData") || "{}");
-    const userId = _auth?.userAddress || "-";
-
-    const [web3authProvider, setWeb3AuthProvider] = useState(null);
-
-
-
 
 
     return (
@@ -30,17 +24,8 @@ function Header() {
                     <ChainSelect />
                 </div>
             </div>
-            <div className="header__infoBox">
-                <CgProfile onClick={() => { History.navigate('/dashboard/profile') }} />
-                &nbsp;
-                <span>|</span>&nbsp;
-                <span className="userName">
-                    {userId
-                        ? userId.substring(0, 4) +
-                        "...." +
-                        userId.substring(userId.length - 4)
-                        : ""}
-                </span>
+            <div className="header__infoBox ptr">
+                <ProfileDropdown />
             </div>
         </div>
     );
