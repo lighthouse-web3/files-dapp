@@ -1,3 +1,6 @@
+@use 'src/styles/variables' as variable;
+
+
 .upload_cid{
     margin: 20px;
     display: flex;
@@ -19,4 +22,17 @@
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+
+
+  @media screen and (max-width: variable.$mobile-break-point) {
+
+    .upload_cid{
+      margin: 20px;
+      input[type="text"]{
+        height: 30px;
+        width: 100%;
+      }
+  
+    }
   }
