@@ -4,7 +4,6 @@ import authReducer from "./authReducer";
 import nftReducer from "./nftReducers";
 import otherDataReducer from "./otherDataReducer";
 import balanceReducer from "./balanceReducer";
-import sideBarReducer from "./sidebarReducer";
 
 const reducers = combineReducers({
   file: fileReducer,
@@ -12,7 +11,6 @@ const reducers = combineReducers({
   nft: nftReducer,
   otherData: otherDataReducer,
   balance: balanceReducer,
-  sidebar: sideBarReducer,
 });
 
 export default reducers;
