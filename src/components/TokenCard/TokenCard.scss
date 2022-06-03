@@ -1,3 +1,6 @@
+@use 'src/styles/variables' as variable;
+
+
 .TokenCard {
   margin: 10px;
   padding: 10px;
@@ -25,5 +28,12 @@
   .balance {
     font-size: 1.2rem;
     font-weight: 600;
+  }
+}
+
+
+@media screen and (max-width: variable.$mobile-break-point) {
+  .TokenCard {
+    width: 100%;
   }
 }

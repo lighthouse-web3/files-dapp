@@ -28,7 +28,13 @@ function Profile() {
             <hr />
             <div className="Profile__InfoContainer">
                 <div className="AddressContainer">
-                    <div className="label">Public Address</div>
+                    <div className="label">Public Address
+
+                        <MdOutlineContentCopy onClick={() => {
+                            copyToClipboard(getAddress());
+                        }} />
+
+                    </div>
                     <div className="addressBox">
                         <p className="address">{getAddress()}</p>
                         <div

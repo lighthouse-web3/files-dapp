@@ -1,3 +1,5 @@
+@use "src/styles/variables" as variable;
+
 .topup {
   display: flex;
   flex-direction: row;
@@ -136,6 +138,43 @@
       height: 100%;
       opacity: 0.1;
       filter: grayscale(100%);
+    }
+  }
+}
+
+@media screen and (max-width: variable.$mobile-break-point) {
+  .topup {
+    .topupMain {
+      width: -webkit-fill-available;
+      padding: 1rem;
+      &__title {
+        flex-direction: column;
+        .btn {
+          margin-top: 10px;
+        }
+      }
+
+      &__description {
+        display: none;
+      }
+      &__content {
+        padding: 1.5rem 0rem;
+        .input-box {
+          font-size: 1rem;
+        }
+
+        .input-box .suffix {
+          display: none;
+        }
+      }
+
+      &__tweeter {
+        flex: 1;
+      }
+    }
+
+    .topupDesign {
+      display: none;
     }
   }
 }

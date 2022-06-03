@@ -1,57 +1,101 @@
-.Profile{
+@use "src/styles/variables" as variable;
+
+.Profile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1.5rem;
+  color: black;
+  &__title {
+    color: var(--background-black);
+    font-weight: 600;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__InfoContainer {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: 1.5rem;
-    color: black;
-    &__title {
-        color: var(--background-black);
-        font-weight: 600;
-        font-size: 1.3rem;
+
+    .AddressContainer {
+      width: 100%;
+      .addressBox {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        font-size: 1.5rem;
+        .icon {
+          margin-left: 10px;
+          cursor: pointer;
+        }
       }
+    }
 
-      &__InfoContainer{
-          display: flex;
-          flex-direction: column;
-
-          .AddressContainer{
-              width: 100%;
-              .addressBox{
-                  display: flex;
-                  align-items: center;
-                  font-size: 1.5rem;
-                  .icon{
-                      margin-left: 10px;
-                      cursor: pointer;
-                  }
-              }
-              
-          }
-
-          .SpaceContainer{
-              width: 100%;
-              .spaceBox{
-                  width: 100%;
-                  margin: 10px 0px;
-           
-              }
-          }
+    .SpaceContainer {
+      width: 100%;
+      .spaceBox {
+        width: 100%;
+        margin: 10px 0px;
       }
+    }
+  }
 
-      &__TokenBalanceContainer{
-          border-top: 1px solid grey;
-          padding: 1rem 0rem;
+  &__TokenBalanceContainer {
+    border-top: 1px solid grey;
+    padding: 1rem 0rem;
 
-          .tokenContainer{
+    .tokenContainer {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 10px 0px;
+    }
+  }
+}
+
+@media screen and (max-width: variable.$mobile-break-point) {
+  .Profile {
+    width: -webkit-fill-available;
+    &__InfoContainer {
+      .AddressContainer {
+          .label{
+              font-size: 1rem;
               display: flex;
-              flex-wrap: wrap;
-              width: 100%;
-              padding: 10px 0px;
-            
+              justify-content: space-between;
+              align-items: center;
+          }
+        .addressBox {
+          p {
+            width: 100%;
+            word-break: break-word;
           }
 
+          .icon{
+              display: none;
+          }
+        }
       }
+
+      .SpaceContainer {
+        width: 100%;
+        .spaceBox {
+          width: 100%;
+          margin: 10px 0px;
+        }
+      }
+    }
+
+    &__TokenBalanceContainer {
+      border-top: 1px solid grey;
+      padding: 1rem 0rem;
+
+      .tokenContainer {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 10px 0px;
+      }
+    }
+  }
 }
