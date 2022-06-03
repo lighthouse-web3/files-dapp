@@ -1,3 +1,5 @@
+@use 'src/styles/variables' as variable;
+
 .landingPage {
   width: 100%;
   display: flex;
@@ -172,7 +174,12 @@
 }
 
 
-@media screen and (max-width: 800px) {
+
+
+
+
+
+@media screen and (max-width: variable.$mobile-break-point) {
 
   .landingPage{
     &__sideBar{

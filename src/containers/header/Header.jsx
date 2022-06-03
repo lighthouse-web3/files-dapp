@@ -1,16 +1,21 @@
-import React, {
-    useState
-} from "react";
+import React from "react";
 import "./header.scss";
-import { CgProfile } from "react-icons/cg";
 import ChainSelect from "../../components/chainSelect/ChainSelect";
-import History from "../../utils/services/GlobalNavigation/navigationHistory";
-import { AiOutlineCaretDown } from "react-icons/ai";
 import ProfileDropdown from "../../components/ProfileDropdown/ProfileDropdown";
+import { FiMenu } from 'react-icons/fi';
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { otherDataAC } from "../../store/action-creators";
+import { CgClose } from "react-icons/cg";
 
 
 
 function Header() {
+
+    const dispatch = useDispatch();
+    const store = useSelector((store) => store);
+    const _otherData = bindActionCreators(otherDataAC, dispatch);
 
 
     return (
@@ -26,6 +31,15 @@ function Header() {
             </div>
             <div className="header__infoBox ptr">
                 <ProfileDropdown />
+            </div>
+
+            <div className="header__menuBox" onClick={() => {
+                _otherData.setOtherData({ sidebarClosed: !store.otherData.sidebarClosed })
+            }}>
+                {
+                    store.otherData.sidebarClosed ? <FiMenu /> : <CgClose />
+                }
+
             </div>
         </div>
     );

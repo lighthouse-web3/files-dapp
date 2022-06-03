@@ -16,10 +16,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { initWeb3Auth } from "./utils/services/web3auth";
 import Profile from "./pages/adminPanel/Profile/Profile";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { otherDataAC } from "./store/action-creators";
 
 function App() {
+  const dispatch = useDispatch();
+  const _otherData = bindActionCreators(otherDataAC, dispatch);
   useEffect(() => {
     initWeb3Auth();
+    let isMobile = window.matchMedia(
+      "only screen and (max-width: 600px)"
+    ).matches;
+    _otherData.setOtherData({ isMobile: isMobile });
+    _otherData.setOtherData({ sidebarClosed: isMobile ? true : false });
   }, []);
 
   return (

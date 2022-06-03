@@ -1,16 +1,16 @@
-export const setBalanceData = (data) => {
+export const setSideBarClosed = (data) => {
   return (dispatch) => {
     dispatch({
-      type: "setBalanceData",
+      type: "setSidebarClosed",
       payload: data,
     });
   };
 };
 
-export const getBalanceData = (data) => {
+export const getSidebarClosed = (data) => {
   return (dispatch) => {
     dispatch({
-      type: "getBalanceData",
+      type: "getSidebarClosed",
       payload: data,
     });
   };

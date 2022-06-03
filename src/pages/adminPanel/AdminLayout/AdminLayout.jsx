@@ -8,13 +8,14 @@ import Infobar from "../../../containers/infobar/infobar";
 
 function AdminLayout() {
     const [infoBarData, setInfoBarData] = useState(null);
+    const [sideBarCollapsed, setSideBarCollapsed] = useState(false);
     return (
         <div className="AdminLayoutContainer">
             <div className="headerContainer">
                 <Header />
             </div>
             <div className="bodyContainer">
-                <Sidebar />
+                <Sidebar sideBarCollapsed={sideBarCollapsed} setSideBarCollapsed={setSideBarCollapsed} />
                 <Outlet context={[infoBarData, setInfoBarData]} />
                 <Infobar infoBarData={infoBarData} setInfoBarData={setInfoBarData} />
           </div>

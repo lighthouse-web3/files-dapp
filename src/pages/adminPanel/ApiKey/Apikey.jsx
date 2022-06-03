@@ -47,7 +47,7 @@ function Apikey() {
 
                     let tempStore = store?.otherData || {};
                     tempStore['apiKey'] = response['data'];
-                    _otherData.setOtherData(tempStore);
+                _otherData.setOtherData({ ...tempStore });
                     setResponseReceived(true);
                 downloadFile(response['data']);
                 notify('Key Generated : Download and save at secure location', 'success')

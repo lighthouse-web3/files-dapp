@@ -1,13 +1,13 @@
-const balanceReducer = (state = null, action) => {
+const sideBarReducer = (state = false, action) => {
   // action has two part action.type & action.payload
   switch (action.type) {
-    case "setBalanceData":
+    case "setSidebarClosed":
       return action.payload;
-    case "getBalanceData":
+    case "getSidebarClosed":
       return state;
     default:
       return state;
   }
 };
 
-export default balanceReducer;
+export default sideBarReducer;
