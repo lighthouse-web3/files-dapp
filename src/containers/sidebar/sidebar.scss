@@ -6,6 +6,7 @@
 
 
 .sidebarContainer{
+    height: calc(100vh - 60px);
     .pro-sidebar-layout{
         background: var(--background-black);
     }
