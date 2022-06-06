@@ -33,7 +33,7 @@ async function systemLogout() {
 }
 
 
-function Sidebar() {
+function Sidebar({ setInfoBarData, infoBarData }) {
     const [currentPage, setCurrentPage] = useState('dashboard');
     const [userBalance, setUserBalance] = useState('dashboard');
     const _location = useLocation();
@@ -44,7 +44,7 @@ function Sidebar() {
     const _balnceAC = bindActionCreators(balanceAC, dispatch);
     const _navigate = useNavigate();
 
-    console.log(store);
+
 
 
 
@@ -73,7 +73,7 @@ function Sidebar() {
     )
 
     return (
-        <ProSidebar className='sidebarContainer' collapsed={store?.otherData?.sidebarClosed || false}>
+        <ProSidebar className='sidebarContainer' collapsed={store?.otherData?.sidebarClosed}>
             <SidebarHeader>
                 <Menu iconShape="round">
                     <MenuItem icon={<AiOutlinePlus />} active={false}

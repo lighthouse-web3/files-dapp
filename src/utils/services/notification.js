@@ -10,6 +10,8 @@ export const notify = (msg, msg_type) => {
     draggable: false,
     progress: undefined,
   };
+
+  window.innerWidth < 600 && (config["position"] = "bottom-center");
   msg_type === "error" && toast.error(`${msg}`, config);
   msg_type === "success" && toast.success(`${msg}`, config);
 };

@@ -1,3 +1,5 @@
+@use 'src/styles/variables' as variable;
+
 .pagination {
     list-style: none;
     display: flex;
@@ -31,5 +33,12 @@
     .previous.disabled,
     .next.disabled {
       color: var(--content-grey);
+    }
+  }
+
+
+  @media screen and (max-width: variable.$mobile-break-point) {
+    .pagination  {
+      padding: 0;
     }
   }
