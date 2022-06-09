@@ -16,6 +16,7 @@ import { notify } from "../../../utils/services/notification";
 
 import { Dialog } from "@material-ui/core";
 import DisclaimerBar from "../../../components/DisclaimerBar/DisclaimerBar";
+import { bytesToString } from "../../../utils/services/other";
 
 const GetTotalFolderSize = (fileArr) => {
     let total = 0;
@@ -151,9 +152,18 @@ function UploadNew() {
                 <div className="uploadNew__progressContainer">
                     {uploadedFiles?.target?.files.length > 0 && (
                         <div className="information">
-                            <p>{uploadedFiles?.target?.files[0]?.name}</p>
+                            <p>{
+                                uploadedFiles?.target?.files[0]?.name
+                            }
+                                {
+                                    ` (${fileUploadProgress}%)`
+                                }
+                            </p>
                             <p>
-                                {(uploadedFiles?.target?.files[0]?.size / 1024).toFixed(1)} Kb
+
+                                {
+                                    bytesToString(uploadedFiles?.target?.files[0]?.size)
+                                }
                             </p>
                         </div>
                     )}

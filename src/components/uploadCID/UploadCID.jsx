@@ -28,6 +28,7 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
                 const costRes = await axios.get(
                     `https://ipfs.io/api/v0/dag/stat?arg=${CID}&progress=true`
                 );
+                console.log(costRes);
 
                 if (costRes["status"] !== 200) {
                     notify("CID doesnt exist", "error");
@@ -60,7 +61,7 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
     };
 
     const UploadCID = () => {
-        // console.log(fileName, CID)
+        console.log(fileName, CID)
         if (fileName.length > 0 && CID.length > 0) {
       // console.log('Start Upload file')
             uploadFile();

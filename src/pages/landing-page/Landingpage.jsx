@@ -76,8 +76,8 @@ function Landingpage() {
 
 
                 </div>
-                <div className="loginBox" >
-                    <div className="loginBtn ptr" onClick={loginWeb3Auth}>
+                <div className="loginBox" onClick={loginWeb3Auth} >
+                    <div className="loginBtn ptr" >
                         <AiOutlineLogin />
                         <p>Login</p>
                     </div>

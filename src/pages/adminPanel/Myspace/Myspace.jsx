@@ -83,9 +83,7 @@ function Myspace() {
                                           <th>Size</th>
                                           <th>Last Modified</th>
                                       </>
-                                  ) : (
-                                      <th>Action</th>
-                                  )}
+                                    ) : (<></>)}
                               </tr>
                           </thead>
                           <tbody>
@@ -103,9 +101,7 @@ function Myspace() {
                                           </td>
 
                                           {isMobile ? (
-                                              <td>
-                                                  <MdOutlineVisibility />
-                                              </td>
+                                              <></>
                                           ) : (
                                               <>
                                                   <td>
