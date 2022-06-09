@@ -1,7 +1,7 @@
 export const setBalanceData = (data) => {
   return (dispatch) => {
     dispatch({
-      type: "setData",
+      type: "setBalanceData",
       payload: data,
     });
   };
@@ -10,7 +10,7 @@ export const setBalanceData = (data) => {
 export const getBalanceData = (data) => {
   return (dispatch) => {
     dispatch({
-      type: "getData",
+      type: "getBalanceData",
       payload: data,
     });
   };

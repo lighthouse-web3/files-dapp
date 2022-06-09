@@ -1,0 +1,30 @@
+.TweeterTopupContainer{
+
+    .messageLink{
+        font-weight: 600;
+        color: #4454fec5;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0 4px;
+    }
+
+    .textContainer{
+        width: 100%;
+        display: flex;
+        Button{
+            background: #4452FE;
+            border-radius: 10px;
+            padding: 0.3rem 1rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0px 5px;
+        }
+        input{
+           flex: 1;
+           height: 35px;
+           margin: 0;
+        }
+    }
+    
+}

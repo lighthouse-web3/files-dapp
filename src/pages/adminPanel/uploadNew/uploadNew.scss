@@ -1,9 +1,19 @@
+@use 'src/styles/variables' as variable;
+
 .uploadNew {
   display: flex;
   flex-direction: column;
   width: 100%;
+
   padding: 1.5rem;
   justify-content: space-between;
+
+  &__top {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
   &__title {
     color: var(--background-black);
@@ -11,12 +21,48 @@
     font-size: 1.3rem;
   }
 
-  &__content{
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .fileCard {
+      height: 100%;
+      width: 30%;
+      border: 1px solid lightgrey;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
 
-    hr{
-      background: linear-gradient(266.31deg, #FF4581 6.14%, #4388DD 99.41%) !important;
+      &:hover{
+        border: 1px solid rgb(171, 170, 170);
+        transform: scale(1.01);
+      }
+
+      .pattern,
+      .title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .pattern {
+        background: url("../../../../public/bg/bg_pattern.png");
+        opacity: 0.1;
+        filter: grayscale(100%);
+      }
+      .title {
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .icon{
+          font-size: 2rem;
+        }
+      }
     }
- 
   }
 
   &__progressContainer {
@@ -26,20 +72,36 @@
     border-radius: 10px;
     margin: 1rem 0rem;
 
-    .information{
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        p{
-            margin: 0px;
-            width: fit-content;
-        }
+    .information {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        margin: 0px;
+        width: fit-content;
+      }
     }
 
-    .progressbar-progress{
-        border-radius: 10px;
-        background: linear-gradient(266.31deg, #FF4581 6.14%, #4388DD 99.41%) !important;
+
+  }
+}
+
+
+@media screen and (max-width: variable.$mobile-break-point) {
+  .uploadNew {
+  
+    &__content {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .fileCard {
+        height: 100%;
+        width: 100%;
+        margin: 10px;
+      }
     }
+
   }
 }

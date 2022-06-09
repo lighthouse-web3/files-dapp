@@ -14,14 +14,17 @@ import { MdFolderShared } from 'react-icons/md';
 import { BiLogOut } from 'react-icons/bi';
 import { BsCollection } from 'react-icons/bs';
 import { AiOutlineApi } from 'react-icons/ai';
+import { HiOutlineDocument } from 'react-icons/hi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { authAC, balanceAC } from '../../store/action-creators';
+import { authAC, balanceAC, otherDataAC, sidebarAC } from '../../store/action-creators';
 import { getBalance } from '../../utils/services/filedeploy';
 import { notify } from '../../utils/services/notification';
 import { bytesToString } from '../../utils/services/other';
 import { logout } from '../../utils/services/auth';
+import History from '../../utils/services/GlobalNavigation/navigationHistory';
+import { CgProfile } from 'react-icons/cg';
 
 
 
@@ -30,14 +33,19 @@ async function systemLogout() {
 }
 
 
-function Sidebar() {
+function Sidebar({ setInfoBarData, infoBarData }) {
     const [currentPage, setCurrentPage] = useState('dashboard');
     const [userBalance, setUserBalance] = useState('dashboard');
     const _location = useLocation();
     const dispatch = useDispatch();
+    const store = useSelector((store) => store);
     const _auth = bindActionCreators(authAC, dispatch);
+    const _otherData = bindActionCreators(otherDataAC, dispatch);
     const _balnceAC = bindActionCreators(balanceAC, dispatch);
     const _navigate = useNavigate();
+
+
+
 
 
     useEffect(() => {
@@ -59,12 +67,13 @@ function Sidebar() {
     useEffect(
         () => {
             setCurrentPage(_location.pathname);
+            store?.otherData?.isMobile && (_otherData.setOtherData({ sidebarClosed: true }))
         },
         [_location]
     )
 
     return (
-        <ProSidebar collapsed={false}>
+        <ProSidebar className='sidebarContainer' collapsed={store?.otherData?.sidebarClosed}>
             <SidebarHeader>
                 <Menu iconShape="round">
                     <MenuItem icon={<AiOutlinePlus />} active={false}
@@ -81,8 +90,10 @@ function Sidebar() {
 
                 <MenuItem icon={<AiOutlineGateway />} active={currentPage === '/dashboard/gateway' ? true : false}
                 >Gateway <Link to='gateway' /></MenuItem>
-                {/* <MenuItem icon={<HiOutlineDocument />} active={currentPage === '/dashboard/mintNFT' ? true : false}
-                >Mint NFT <Link to='mintNFT' /></MenuItem> */}
+                <MenuItem icon={<HiOutlineDocument />} onClick={() => {
+                    window.open('https://lighthouse-storage.gitbook.io/lighthouse/', '_blank')
+                }}
+                >Documentation </MenuItem>
             </Menu>
             <SidebarContent>
             </SidebarContent>
@@ -96,6 +107,9 @@ function Sidebar() {
                         </p>
                         <Link to='topup' />
                     </MenuItem>
+                    <MenuItem icon={<CgProfile />} active={false}
+                        onClick={() => { History.navigate('/dashboard/profile') }}
+                    >Profile</MenuItem>
                     <MenuItem icon={<BiLogOut />} active={false}
                         onClick={() => { systemLogout(_auth, _navigate) }}
                     >Logout</MenuItem>

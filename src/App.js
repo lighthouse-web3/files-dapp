@@ -4,7 +4,7 @@ import AdminLayout from "./pages/adminPanel/AdminLayout/AdminLayout";
 import Myspace from "./pages/adminPanel/Myspace/Myspace";
 import Gateway from "./pages/adminPanel/Gateway/Gateway";
 import NoPage from "./pages/NoPage/NoPage";
-import MintNFT from "./pages/adminPanel/MintNFT/MintNFT";
+
 import UploadNew from "./pages/adminPanel/uploadNew/uploadNew";
 import RequireAuth from "./utils/RequireAuth";
 import Collection from "./pages/adminPanel/Collection/Collection";
@@ -15,10 +15,21 @@ import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { initWeb3Auth } from "./utils/services/web3auth";
+import Profile from "./pages/adminPanel/Profile/Profile";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { otherDataAC } from "./store/action-creators";
 
 function App() {
+  const dispatch = useDispatch();
+  const _otherData = bindActionCreators(otherDataAC, dispatch);
   useEffect(() => {
     initWeb3Auth();
+    let isMobile = window.matchMedia(
+      "only screen and (max-width: 600px)"
+    ).matches;
+    _otherData.setOtherData({ isMobile: isMobile });
+    _otherData.setOtherData({ sidebarClosed: isMobile ? true : false });
   }, []);
 
   return (
@@ -38,7 +49,8 @@ function App() {
         <Route path="collection" element={<Collection />} />
         <Route path="apikey" element={<Apikey />} />
         <Route path="viewNFT/:id" element={<ViewNFT />} />
-        <Route path="mintNFT" element={<MintNFT />} />
+        <Route path="profile" element={<Profile />} />
+
         <Route path="uploadNew" element={<UploadNew />} />
       </Route>
       <Route path="*" element={<NoPage />} />

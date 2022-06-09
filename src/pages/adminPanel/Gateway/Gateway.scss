@@ -1,3 +1,5 @@
+@use "src/styles/variables" as variable;
+
 .gateway {
   display: flex;
   flex-direction: row;
@@ -131,6 +133,31 @@
         height: 100%;
         opacity: 0.1;
         filter: grayscale(100%);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: variable.$mobile-break-point) {
+  .gateway {
+    .gatewayMain {
+      width: -webkit-fill-available;
+      padding: 1rem;
+      &__title {
+        font-size: 1rem;
+      }
+      &__content {
+        .input-box {
+          height: 50px;
+          width: 100%;
+          font-size: 0.8rem;
+        }
+        .btn {
+          font-size: 0.8;
+        }
+      }
+      .gatewayDesign {
+        display: none;
       }
     }
   }

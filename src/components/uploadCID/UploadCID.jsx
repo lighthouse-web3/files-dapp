@@ -1,81 +1,113 @@
-import React, { useState } from 'react'
-import './uploadcid.scss'
+import React, { useState } from "react";
+import "./uploadcid.scss";
 import lighthouse from "lighthouse-web3";
-import axios from 'axios';
-import { notify } from '../../utils/services/notification';
-import { getChainNetwork } from '../../utils/services/chainNetwork';
-import { currentWeb3AuthChain } from '../../utils/services/web3auth';
+import axios from "axios";
+import { notify } from "../../utils/services/notification";
+import { getChainNetwork } from "../../utils/services/chainNetwork";
+import { currentWeb3AuthChain } from "../../utils/services/web3auth";
 
-
-
-
-
-
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import Button from "@material-ui/core/Button";
 
 function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
-
-    const [fileName, setFileName] = useState('')
-    const [CID, setCID] = useState('')
+    const [fileName, setFileName] = useState("");
+    const [CID, setCID] = useState("");
 
     const uploadFile = async () => {
-        // setUploadProgress(10);
-        let network = currentWeb3AuthChain
+    // setUploadProgress(10);
+        let network = currentWeb3AuthChain;
 
         if (network) {
             try {
                 const signing_response = await sign_message();
-           // console.log(signing_response)
-                // setUploadProgress(20);
+        // console.log(signing_response)
+        // setUploadProgress(20);
 
-                const costRes = await axios.get(`https://ipfs.io/api/v0/dag/stat?arg=${CID}&progress=true`);
+                const costRes = await axios.get(
+                    `https://ipfs.io/api/v0/dag/stat?arg=${CID}&progress=true`
+                );
+                console.log(costRes);
 
-                if (costRes['status'] !== 200) {
-                    notify('CID doesnt exist', 'error');
+                if (costRes["status"] !== 200) {
+                    notify("CID doesnt exist", "error");
                     return;
                 }
-                const cost = (await lighthouse.getQuote(costRes['data']['Size'], network)).total_cost.toFixed(18).toString();
-                const transaction = await execute_transaction(CID, fileName, costRes['data']['Size'], cost, network);
+                const cost = (
+                    await lighthouse.getQuote(costRes["data"]["Size"], network)
+                ).total_cost
+                    .toFixed(18)
+                    .toString();
+                const transaction = await execute_transaction(
+                    CID,
+                    fileName,
+                    costRes["data"]["Size"],
+                    cost,
+                    network
+                );
                 const deploy = await lighthouse.addCid(fileName, CID);
 
-                if (deploy['created']) {
-                    notify('File Uploaded Successfully', 'success');
+                if (deploy["created"]) {
+                    notify("File Uploaded Successfully", "success");
                 }
-
-            }
-            catch (e) {
-                notify(`Error: ${e}`, 'error');
+            } catch (e) {
+                notify(`Error: ${e}`, "error");
                 setUploadProgress(0);
             }
         } else {
-       // console.log("Please connect to a supported network");
+            // console.log("Please connect to a supported network");
         }
-    }
-
-
-
-
-
+    };
 
     const UploadCID = () => {
-   // console.log(fileName, CID)
+        console.log(fileName, CID)
         if (fileName.length > 0 && CID.length > 0) {
-       // console.log('Start Upload file')
-            uploadFile()
+      // console.log('Start Upload file')
+            uploadFile();
         } else {
-            fileName.length === 0 && notify('Please Enter File Name', 'error');
-            CID.length === 0 && notify('Please Enter CID', 'error');
+            fileName.length === 0 && notify("Please Enter File Name", "error");
+            CID.length === 0 && notify("Please Enter CID", "error");
         }
-    }
-
+    };
 
     return (
+        <>
+            <DialogTitle>{"Upload File Using CID"}</DialogTitle>
+            <DialogContent>
         <div className="upload_cid">
-            <p>Add file using CID</p>
-            <input type="text" placeholder='Enter CID | eg. QmNYeP41TMqN...........94b8nYHM' onInput={(e) => { setCID(e.target.value) }} />
-            <input type="text" placeholder='Enter File Name' onInput={(e) => { setFileName(e.target.value) }} />
-            <button className="btn" onClick={() => { UploadCID() }}>Upload</button>
-        </div>
-    )
+                    <input
+                        type="text"
+                        placeholder="Enter CID | eg. QmNYeP41TMqN...........94b8nYHM"
+                        onInput={(e) => {
+                            setCID(e.target.value);
+                        }}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter File Name"
+                        onInput={(e) => {
+                            setFileName(e.target.value);
+                        }}
+                    />
+                </div>
+            </DialogContent>
+            <DialogActions>
+                <div className="ActionContainer">
+                    <Button
+                        className="btn"
+                        onClick={() => {
+                            UploadCID();
+                        }}
+                    >
+                        Upload
+                    </Button>
+
+                </div>
+
+            </DialogActions>
+        </>
+    );
 }
 
-export default UploadCID
+export default UploadCID;

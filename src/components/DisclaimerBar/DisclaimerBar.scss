@@ -1,0 +1,23 @@
+.DisclaimerBar{
+    width: 100%;
+    margin: 10px 0px;
+    padding: 5px 0px;
+
+    .container{
+        padding: 10px;
+        font-size: 0.8rem;
+        display: flex;
+        background: #f0f0f0;
+        flex-direction: column;
+        .title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p{
+                margin: 0px;
+            }
+        }
+    }
+
+   
+}

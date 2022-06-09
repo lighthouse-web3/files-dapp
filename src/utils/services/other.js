@@ -19,7 +19,6 @@ export const bytesToString = (bytes) => {
 };
 
 export const copyToClipboard = (text) => {
-  console.log("Text to copy", text);
   // Allows user to copy the given text on clipboard
   navigator.clipboard.writeText(text);
   notify("Copied To Clipboard", "success");

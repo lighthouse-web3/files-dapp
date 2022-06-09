@@ -1,13 +1,22 @@
-import React, {
-    useState, useEffect
-} from "react";
+import React from "react";
 import "./header.scss";
-import { CgProfile } from "react-icons/cg";
 import ChainSelect from "../../components/chainSelect/ChainSelect";
+import ProfileDropdown from "../../components/ProfileDropdown/ProfileDropdown";
+import { FiMenu } from 'react-icons/fi';
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { otherDataAC } from "../../store/action-creators";
+import { CgClose } from "react-icons/cg";
+
+
 
 function Header() {
-    const _auth = JSON.parse(localStorage.getItem("authData") || "{}");
-    const userId = _auth?.userAddress || "-";
+
+    const dispatch = useDispatch();
+    const store = useSelector((store) => store);
+    const _otherData = bindActionCreators(otherDataAC, dispatch);
+
 
     return (
         <div className="header">
@@ -20,17 +29,17 @@ function Header() {
                     <ChainSelect />
                 </div>
             </div>
-            <div className="header__infoBox">
-                <CgProfile />
-                &nbsp;
-                <span>|</span>&nbsp;
-                <span className="userName">
-                    {userId
-                        ? userId.substring(0, 4) +
-                        "...." +
-                        userId.substring(userId.length - 4)
-                        : ""}
-                </span>
+            <div className="header__infoBox ptr">
+                <ProfileDropdown />
+            </div>
+
+            <div className="header__menuBox" onClick={() => {
+                _otherData.setOtherData({ sidebarClosed: !store.otherData.sidebarClosed })
+            }}>
+                {
+                    store.otherData.sidebarClosed ? <FiMenu /> : <CgClose />
+                }
+
             </div>
         </div>
     );

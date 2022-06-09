@@ -1,5 +1,9 @@
+@use 'src/styles/variables' as variable;
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import '~react-pro-sidebar/dist/scss/styles.scss';
+
+
+
 
 body {
   margin: 0;
@@ -8,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: white;
+ 
 }
 
 .gradient__text {
@@ -60,4 +65,63 @@ input[type="text"] , textarea{
   align-items: center;
   width: 100%;
   padding: 1.5rem;
+}
+
+
+// Dialog CSS 
+.MuiPaper-root{
+  width: 50vw;
+
+  .MuiDialogTitle-root{
+      background: linear-gradient(90deg, #FF4581 0%, #4388DD 100%);
+      color: white;
+  }
+
+  .MuiDialogContent-root{
+      p{
+          font-size: 0.8rem;
+      }
+      small{
+          font-size: 0.7rem;
+          color: firebrick;
+          padding: 0rem 0.5rem;
+      }
+  }
+
+  .MuiDialogActions-root{
+      justify-content: space-between;
+      padding: 0.7rem 1.5rem;
+
+      .MuiButtonBase-root{
+          background: #4452FE;
+border-radius: 10px;
+padding: 0.3rem 1rem;
+color: white;
+font-size: 1rem;
+font-weight: 500;
+      }
+  }
+}
+
+.progressbar-container{
+  background: #80808021;
+  border-radius: 10px;
+  .progressbar-progress {
+    border-radius: 10px;
+    background: linear-gradient(
+      266.31deg,
+      #ff4581 6.14%,
+      #4388dd 99.41%
+    ) !important;
+  }
+}
+
+
+@media screen and (max-width: variable.$mobile-break-point) {
+
+  .MuiPaper-root{
+    width: max(400px , 90vw);
+    margin: 10px !important;
+  
+  }
 }

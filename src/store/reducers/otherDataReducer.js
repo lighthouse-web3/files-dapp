@@ -1,7 +1,7 @@
-const otherDataReducer = (state = null, action) => {
+const otherDataReducer = (state = {}, action) => {
   switch (action.type) {
     case "setData":
-      return action.payload;
+      return { ...state, ...action.payload };
     case "getData":
       return state;
     default:
