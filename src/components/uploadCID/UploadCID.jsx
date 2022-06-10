@@ -11,7 +11,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 
-function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
+function UploadCID({ setUploadProgress, sign_message, execute_transaction, setCidDialog }) {
     const [fileName, setFileName] = useState("");
     const [CID, setCID] = useState("");
 
@@ -21,9 +21,6 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
 
         if (network) {
             try {
-                const signing_response = await sign_message();
-        // console.log(signing_response)
-        // setUploadProgress(20);
 
                 const costRes = await axios.get(
                     `https://ipfs.io/api/v0/dag/stat?arg=${CID}&progress=true`
@@ -34,22 +31,24 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction }) {
                     notify("CID doesnt exist", "error");
                     return;
                 }
-                const cost = (
-                    await lighthouse.getQuote(costRes["data"]["Size"], network)
-                ).total_cost
-                    .toFixed(18)
-                    .toString();
-                const transaction = await execute_transaction(
-                    CID,
-                    fileName,
-                    costRes["data"]["Size"],
-                    cost,
-                    network
-                );
+                // const cost = (
+                //     await lighthouse.getQuote(costRes["data"]["Size"], network)
+                // ).total_cost
+                //     .toFixed(18)
+                //     .toString();
+                // const transaction = await execute_transaction(
+                //     CID,
+                //     fileName,
+                //     costRes["data"]["Size"],
+                //     cost,
+                //     network
+                // );
                 const deploy = await lighthouse.addCid(fileName, CID);
+                console.log(deploy)
 
-                if (deploy["created"]) {
-                    notify("File Uploaded Successfully", "success");
+                if (deploy) {
+                    notify("File Added To Queue Successfully", "success");
+                    setCidDialog(false);
                 }
             } catch (e) {
                 notify(`Error: ${e}`, "error");

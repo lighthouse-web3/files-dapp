@@ -142,6 +142,7 @@ function UploadNew() {
                     sign_message={sign_message}
                     execute_transaction={execute_transaction}
                     notify={notify}
+                    setCidDialog={setCidDialog}
                 />
             </Dialog>
 
