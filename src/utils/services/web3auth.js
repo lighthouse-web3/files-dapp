@@ -25,8 +25,8 @@ export const initWeb3Auth = async () => {
     const openloginAdapter = new OpenloginAdapter({
       adapterSettings: {
         clientId,
-        network: "testnet",
-        // network: "mainnet",
+        // network: "testnet",
+        network: "mainnet",
         uxMode: "popup",
         whitelabel: {
           name: "Lighthouse",
