@@ -108,7 +108,7 @@ function TopUp() {
             </div>
 
             <Dialog open={tweeterTopup} onClose={() => { setTweeterTopup(false) }}>
-                <TweeterTopupDialog />
+                <TweeterTopupDialog setTweeterTopup={setTweeterTopup} />
             </Dialog>
 
 

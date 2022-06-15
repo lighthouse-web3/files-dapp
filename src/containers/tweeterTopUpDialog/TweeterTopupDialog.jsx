@@ -1,18 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './TweeterTopupDialog.scss'
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
+import { baseUrl } from '../../utils/config/urls';
+import { getAddress } from '../../utils/services/auth';
+import { notify } from '../../utils/services/notification';
 
 
 const makeTweet = () => {
-    let content = ``;
+    let content = `Requesting 1GB Free storage capacity at Lighthouse for public address : ${getAddress()}`;
     window.open(`https://twitter.com/intent/tweet?url=${content}`, '_blank');
 }
 
-function TweeterTopupDialog() {
+const verifyTweet = async (twitterLink, setTwitterLink, setTweeterTopup) => {
+    console.log(twitterLink);
+    let twitterID = twitterLink.split('/')?.[5] || null;
+    try {
+        if (twitterID) {
+            let topupResponse = await fetch(`${baseUrl}/api/auth/tweet_recharge?publicKey=${getAddress()}&twitterID=${twitterID}`)
+            console.log(topupResponse);
+            if (topupResponse) {
+                notify('Topup Sucess', 'success');
+                setTwitterLink('');
+                setTweeterTopup(false);
+            }
+
+        } else {
+            notify('Invalid Link', 'error');
+        }
+
+    } catch (e) {
+        console.log(e);
+        notify('Invalid Tweet Content | Please Make sure to add the public address in the tweet', 'error')
+    }
+
+}
+
+function TweeterTopupDialog({ setTweeterTopup }) {
+    const [twitterLink, setTwitterLink] = useState('');
     return (
         <>
             <DialogTitle>{"Get 1GB Free Storage"}</DialogTitle>
@@ -26,8 +54,8 @@ function TweeterTopupDialog() {
                     </p>
 
                     <div className="textContainer">
-                        <input type="text" />
-                        <Button>Verify</Button>
+                        <input value={twitterLink} onChange={(e) => { setTwitterLink(e.target.value) }} type="text" />
+                        <Button onClick={() => { verifyTweet(twitterLink, setTwitterLink, setTweeterTopup) }}>Verify</Button>
                     </div>
 
 
