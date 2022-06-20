@@ -1,3 +1,59 @@
 .LoginDialog{
+    position: relative;
+    background: url("../../../public/bg/bg_pattern_bw2.png");
+
+    &__content{
+        .title{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-bottom: 1px solid grey;
+            p{
+                font-size: inherit;
+            }
+        }
+
+        .content{
+            .email{
+                margin: 1rem 0rem;
+                label{
+                    font-size: 0.8rem;
+                }
+                input[type="text"]{
+                    height: 30px;
+                }
+                button{
+                    margin: 0px;
+                    width: 100%;
+                    font-weight: 500;
+                }
+            }
+
+            .directLogin{
+                margin: 1rem 0rem;
+                label{
+                    font-size: 0.8rem;
+                    margin: 0.9rem 0rem;
+                }
+                input[type="text"]{
+                    height: 30px;
+                }
+                button{
+                    margin: 10px 0px;
+                    width: 100%;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+    
     
 }
+
+
+.MuiPaper-root{
+    width: 30vw;
+  }
