@@ -11,6 +11,8 @@ import { login } from "../../utils/services/auth";
 import { baseUrl } from "../../utils/config/urls";
 import { getWeb3AuthProvider, web3auth } from "../../utils/services/web3auth";
 import { AiOutlineLogin } from "react-icons/ai";
+import { Dialog } from "@material-ui/core";
+import LoginDialog from "../../containers/LoginDialog/LoginDialog";
 
 
 function Landingpage() {
@@ -21,27 +23,29 @@ function Landingpage() {
 
     const _currentAuth = useSelector((store) => store.auth);
     const [isW3AConnected, setw3AConnected] = useState(false);
+    const [openLoginDialog, setLoginDialog] = useState(false);
 
 
     const loginWeb3Auth = async () => {
-        if (!web3auth) {
-            console.log("web3auth not initialized yet");
-            return;
-        }
-        const web3provider = await getWeb3AuthProvider();
-        const provider = new ethers.providers.Web3Provider(web3provider);
+        setLoginDialog(true);
+        // if (!web3auth) {
+        //     console.log("web3auth not initialized yet");
+        //     return;
+        // }
+        // const web3provider = await getWeb3AuthProvider();
+        // const provider = new ethers.providers.Web3Provider(web3provider);
 
-        const signer = provider.getSigner();
-        let address = await signer.getAddress();
-        const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
-        const message = res.data;
-        const signed_message = await signer.signMessage(message);
-        const obj = {
-            signed_message: signed_message,
-            address: await signer.getAddress()
-        }
-        _auth.setAuthData(obj);
-        login(obj.address, obj.signed_message);
+        // const signer = provider.getSigner();
+        // let address = await signer.getAddress();
+        // const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
+        // const message = res.data;
+        // const signed_message = await signer.signMessage(message);
+        // const obj = {
+        //     signed_message: signed_message,
+        //     address: await signer.getAddress()
+        // }
+        // _auth.setAuthData(obj);
+        // login(obj.address, obj.signed_message);
     };
 
     useEffect(() => {
@@ -120,6 +124,9 @@ function Landingpage() {
                 </div>
 
             </div>
+            <Dialog open={openLoginDialog} onClose={() => { setLoginDialog(false) }}>
+                <LoginDialog />
+            </Dialog>
         </div>
     );
 }
