@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./uploadcid.scss";
-import lighthouse from "lighthouse-web3";
+import lighthouse from "@lighthouse-web3/sdk";
 import axios from "axios";
 import { notify } from "../../utils/services/notification";
 import { getChainNetwork } from "../../utils/services/chainNetwork";
