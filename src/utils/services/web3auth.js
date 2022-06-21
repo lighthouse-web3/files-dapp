@@ -3,7 +3,7 @@ import { Web3Auth } from "@web3auth/web3auth";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 import { availableNetworks } from "../config/availableNetworks";
-
+import { Web3AuthCore } from "@web3auth/core";
 
 let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 export var web3auth = undefined;
@@ -12,41 +12,55 @@ export var currentWeb3AuthChain = "ethereum";
 
 export const initWeb3Auth = async () => {
   try {
-    const web3AuthCtorParams = {
-      clientId,
+    // const web3AuthCtorParams = {
+    //   clientId,
+    //   chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
+    //   uiConfig: {
+    //     theme: "dark",
+    //     loginMethodsOrder: ["facebook", "google", "github", "discord"],
+    //     appLogo: "/logo.png",
+    //   },
+    // };
+    // web3auth = new Web3Auth(web3AuthCtorParams);
+    // const openloginAdapter = new OpenloginAdapter({
+    //   adapterSettings: {
+    //     clientId,
+    //     // network: "testnet",
+    //     network: "mainnet",
+    //     uxMode: "popup",
+    //     whitelabel: {
+    //       name: "Lighthouse",
+    //       logoLight: "/logo.png",
+    //       logoDark: "/logo.png",
+    //       defaultLanguage: "en",
+    //       dark: true,
+    //     },
+    //   },
+    //   loginSettings: {
+    //     relogin: false,
+    //     redirectUrl: `${
+    //       window.location.host.includes("localhost") ? "http" : "https"
+    //     }://${window.location.host}/dashboard`,
+    //   },
+    //   chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
+    // });
+    // web3auth.configureAdapter(openloginAdapter);
+    // console.log(openloginAdapter);
+    // await web3auth.initModal();
+    const options = {
       chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
-      uiConfig: {
-        theme: "dark",
-        loginMethodsOrder: ["facebook", "google", "github", "discord"],
-        appLogo: "/logo.png",
-      },
+      authMode: "DAPP",
+      clientId: clientId,
     };
-    web3auth = new Web3Auth(web3AuthCtorParams);
-    const openloginAdapter = new OpenloginAdapter({
-      adapterSettings: {
-        clientId,
-        // network: "testnet",
-        network: "mainnet",
-        uxMode: "popup",
-        whitelabel: {
-          name: "Lighthouse",
-          logoLight: "/logo.png",
-          logoDark: "/logo.png",
-          defaultLanguage: "en",
-          dark: true,
-        },
-      },
-      loginSettings: {
-        relogin: false,
-        redirectUrl: `${
-          window.location.host.includes("localhost") ? "http" : "https"
-        }://${window.location.host}/dashboard`,
-      },
-      chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
-    });
+    web3auth = new Web3AuthCore(options);
+
+     const openloginAdapter = new OpenloginAdapter({
+       clientId,
+       network: "mainnet",
+     });
+
     web3auth.configureAdapter(openloginAdapter);
-    console.log(openloginAdapter);
-    await web3auth.initModal();
+    await web3auth.init();
   } catch (error) {
     console.error(error, "INSIDE WEB3AUTH");
   }

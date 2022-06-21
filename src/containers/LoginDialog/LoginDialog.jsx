@@ -10,27 +10,13 @@ let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 
 
 function LoginDialog() {
-    const options = {
-        chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
-        authMode: "DAPP",
-        clientId: clientId,
-    }
-    const web3auth = new Web3AuthCore(options);
 
-
-    const openloginAdapter = new OpenloginAdapter({
-        clientId,
-        network: "mainnet",
-        uxMode: "popup",
-    });
-
-    web3auth.configureAdapter(openloginAdapter);
 
     const loginEmail = () => {
-        console.log(web3auth);
-        web3auth.login({
-            loginProvider: 'google'
-        })
+        // console.log(web3auth);
+        // web3auth.login({
+        //     loginProvider: 'google'
+        // })
     }
 
 
