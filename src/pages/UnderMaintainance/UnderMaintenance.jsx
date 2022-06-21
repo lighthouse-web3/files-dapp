@@ -1,6 +1,5 @@
 import React from 'react'
 import './UnderMaintenance.scss'
-
 import TypeAnimation from 'react-type-animation';
 
 
