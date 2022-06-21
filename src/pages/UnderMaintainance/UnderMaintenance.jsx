@@ -1,22 +1,23 @@
-import React from 'react';
-import './NoPage.scss';
+import React from 'react'
+import './UnderMaintenance.scss'
+
 import TypeAnimation from 'react-type-animation';
 
 
-function PageNotFound() {
+function UnderMaintenance() {
     return (
-        <div className="PageNotFound">
+        <div className="UnderMaintenance">
             <div className="bg_pattern"></div>
             <div className="logoContainer">
                 <img src="/icons/logo.png" width={100} height={100} alt="" />
             </div>
             <div className="title">
-                <p className='gradient__text title__text'>404</p>
+                <p className='gradient__text title__text'>Lighthouse.storage</p>
                 <TypeAnimation
                     cursor={true}
                     className='typeAnimation'
                     sequence={[
-                        'Page Not Found',
+                        'Site Under Maintenance',
                         3000,
                     ]}
                     wrapper="a"
@@ -24,13 +25,13 @@ function PageNotFound() {
                 />
             </div>
 
-            <div className="goBack ptr">
+            {/* <div className="goBack ptr">
                 <a href="/">Go Back</a>
-            </div>
+            </div> */}
 
 
         </div>
     )
 }
 
-export default PageNotFound
+export default UnderMaintenance

@@ -1,0 +1,54 @@
+.UnderMaintenance {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: black;
+  
+    .bg_pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      background: url("../../../public/bg/bg_rings.png");
+      background-position: center;
+      background-size: cover;
+    }
+  
+    .logoContainer {
+      width: 40%;
+      justify-content: center;
+      height: auto;
+      display: flex;
+      align-items: center;
+    }
+  
+    .title {
+        text-align: center;
+      .title__text {
+        font-weight: 600;
+        font-size: 3rem;
+        text-align: center;
+      }
+      .typeAnimation {
+        font-size: 2rem;
+        color: white;
+      }
+    }
+  
+    .goBack {
+      z-index: 1;
+      margin-top: 2rem;
+      font-family: "Montserrat";
+      text-decoration: underline;
+      a{
+          color: white;
+      }
+    }
+  }
+  
