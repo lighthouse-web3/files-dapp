@@ -10,7 +10,8 @@ import { baseUrl } from "../../../utils/config/urls";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { otherDataAC } from "../../../store/action-creators";
-import { web3auth } from '../../../utils/services/web3auth'
+import { getWeb3AuthProvider, web3auth } from '../../../utils/services/web3auth'
+import { ethers } from "ethers";
 
 function Apikey() {
 
@@ -33,12 +34,16 @@ function Apikey() {
 
     const getData = async () => {
         setResponseReceived(false);
-        // const web3provider = await web3auth.connect();
-        // const provider = new ethers.providers.Web3Provider(web3provider);
+        const web3provider = await getWeb3AuthProvider();
+        const provider = new ethers.providers.Web3Provider(web3provider);
+        const signer = provider.getSigner();
+        const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${getAddress()}`);
+        const message = res.data;
+        const signed_message = await signer.signMessage(message);
 
         axios.post(`${baseUrl}/api/auth/get_api_key`, {
             "publicKey": getAddress(),
-            "signedMessage": getSignMessage()
+            "signedMessage": signed_message
         }, {
             headers: { Authorization: `Bearer${getAddress()} ${getSignMessage()}` }
         }).then(
