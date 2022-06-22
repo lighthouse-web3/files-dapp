@@ -55,12 +55,17 @@ export const initWeb3Auth = async () => {
     web3auth = new Web3AuthCore(options);
 
      const openloginAdapter = new OpenloginAdapter({
-       clientId,
-       network: "mainnet",
+       adapterSettings: {
+         network: "mainnet",
+         clientId: clientId,
+         uxMode: "popup",
+       },
+       chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
      });
 
-    web3auth.configureAdapter(openloginAdapter);
-    await web3auth.init();
+     web3auth.configureAdapter(openloginAdapter);
+     await web3auth.init();
+     await web3auth.connectTo(OpenloginAdapter.name);
   } catch (error) {
     console.error(error, "INSIDE WEB3AUTH");
   }
