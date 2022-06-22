@@ -4,7 +4,9 @@ import { AiOutlineCloseCircle } from 'react-icons/ai'
 import './LoginDialog.scss'
 import { Web3AuthCore } from "@web3auth/core";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
-import { currentWeb3AuthChain, getWeb3AuthChainConfig, getWeb3AuthProvider, web3auth } from '../../utils/services/web3auth';
+import { currentWeb3AuthChain, getWeb3AuthChainConfig, getWeb3AuthProvider, web3auth, web3AuthLogin } from '../../utils/services/web3auth';
+import { WALLET_ADAPTERS } from "@web3auth/base";
+
 
 let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 
@@ -13,12 +15,13 @@ function LoginDialog() {
 
 
     const loginEmail = async () => {
-        let webauth = web3auth;
-        console.log(webauth);
-        webauth.login({
-            loginProvider: 'google'
+        web3AuthLogin(WALLET_ADAPTERS.OPENLOGIN, "google")
+        // let webauth = web3auth;
+        // console.log(webauth);
+        // webauth.login({
+        //     loginProvider: 'google'
 
-        })
+        // })
 
 
 

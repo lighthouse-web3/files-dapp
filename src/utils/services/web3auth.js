@@ -12,60 +12,18 @@ export var currentWeb3AuthChain = "ethereum";
 
 export const initWeb3Auth = async () => {
   try {
-    // const web3AuthCtorParams = {
-    //   clientId,
-    //   chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
-    //   uiConfig: {
-    //     theme: "dark",
-    //     loginMethodsOrder: ["facebook", "google", "github", "discord"],
-    //     appLogo: "/logo.png",
-    //   },
-    // };
-    // web3auth = new Web3Auth(web3AuthCtorParams);
-    // const openloginAdapter = new OpenloginAdapter({
-    //   adapterSettings: {
-    //     clientId,
-    //     // network: "testnet",
-    //     network: "mainnet",
-    //     uxMode: "popup",
-    //     whitelabel: {
-    //       name: "Lighthouse",
-    //       logoLight: "/logo.png",
-    //       logoDark: "/logo.png",
-    //       defaultLanguage: "en",
-    //       dark: true,
-    //     },
-    //   },
-    //   loginSettings: {
-    //     relogin: false,
-    //     redirectUrl: `${
-    //       window.location.host.includes("localhost") ? "http" : "https"
-    //     }://${window.location.host}/dashboard`,
-    //   },
-    //   chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
-    // });
-    // web3auth.configureAdapter(openloginAdapter);
-    // console.log(openloginAdapter);
-    // await web3auth.initModal();
-    const options = {
+    web3auth = new Web3AuthCore({
       chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
-      authMode: "DAPP",
-      clientId: clientId,
-    };
-    web3auth = new Web3AuthCore(options);
+    });
 
-     const openloginAdapter = new OpenloginAdapter({
-       adapterSettings: {
-         network: "mainnet",
-         clientId: clientId,
-         uxMode: "popup",
-       },
-       chainConfig: getWeb3AuthChainConfig(currentWeb3AuthChain),
-     });
-
-     web3auth.configureAdapter(openloginAdapter);
-     await web3auth.init();
-     await web3auth.connectTo(OpenloginAdapter.name);
+    const openloginAdapter = new OpenloginAdapter({
+      adapterSettings: {
+        network: "mainnet",
+        clientId: clientId,
+      },
+    });
+    web3auth.configureAdapter(openloginAdapter);
+    await web3auth.init();
   } catch (error) {
     console.error(error, "INSIDE WEB3AUTH");
   }
@@ -119,3 +77,18 @@ export const getWeb3AuthProvider = async () => {
   return web3authProvider;
 };
 
+export const web3AuthLogin = async (adapter, loginProvider, login_hint) => {
+  try {
+    if (!web3auth) {
+      console.log("web3auth not initialized yet");
+      return;
+    }
+    web3authProvider = await web3auth.connectTo(adapter, {
+      loginProvider,
+      login_hint,
+    });
+    console.log(web3authProvider);
+  } catch (error) {
+    console.log("error", error);
+  }
+};
