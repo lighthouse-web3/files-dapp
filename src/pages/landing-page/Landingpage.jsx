@@ -40,8 +40,12 @@ function Landingpage() {
             signed_message: signed_message,
             address: await signer.getAddress()
         }
+        const authToken = await axios.post(`${baseUrl}/api/auth/verify_signer`, {
+            "publicKey": obj.address,
+            "signedMessage": obj.signed_message
+        });
         _auth.setAuthData(obj);
-        login(obj.address, obj.signed_message);
+        login(obj.address, obj.signed_message, authToken?.['data']?.['accessToken']);
     };
 
     useEffect(() => {

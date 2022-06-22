@@ -1,10 +1,10 @@
-import lighthouse from "lighthouse-web3";
+import lighthouse from "@lighthouse-web3/sdk";
 import { lighthouseAbi } from "../contract_abi/lighthouseAbi";
 import { ethers } from "ethers";
 import axios from "axios";
 import { getChainNetwork } from "./chainNetwork";
 import { notify } from "./notification";
-import { getAddress, getSignMessage } from "./auth";
+import { getAccessToken, getAddress, getSignMessage } from "./auth";
 import { baseUrl } from "../config/urls";
 import {
   currentWeb3AuthChain,
@@ -64,12 +64,10 @@ export const uploadFile = async (
       let balance = await getBalance();
       if (+balance?.dataUsed < +balance?.dataLimit) {
         setUploadProgress(50);
-        let signed_message = await sign_message();
+        // let signed_message = await sign_message();
         const deploy_response = await lighthouse.deploy(
           uploadedFile,
-          null,
-          getAddress(),
-          signed_message["signed_message"]
+          getAccessToken()
         );
         setUploadProgress(70);
         setUploadProgress(0);
@@ -99,15 +97,15 @@ export const uploadFolder = async (
     try {
       setUploadProgress(20);
       let balance = await getBalance();
-      let signed_message = await sign_message();
+      // let signed_message = await sign_message();
       if (+balance?.dataUsed < +balance?.dataLimit) {
         setUploadProgress(50);
         const deploy_response = await lighthouse.deploy(
           uploadedFile,
-          null,
-          getAddress(),
-          signed_message["signed_message"]
+          getAccessToken()
         );
+
+        console.log(deploy_response);
         setUploadProgress(70);
         let newResponse = deploy_response.split("\n");
         newResponse = JSON.parse(newResponse[newResponse.length - 2]);

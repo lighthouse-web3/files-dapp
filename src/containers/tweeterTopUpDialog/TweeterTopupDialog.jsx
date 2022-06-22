@@ -6,8 +6,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import { baseUrl } from '../../utils/config/urls';
-import { getAddress } from '../../utils/services/auth';
+import { getAccessToken, getAddress } from '../../utils/services/auth';
 import { notify } from '../../utils/services/notification';
+import axios from 'axios';
 
 
 const makeTweet = () => {
@@ -20,7 +21,9 @@ const verifyTweet = async (twitterLink, setTwitterLink, setTweeterTopup) => {
     let twitterID = twitterLink.split('/')?.[5] || null;
     try {
         if (twitterID) {
-            let topupResponse = await fetch(`${baseUrl}/api/auth/tweet_recharge?publicKey=${getAddress()}&twitterID=${twitterID}`)
+            let topupResponse = await axios.get(`${baseUrl}/api/auth/tweet_recharge?publicKey=${getAddress()}&twitterID=${twitterID}`, {
+                headers: { Authorization: `Bearer ${getAccessToken()}` }
+            })
             console.log(topupResponse);
             if (topupResponse) {
                 notify('Topup Sucess', 'success');

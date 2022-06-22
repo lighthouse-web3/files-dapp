@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./uploadcid.scss";
-import lighthouse from "lighthouse-web3";
+import lighthouse from "@lighthouse-web3/sdk";
 import axios from "axios";
 import { notify } from "../../utils/services/notification";
 import { getChainNetwork } from "../../utils/services/chainNetwork";
@@ -31,18 +31,6 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction, setCi
                     notify("CID doesnt exist", "error");
                     return;
                 }
-                // const cost = (
-                //     await lighthouse.getQuote(costRes["data"]["Size"], network)
-                // ).total_cost
-                //     .toFixed(18)
-                //     .toString();
-                // const transaction = await execute_transaction(
-                //     CID,
-                //     fileName,
-                //     costRes["data"]["Size"],
-                //     cost,
-                //     network
-                // );
                 const deploy = await lighthouse.addCid(fileName, CID);
                 console.log(deploy)
 
