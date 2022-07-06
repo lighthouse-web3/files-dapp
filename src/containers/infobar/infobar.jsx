@@ -18,14 +18,14 @@ import { notify } from '../../utils/services/notification';
 
 function openNewTab(cid) {
     window.open(
-        `https://gateway.lighthouse.storage/ipfs/${cid}`, "_blank");
+        `https://ipfs.io/ipfs/${cid}`, "_blank");
 }
 const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(`https://gateway.lighthouse.storage/ipfs/${text}`);
+    navigator.clipboard.writeText(`https://ipfs.io/ipfs/${text}`);
     notify('Copied To Clipboard', 'success')
 }
 function downloadFile(cid, filename) {
-    let url = `https://gateway.lighthouse.storage/ipfs/${cid}`
+    let url = `https://ipfs.io/ipfs/${cid}`
     fetch(url)
         .then(response => response.blob())
         .then(blob => {

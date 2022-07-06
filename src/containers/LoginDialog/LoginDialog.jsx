@@ -9,41 +9,31 @@ import { ethers } from 'ethers';
 import axios from 'axios';
 import { baseUrl } from '../../utils/config/urls';
 import { login } from '../../utils/services/auth';
+import { bindActionCreators } from 'redux';
+import { authAC } from '../../store/action-creators';
+import { useDispatch } from 'react-redux';
 
 
 function LoginDialog({ setLoginDialog }) {
     const email = useRef('');
+    const dispatch = useDispatch();
+    const _auth = bindActionCreators(authAC, dispatch);
+
     const loginSocial = async (type) => {
         const web3provider = await web3AuthLogin(WALLET_ADAPTERS.OPENLOGIN, type);
-        const provider = new ethers.providers.Web3Provider(web3provider);
-        const signer = provider.getSigner();
-        let address = await signer.getAddress();
-        const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
-        const message = res.data;
-        const signed_message = await signer.signMessage(message);
-        const obj = {
-            signed_message: signed_message,
-            address: await signer.getAddress()
-        }
-        login(obj.address, obj.signed_message);
+        await proceedLogin(web3provider)
     }
     const handleLoginWithEmail = async () => {
         const web3provider = await web3AuthLogin(WALLET_ADAPTERS.OPENLOGIN, "email_passwordless", email.current.value);
-        const provider = new ethers.providers.Web3Provider(web3provider);
-        const signer = provider.getSigner();
-        let address = await signer.getAddress();
-        const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
-        const message = res.data;
-        const signed_message = await signer.signMessage(message);
-        const obj = {
-            signed_message: signed_message,
-            address: await signer.getAddress()
-        }
-        login(obj.address, obj.signed_message);
+        await proceedLogin(web3provider)
     }
     const handleWallet = async () => {
         const web3provider = await Web3AuthLoginWithWallet();
-        const provider = new ethers.providers.Web3Provider(web3provider);
+        await proceedLogin(web3provider)
+    }
+
+    const proceedLogin = async (web3authProvider) => {
+        const provider = new ethers.providers.Web3Provider(web3authProvider);
         const signer = provider.getSigner();
         let address = await signer.getAddress();
         const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);
@@ -53,7 +43,12 @@ function LoginDialog({ setLoginDialog }) {
             signed_message: signed_message,
             address: await signer.getAddress()
         }
-        login(obj.address, obj.signed_message);
+        const authToken = await axios.post(`${baseUrl}/api/auth/verify_signer`, {
+            "publicKey": obj.address,
+            "signedMessage": obj.signed_message
+        });
+        _auth.setAuthData(obj);
+        login(obj.address, obj.signed_message, authToken?.['data']?.['accessToken']);
     }
 
 

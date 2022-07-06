@@ -19,6 +19,7 @@ import Profile from "./pages/adminPanel/Profile/Profile";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { otherDataAC } from "./store/action-creators";
+import UnderMaintenance from "./pages/UnderMaintainance/UnderMaintenance";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Landingpage />}></Route>
+      {/* <Route path="/" element={<UnderMaintenance />}></Route> */}
       <Route
         path="/dashboard"
         element={

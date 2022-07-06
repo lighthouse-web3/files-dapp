@@ -1,4 +1,6 @@
-.PageNotFound {
+@use "src/styles/variables" as variable;
+
+.UnderMaintenance {
   height: 100vh;
   overflow: hidden;
   display: flex;
@@ -29,6 +31,7 @@
   }
 
   .title {
+    text-align: center;
     .title__text {
       font-weight: 600;
       font-size: 3rem;
@@ -45,8 +48,27 @@
     margin-top: 2rem;
     font-family: "Montserrat";
     text-decoration: underline;
-    a{
-        color: white;
+    a {
+      color: white;
+    }
+  }
+}
+
+@media screen and (max-width: variable.$mobile-break-point) {
+  .UnderMaintenance {
+    .logoContainer {
+      width: 60%;
+    }
+
+    .title {
+      width: 100%;
+   
+      .title__text {
+        font-size: 1.5rem;
+      }
+      .typeAnimation {
+        font-size: 1rem;
+      }
     }
   }
 }
