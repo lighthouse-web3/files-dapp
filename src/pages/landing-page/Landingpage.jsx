@@ -34,7 +34,6 @@ function Landingpage() {
         // }
         // const web3provider = await getWeb3AuthProvider();
         // const provider = new ethers.providers.Web3Provider(web3provider);
-
         // const signer = provider.getSigner();
         // let address = await signer.getAddress();
         // const res = await axios.get(`${baseUrl}/api/auth/get_message?publicKey=${address}`);

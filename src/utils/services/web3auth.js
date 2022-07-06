@@ -4,6 +4,7 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 import { availableNetworks } from "../config/availableNetworks";
 import { Web3AuthCore } from "@web3auth/core";
+import { WALLET_ADAPTERS } from "@web3auth/base";
 
 let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 export var web3auth = undefined;
@@ -87,8 +88,26 @@ export const web3AuthLogin = async (adapter, loginProvider, login_hint) => {
       loginProvider,
       login_hint,
     });
-    console.log(web3authProvider);
+    return web3authProvider;
   } catch (error) {
     console.log("error", error);
+    return;
+  }
+};
+
+export const Web3AuthLoginWithWallet = async () => {
+  try {
+    if (!web3auth) {
+      console.log("web3auth not initialized yet");
+      return;
+    }
+    web3authProvider = await web3auth.connectTo(
+      WALLET_ADAPTERS.WALLET_CONNECT_V1,
+      {}
+    );
+    return web3authProvider;
+  } catch (error) {
+    console.log("error", error);
+    return;
   }
 };
