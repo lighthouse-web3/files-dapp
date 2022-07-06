@@ -124,7 +124,7 @@ function Landingpage() {
 
             </div>
             <Dialog open={openLoginDialog} onClose={() => { setLoginDialog(false) }}>
-                <LoginDialog />
+                <LoginDialog setLoginDialog={setLoginDialog} />
             </Dialog>
         </div>
     );

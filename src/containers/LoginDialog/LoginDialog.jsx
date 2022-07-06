@@ -3,9 +3,7 @@ import React, { useRef } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 // import { GrGoogle, GrFacebook, GrMail } from 'react-icons/gr'
 import './LoginDialog.scss'
-import { Web3AuthCore } from "@web3auth/core";
-import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
-import { currentWeb3AuthChain, getWeb3AuthChainConfig, getWeb3AuthProvider, web3auth, web3AuthLogin, Web3AuthLoginWithWallet } from '../../utils/services/web3auth';
+import { web3AuthLogin, Web3AuthLoginWithWallet } from '../../utils/services/web3auth';
 import { WALLET_ADAPTERS } from "@web3auth/base";
 import { ethers } from 'ethers';
 import axios from 'axios';
@@ -13,11 +11,10 @@ import { baseUrl } from '../../utils/config/urls';
 import { login } from '../../utils/services/auth';
 
 
-function LoginDialog() {
+function LoginDialog({ setLoginDialog }) {
     const email = useRef('');
     const loginSocial = async (type) => {
-        console.log(type);
-        const web3provider = await web3AuthLogin(WALLET_ADAPTERS.OPENLOGIN, "google");
+        const web3provider = await web3AuthLogin(WALLET_ADAPTERS.OPENLOGIN, type);
         const provider = new ethers.providers.Web3Provider(web3provider);
         const signer = provider.getSigner();
         let address = await signer.getAddress();
@@ -66,7 +63,7 @@ function LoginDialog() {
                 <DialogContent>
                     <div className="title">
                         <p >Login To Lighthouse</p>
-                        <AiOutlineCloseCircle />
+                        <AiOutlineCloseCircle className='ptr' onClick={() => { setLoginDialog(false) }} />
                     </div>
 
                     <div className="content">

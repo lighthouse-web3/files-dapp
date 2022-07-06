@@ -5,6 +5,7 @@ import { CHAIN_NAMESPACES } from "@web3auth/base";
 import { availableNetworks } from "../config/availableNetworks";
 import { Web3AuthCore } from "@web3auth/core";
 import { WALLET_ADAPTERS } from "@web3auth/base";
+import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 
 let clientId = process.env.REACT_APP_WEB3AUTH_APP_ID;
 export var web3auth = undefined;
@@ -23,7 +24,9 @@ export const initWeb3Auth = async () => {
         clientId: clientId,
       },
     });
+    const metamaskAdapter = new MetamaskAdapter();
     web3auth.configureAdapter(openloginAdapter);
+    web3auth.configureAdapter(metamaskAdapter);
     await web3auth.init();
   } catch (error) {
     console.error(error, "INSIDE WEB3AUTH");
@@ -101,10 +104,7 @@ export const Web3AuthLoginWithWallet = async () => {
       console.log("web3auth not initialized yet");
       return;
     }
-    web3authProvider = await web3auth.connectTo(
-      WALLET_ADAPTERS.WALLET_CONNECT_V1,
-      {}
-    );
+    web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.METAMASK, {});
     return web3authProvider;
   } catch (error) {
     console.log("error", error);
