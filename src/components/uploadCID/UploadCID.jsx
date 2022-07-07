@@ -21,19 +21,16 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction, setCi
 
         if (network) {
             try {
-
                 const costRes = await axios.get(
                     `https://ipfs.io/api/v0/dag/stat?arg=${CID}&progress=true`
                 );
                 console.log(costRes);
-
                 if (costRes["status"] !== 200) {
                     notify("CID doesnt exist", "error");
                     return;
                 }
                 const deploy = await lighthouse.addCid(fileName, CID);
                 console.log(deploy)
-
                 if (deploy) {
                     notify("File Added To Queue Successfully", "success");
                     setCidDialog(false);
@@ -42,9 +39,7 @@ function UploadCID({ setUploadProgress, sign_message, execute_transaction, setCi
                 notify(`Error: ${e}`, "error");
                 setUploadProgress(0);
             }
-        } else {
-            // console.log("Please connect to a supported network");
-        }
+        } else { }
     };
 
     const UploadCID = () => {

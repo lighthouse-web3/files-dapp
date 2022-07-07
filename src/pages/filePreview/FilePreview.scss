@@ -1,0 +1,38 @@
+.filePreviewContainer {
+  width: -webkit-fill-available;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .header {
+    height: 30px;
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border-bottom: 1px solid black;
+    .logoContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 30px;
+            height: auto;
+        }
+        p{
+            color: black;
+        }
+    }
+
+    .iconsContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+  }
+  .body {
+    flex: 1 1;
+    width: 100%;
+    overflow-y: hidden;
+    padding: 10px 0px;
+  }
+}

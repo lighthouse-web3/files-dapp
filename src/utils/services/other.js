@@ -23,3 +23,16 @@ export const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text);
   notify("Copied To Clipboard", "success");
 };
+
+
+export const downloadFileFromURL = async (url, filename = "untitled") => {
+  await fetch(url)
+    .then((response) => response.blob())
+    .then((blob) => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+    })
+    .catch(console.error);
+};

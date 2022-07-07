@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { otherDataAC } from "./store/action-creators";
 import UnderMaintenance from "./pages/UnderMaintainance/UnderMaintenance";
+import FilePreview from "./pages/filePreview/FilePreview";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,9 +53,9 @@ function App() {
         <Route path="apikey" element={<Apikey />} />
         <Route path="viewNFT/:id" element={<ViewNFT />} />
         <Route path="profile" element={<Profile />} />
-
         <Route path="uploadNew" element={<UploadNew />} />
       </Route>
+      <Route path="viewFile/:id" element={<FilePreview />} />
       <Route path="*" element={<NoPage />} />
     </Routes>
   );
