@@ -30,7 +30,15 @@
                     width: 100%;
                     font-weight: 500;
                     cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .icon{
+                        display: flex;
+                        margin-right: 5px;
+                    }
                 }
+             
             }
 
             .directLogin{
@@ -47,6 +55,13 @@
                     width: 100%;
                     font-weight: 500;
                     cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .icon{
+                        display: flex;
+                        margin-right: 5px;
+                    }
                 }
             }
         }
