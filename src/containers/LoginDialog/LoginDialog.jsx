@@ -2,7 +2,6 @@ import { DialogContent } from '@material-ui/core'
 import React, { useRef } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { GrGoogle, GrGithub, GrMail } from 'react-icons/gr'
-import './LoginDialog.scss'
 import { web3AuthLogin, Web3AuthLoginWithWallet } from '../../utils/services/web3auth';
 import { WALLET_ADAPTERS } from "@web3auth/base";
 import { ethers } from 'ethers';
@@ -12,8 +11,8 @@ import { login } from '../../utils/services/auth';
 import { bindActionCreators } from 'redux';
 import { authAC } from '../../store/action-creators';
 import { useDispatch } from 'react-redux';
-import { BiWalletAlt } from 'react-icons/bi';
 import { IoWallet } from 'react-icons/io5'
+import './LoginDialog.scss'
 
 
 
