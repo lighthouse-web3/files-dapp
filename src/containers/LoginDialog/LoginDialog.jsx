@@ -1,8 +1,7 @@
 import { DialogContent } from '@material-ui/core'
 import React, { useRef } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-// import { GrGoogle, GrFacebook, GrMail } from 'react-icons/gr'
-import './LoginDialog.scss'
+import { GrGoogle, GrGithub, GrMail } from 'react-icons/gr'
 import { web3AuthLogin, Web3AuthLoginWithWallet } from '../../utils/services/web3auth';
 import { WALLET_ADAPTERS } from "@web3auth/base";
 import { ethers } from 'ethers';
@@ -12,6 +11,9 @@ import { login } from '../../utils/services/auth';
 import { bindActionCreators } from 'redux';
 import { authAC } from '../../store/action-creators';
 import { useDispatch } from 'react-redux';
+import { IoWallet } from 'react-icons/io5'
+import './LoginDialog.scss'
+
 
 
 function LoginDialog({ setLoginDialog }) {
@@ -68,18 +70,18 @@ function LoginDialog({ setLoginDialog }) {
                             </label>
                             <input type="text" ref={email} />
                             <button
-                                className="fillBtn__blue" onClick={() => { handleLoginWithEmail() }}>Continue with Email</button>
+                                className="fillBtn__blue" onClick={() => { handleLoginWithEmail() }}> <span className='icon'><GrMail /></span> Continue with Email</button>
                         </div>
 
                         <div className="directLogin">
                             <label htmlFor="">
                                 Or Using one of our following
                             </label>
-                            <button className="fillBtn__blue" onClick={() => { handleWallet() }}>Continue with Metamask</button>
-                            <button className="fillBtn__blue" onClick={() => { loginSocial("google") }}>Continue with Google</button>
+                            <button className="fillBtn__blue" onClick={() => { handleWallet() }}><span className='icon'><IoWallet /></span>Continue with Wallet</button>
+                            <button className="fillBtn__blue" onClick={() => { loginSocial("google") }}> <span className='icon'><GrGoogle /></span> Continue with Google</button>
                             <button className="fillBtn__blue" onClick={() => {
-                                loginSocial("facebook")
-                            }}>Continue with Facebook</button>
+                                loginSocial("github")
+                            }}><span className='icon'><GrGithub /></span>Continue with github</button>
                         </div>
                     </div>
                 </DialogContent>
