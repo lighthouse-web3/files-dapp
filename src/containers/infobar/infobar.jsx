@@ -63,7 +63,14 @@ function Infobar({ infoBarData, setInfoBarData }) {
                             {infoBarData?.cid}
                         </span>
                     </p>
-
+                </div>
+                <div className="row">
+                    <p>Storage Providers
+                        <br />
+                        <span className="content">
+                            {'Queuing'}
+                        </span>
+                    </p>
                 </div>
 
                 <hr />
