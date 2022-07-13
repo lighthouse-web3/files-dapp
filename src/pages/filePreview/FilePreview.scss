@@ -34,5 +34,9 @@
     width: 100%;
     overflow-y: hidden;
     padding: 10px 0px;
+    .pg-viewer-wrapper{
+      width: -webkit-fill-available;
+      overflow-x: hidden;
+    }
   }
 }
