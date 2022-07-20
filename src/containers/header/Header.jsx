@@ -5,9 +5,10 @@ import ProfileDropdown from "../../components/ProfileDropdown/ProfileDropdown";
 import { FiMenu } from 'react-icons/fi';
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-
 import { otherDataAC } from "../../store/action-creators";
 import { CgClose } from "react-icons/cg";
+import Skeleton from 'react-loading-skeleton'
+
 
 
 

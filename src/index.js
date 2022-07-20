@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
+import "react-loading-skeleton/dist/skeleton.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -8,6 +9,7 @@ import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import { MoralisProvider } from "react-moralis";
 import NavigationSetter from "./utils/services/GlobalNavigation/NavigationSetter";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 let appIdmoralis = process.env.REACT_APP_APP_ID;
 let serverUrlmoralis = process.env.REACT_APP_SERVER_URL;
@@ -17,7 +19,9 @@ ReactDOM.render(
     <BrowserRouter>
       <NavigationSetter />
       <Provider store={store}>
-        <App />
+        <SkeletonTheme baseColor="#202020" highlightColor="#444">
+          <App />
+        </SkeletonTheme>
       </Provider>
       <ToastContainer />
     </BrowserRouter>

@@ -13,6 +13,8 @@ import Dialog from "@material-ui/core/Dialog";
 import FileShareDialog from '../fileShareDialog/FileShareDialog';
 import moment from 'moment';
 import { notify } from '../../utils/services/notification';
+import Skeleton from 'react-loading-skeleton'
+
 
 
 
@@ -68,7 +70,7 @@ function Infobar({ infoBarData, setInfoBarData }) {
                     <p>Storage Providers
                         <br />
                         <span className="content">
-                            {'Queuing'}
+                            {infoBarData?.provider || <Skeleton />}
                         </span>
                     </p>
                 </div>
