@@ -19,7 +19,7 @@ ReactDOM.render(
     <BrowserRouter>
       <NavigationSetter />
       <Provider store={store}>
-        <SkeletonTheme baseColor="#202020" highlightColor="#444">
+        <SkeletonTheme baseColor="#b8b8b8d1" highlightColor="#00000021">
           <App />
         </SkeletonTheme>
       </Provider>

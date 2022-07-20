@@ -15,6 +15,7 @@ import { getFileIcon } from "../../../utils/services/fileTypeIcons";
 import ReactLoading from "react-loading";
 import { baseUrl } from "../../../utils/config/urls";
 import { bytesToString, copyToClipboard } from "../../../utils/services/other";
+import Skeleton from "react-loading-skeleton";
 
 function Myspace() {
     const [infoBarData, setInfoBarData] = useOutletContext();
@@ -40,18 +41,18 @@ function Myspace() {
   };
 
     const getData = async () => {
-      axios.get(`${baseUrl}/api/user/get_uploads?publicKey=${getAddress()}`).then(
-          (response) => {
-              if (response["status"] === 200) {
-                  _fileAC.setFileData(response["data"]);
-                  setCurrentItems(response["data"]);
-                  setOrignalItems(response["data"]);
-                  setResponseReceived(true);
-                  setTableItemsLength();
-              }
-        },
-        (error) => {
-            setResponseReceived(true);
+        axios.get(`${baseUrl}/api/user/get_uploads?publicKey=${getAddress()}`).then(
+            (response) => {
+                if (response["status"] === 200) {
+                    _fileAC.setFileData(response["data"]);
+                    setCurrentItems(response["data"]);
+                    setOrignalItems(response["data"]);
+                    setResponseReceived(true);
+                    setTableItemsLength();
+                }
+            },
+            (error) => {
+                setResponseReceived(true);
       }
     );
 
@@ -60,101 +61,109 @@ function Myspace() {
 
     return (
         <>
-          {responseReceived ? (
-              <div className="mySpace">
-                  <div className="mySpace__title">
-                      <p>My Space</p>
-                      <div className="searchBar">
-                          <Searchbar
-                              orignalItems={orignalItems}
-                              setCurrentItems={setCurrentItems}
-                          />
-                      </div>
-                  </div>
+            <div className="mySpace">
+                <div className="mySpace__title">
+                    <p>My Space</p>
+                    <div className="searchBar">
+                        <Searchbar
+                            orignalItems={orignalItems}
+                            setCurrentItems={setCurrentItems}
+                        />
+                    </div>
+                </div>
 
-                  <div className="mySpace__tableContainer" ref={tableRef}>
-                      <table>
-                          <thead>
-                              <tr className="tableHead">
-                                  <th>Name</th>
-                                  {!isMobile ? (
-                                      <>
-                                          <th>CID</th>
-                                          <th>Size</th>
-                                          <th>Last Modified</th>
-                                      </>
-                                    ) : (<></>)}
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {currentItems?.length > 0 &&
-                                  currentItems.map((item, i) => (
-                                      <tr
-                                          key={i}
-                                          className="ptr"
-                                          onClick={() => {
-                                              setInfoBarData(item);
-                                          }}
-                                      >
-                                          <td>
-                                              {getFileIcon(item?.fileName)}&nbsp;{item?.fileName}
-                                          </td>
+                <div className="mySpace__tableContainer" ref={tableRef}>
+                    <table>
+                        <thead>
+                            <tr className="tableHead">
+                                <th>Name</th>
+                                {!isMobile ? (
+                                    <>
+                                        <th>CID</th>
+                                        <th>Size</th>
+                                        <th>Last Modified</th>
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {responseReceived ? (
+                                currentItems?.length > 0 &&
+                                currentItems.map((item, i) => (
+                                    <tr
+                                        key={i}
+                                        className="ptr"
+                                        onClick={() => {
+                                            setInfoBarData(item);
+                                        }}
+                                    >
+                                        <td>
+                                            {getFileIcon(item?.fileName)}&nbsp;{item?.fileName}
+                                        </td>
 
-                                          {isMobile ? (
-                                              <></>
-                                          ) : (
-                                              <>
-                                                  <td>
-                                                      <span className="cid">{item.cid}</span>
-                                                      &nbsp;
-                                          <span
-                                              className="icon"
-                                              onClick={() => {
-                                                  copyToClipboard(item.cid);
-                                              }}
-                                          >
-                                              <MdOutlineContentCopy />
-                                          </span>
-                                      </td>
-                                      <td>{bytesToString(item?.fileSizeInBytes)}</td>
-                                  <td>
-                                      {moment(item?.createdAt).format(
-                                          "DD-MM-YYYY h:mm:ss"
-                                      )}
-                                  </td>
-                              </>
-                          )}
-                      </tr>
-                  ))}
-                          </tbody>
-                      </table>
-                  </div>
-                  <div className="mySpace__lowerContainer">
-                      <div className="sizeBar">
-                          {userBalance && (
-                              <p>
-                                  Total Size : {bytesToString(userBalance["dataUsed"])} /{" "}
-                                  {bytesToString(userBalance["dataLimit"])}
-                              </p>
-                          )}
-                      </div>
-                      <Pagination
-                          orignalData={orignalItems}
-                          setCurrentData={setCurrentItems}
-                          itemsPerPage={itemsPerPage}
-                      />
-                  </div>
-              </div>
-          ) : (
-              <div className="loadingContainer">
-                  <ReactLoading
-                      type={"bubbles"}
-                      color={"#4452FE"}
-                      height={667}
-                      width={375}
-                  />
-              </div>
-          )}
+                                        {isMobile ? (
+                                            <></>
+                                        ) : (
+                                            <>
+                                                <td>
+                                                    <span className="cid">{item.cid}</span>
+                                                    &nbsp;
+                                                    <span
+                                                        className="icon"
+                                                        onClick={() => {
+                                                            copyToClipboard(item.cid);
+                                                        }}
+                                                    >
+                                                        <MdOutlineContentCopy />
+                                                    </span>
+                                                </td>
+                                                <td>{bytesToString(item?.fileSizeInBytes)}</td>
+                                                <td>
+                                                    {moment(item?.createdAt).format("DD-MM-YYYY h:mm:ss")}
+                                                </td>
+                                            </>
+                                        )}
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td><Skeleton /></td>
+                                    {isMobile ? (
+                                        <></>
+                                    ) : (
+                                        <>
+                                            <td>
+                                                <span style={{ flex: '0.95' }}>
+                                                    <Skeleton />
+                                                </span>
+                                                    </td>
+                                                    <td><Skeleton /></td>
+                                                    <td><Skeleton /></td>
+                                            </>
+                                        )}
+                                    </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="mySpace__lowerContainer">
+                    <div className="sizeBar">
+                        {userBalance && (
+                            <p>
+                                Total Size : {bytesToString(userBalance["dataUsed"]) || <Skeleton />} /{" "}
+                                {bytesToString(userBalance["dataLimit"]) || <Skeleton />}
+                            </p>
+                        )}
+                    </div>
+                    <Pagination
+                        orignalData={orignalItems}
+                        setCurrentData={setCurrentItems}
+                        itemsPerPage={itemsPerPage}
+                    />
+                </div>
+            </div>
       </>
   );
 }
