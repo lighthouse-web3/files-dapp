@@ -25,7 +25,7 @@ export const sign_message = async () => {
   return {
     message: message,
     signed_message: signed_message,
-    address: await signer.getAddress(),
+    address: address,
   };
 };
 
@@ -64,12 +64,56 @@ export const uploadFile = async (
       let balance = await getBalance();
       if (+balance?.dataUsed < +balance?.dataLimit) {
         setUploadProgress(50);
-        // let signed_message = await sign_message();
         const deploy_response = await lighthouse.deploy(
           uploadedFile,
           getAccessToken()
         );
         setUploadProgress(70);
+        setUploadProgress(0);
+        notify(`File Upload Success:  ${deploy_response?.Hash}`, "success");
+      } else {
+        setUploadProgress(0);
+        notify(`Free Data Usage Exeeded `, "error");
+      }
+    } catch (e) {
+      notify(`ERROR:${e}`, "error");
+      setUploadProgress(0);
+    }
+  } else {
+    notify(`Please connect to a supported network`, "error");
+  }
+};
+
+const uploadEncryptedFile = async (
+  uploadedFile,
+  setUploadProgress,
+  _authDetails
+) => {
+  uploadedFile.persist();
+  setUploadProgress(10);
+
+  let network = currentWeb3AuthChain;
+  if (network) {
+    try {
+      setUploadProgress(20);
+      let balance = await getBalance();
+      if (+balance?.dataUsed < +balance?.dataLimit) {
+        const signingResponse = await sign_message();
+        const accessToken = (
+          await axios.post(
+            `https://api.lighthouse.storage/api/auth/verify_signer`,
+            {
+              publicKey: signingResponse.address,
+              signedMessage: signingResponse.signedMessage,
+            }
+          )
+        ).data.accessToken;
+
+        const deploy_response = await lighthouse.uploadEncrypted(
+          uploadedFile,
+          signingResponse.address,
+          accessToken
+        );
         setUploadProgress(0);
         notify(`File Upload Success:  ${deploy_response?.Hash}`, "success");
       } else {
